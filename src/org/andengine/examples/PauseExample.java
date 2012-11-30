@@ -8,14 +8,11 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.CameraScene;
 import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.SceneWithChild;
-import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.sprite.modifier.MoveModifier;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureRegion;
 import org.anddev.andengine.opengl.texture.TextureRegionFactory;
-import org.anddev.andengine.opengl.texture.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
@@ -28,8 +25,8 @@ public class PauseExample extends BaseGameActivity {
   private Camera mCamera;
 
   private Texture mTexture;
-  private SceneWithChild mMainScene;
-  private TiledTextureRegion mFaceTextureRegion;
+  private Scene mMainScene;
+  private TextureRegion mFaceTextureRegion;
   private TextureRegion mPauseTextureRegion;
   private CameraScene mPauseScene;
 
@@ -46,11 +43,10 @@ public class PauseExample extends BaseGameActivity {
     mPauseScene.getTopLayer().addEntity(pauseSprite);
     mPauseScene.setBackgroundEnabled(false);
 
-    mMainScene = new SceneWithChild(1);
+    mMainScene = new Scene(1);
     mMainScene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final AnimatedSprite face = new AnimatedSprite(0, 0, mFaceTextureRegion);
-    face.animate(100);
+    final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
     face.addSpriteModifier(new MoveModifier(30, 0,
         CAMERA_WIDTH - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
     mMainScene.getTopLayer().addEntity(face);
@@ -60,11 +56,11 @@ public class PauseExample extends BaseGameActivity {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(128, 128);
+    mTexture = new Texture(256, 128);
     mPauseTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/paused.png", 0, 0);
-    mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "gfx/boxface.png", 0, 36, 2, 1);
+    mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
+        "gfx/boxface.png", 0, 50);
     getEngine().loadTexture(mTexture);
   }
 
@@ -84,7 +80,7 @@ public class PauseExample extends BaseGameActivity {
     if (keyCode == KeyEvent.KEYCODE_MENU &&
         event.getAction() == KeyEvent.ACTION_DOWN) {
       if (getEngine().isRunning()) {
-        mMainScene.setChildSceneModal(mPauseScene, false, true);
+        mMainScene.setChildScene(mPauseScene, false, true);
         getEngine().stop();
       }
       else {
@@ -95,5 +91,4 @@ public class PauseExample extends BaseGameActivity {
     }
     return super.onKeyDown(keyCode, event);
   }
-
 }
