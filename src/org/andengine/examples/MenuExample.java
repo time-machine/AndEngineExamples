@@ -31,11 +31,12 @@ IOnMenuItemClickerListener {
 
   protected Scene mMainScene;
 
-  protected Texture mTexture;
-  protected TextureRegion mFaceTextureRegion;
+  private Texture mTexture;
+  private TextureRegion mFaceTextureRegion;
 
   protected MenuScene mMenuScene;
 
+  private Texture mMenuTexture;
   protected TextureRegion mMenuResetTextureRegion;
   protected TextureRegion mMenuQuitTextureRegion;
 
@@ -48,14 +49,17 @@ IOnMenuItemClickerListener {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(256, 256);
-    mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
-        this, "gfx/menu_reset.png", 0, 0);
-    mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
-        this, "gfx/menu_quit.png", 0, 50);
+    mTexture = new Texture(64, 64);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface_menu.png", 0, 100);
+        "gfx/boxface_menu.png", 0, 0);
     getEngine().loadTexture(mTexture);
+
+    mMenuTexture = new Texture(256, 128);
+    mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,
+        this, "gfx/menu_reset.png", 0, 0);
+    mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,
+        this, "gfx/menu_quit.png", 0, 50);
+    getEngine().loadTexture(mMenuTexture);
   }
 
   @Override
@@ -106,12 +110,11 @@ IOnMenuItemClickerListener {
       // restart the animation
       mMainScene.reset();
 
-      // remove menu and reset it
+      // remove the menu and reset it
       mMainScene.clearChildScene();
       mMenuScene.reset();
       break;
     case MENU_QUIT:
-      // end activity
       finish();
       break;
     default:
