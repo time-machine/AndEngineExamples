@@ -17,7 +17,6 @@ import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
 
-
 public class PauseExample extends BaseGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT= 480;

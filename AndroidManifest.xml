@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".LineExample" />
         <activity android:name=".PauseExample" />
         <activity android:name=".MenuExample" />
         <activity android:name=".SubMenuExample" />

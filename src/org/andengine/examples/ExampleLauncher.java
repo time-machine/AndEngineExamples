@@ -12,7 +12,7 @@ public class ExampleLauncher extends ListActivity {
   final Example[] EXAMPLES = Example.values();
 
   @Override
-  protected void onCreate(final Bundle savedInstanceState) {
+  public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     // create an ArrayAdapter, that will actually make the Strings above appear
     // in the ListView
@@ -21,12 +21,14 @@ public class ExampleLauncher extends ListActivity {
   }
 
   @Override
-  protected void onListItemClick(final ListView l, final View v, final int position, final long id) {
+  protected void onListItemClick(final ListView l, final View v,
+      final int position, final long id) {
     super.onListItemClick(l, v, position, id);
     startActivity(new Intent(this, EXAMPLES[position].CLASS));
   }
 
   private static enum Example {
+    LINE(LineExample.class, "Line Example"),
     PAUSE(PauseExample.class, "Pause Example"),
     MENU(MenuExample.class, "Menu Example"),
     SUBMENU(SubMenuExample.class, "SubMenu Example"),
