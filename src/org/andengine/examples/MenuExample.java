@@ -54,7 +54,7 @@ IOnMenuItemClickerListener {
     mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
         this, "gfx/menu_quit.png", 0, 50);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface.png", 0, 100);
+        "gfx/boxface_menu.png", 0, 100);
     getEngine().loadTexture(mTexture);
   }
 
