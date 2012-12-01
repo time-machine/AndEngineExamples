@@ -7,7 +7,6 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureRegion;
 import org.anddev.andengine.opengl.texture.TextureRegionFactory;
 
-
 public class SubMenuExample extends MenuExample {
   private static final int MENU_QUIT_OK = MenuExample.MENU_QUIT + 1;
   private static final int MENU_QUIT_BACK = MENU_QUIT_OK + 1;
