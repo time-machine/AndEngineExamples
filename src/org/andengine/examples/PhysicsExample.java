@@ -26,9 +26,9 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 
 public class PhysicsExample extends BaseGameActivity implements
-IAccelerometerListener, IOnSceneTouchListener {
+    IAccelerometerListener, IOnSceneTouchListener {
   private static final int GAME_WIDTH = 720;
-  private static final int GAME_HEIGHT= 480;
+  private static final int GAME_HEIGHT = 480;
 
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
@@ -111,8 +111,9 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   private void addFace(final float pX, final float pY) {
     final Scene scene = getEngine().getScene();
-    final AnimatedSprite face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-    face.animate(new long[]{100, 100}, 0, 1, true);
+    final AnimatedSprite face = new AnimatedSprite(pX, pY,
+        mBoxFaceTextureRegion);
+    face.animate(new long[] { 100, 100 }, 0, 1, true);
     scene.getLayer(1).addEntity(face);
     mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE, false));
