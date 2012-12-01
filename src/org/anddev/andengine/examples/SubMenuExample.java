@@ -1,4 +1,4 @@
-package org.andengine.examples;
+package org.anddev.andengine.examples;
 
 import org.anddev.andengine.entity.menu.MenuItem;
 import org.anddev.andengine.entity.menu.MenuScene;

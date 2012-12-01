@@ -1,4 +1,4 @@
-package org.andengine.examples;
+package org.anddev.andengine.examples;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -31,10 +31,12 @@ public class ExampleLauncher extends ListActivity {
     LINE(LineExample.class, "Line Example"),
     RECTANGLE(RectangleExample.class, "Rectangle Example"),
     SPRITE(SpriteExample.class, "Sprite Example"),
+    SPRITEMODIFIER(SpriteModifierExample.class, "SpriteModifier Example"),
     PAUSE(PauseExample.class, "Pause Example"),
     MENU(MenuExample.class, "Menu Example"),
     SUBMENU(SubMenuExample.class, "SubMenu Example"),
     FONT(FontExample.class, "Font Example"),
+    PARTICLESYSTEM(ParticleSystemExample.class, "ParticleSystem Example"),
     PHYSICS(PhysicsExample.class, "Physics Example");
 
     public final Class<? extends Activity> CLASS;

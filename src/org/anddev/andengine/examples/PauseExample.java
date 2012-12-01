@@ -1,4 +1,4 @@
-package org.andengine.examples;
+package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
