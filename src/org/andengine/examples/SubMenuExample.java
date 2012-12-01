@@ -21,10 +21,11 @@ public class SubMenuExample extends MenuExample {
   public void onLoadResources() {
     super.onLoadResources();
     mSubMenuTexture = new Texture(256, 128);
-    mMenuOkTextureRegion =  TextureRegionFactory.createFromAsset(
+    mMenuOkTextureRegion = TextureRegionFactory.createFromAsset(
         mSubMenuTexture, this, "gfx/menu_ok.png", 0, 0);
-    mMenuBackTextureRegion =  TextureRegionFactory.createFromAsset(
+    mMenuBackTextureRegion = TextureRegionFactory.createFromAsset(
         mSubMenuTexture, this, "gfx/menu_back.png", 0, 50);
+
     getEngine().loadTexture(mSubMenuTexture);
   }
 
