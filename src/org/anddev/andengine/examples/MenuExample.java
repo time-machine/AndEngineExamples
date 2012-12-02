@@ -10,17 +10,18 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.menu.IOnMenuItemClickerListener;
 import org.anddev.andengine.entity.menu.MenuItem;
 import org.anddev.andengine.entity.menu.MenuScene;
+import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.sprite.modifier.MoveModifier;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureRegion;
-import org.anddev.andengine.opengl.texture.TextureRegionFactory;
+import org.anddev.andengine.opengl.texture.TextureManager;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
 
 public class MenuExample extends BaseGameActivity implements
-    IOnMenuItemClickerListener {
+IOnMenuItemClickerListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -52,14 +53,14 @@ public class MenuExample extends BaseGameActivity implements
     mTexture = new Texture(64, 64);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface_menu.png", 0, 0);
-    getEngine().loadTexture(mTexture);
+    TextureManager.loadTexture(mTexture);
 
     mMenuTexture = new Texture(256, 128);
     mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(
         mMenuTexture, this, "gfx/menu_reset.png", 0, 0);
     mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,
         this, "gfx/menu_quit.png", 0, 50);
-    getEngine().loadTexture(mMenuTexture);
+    TextureManager.loadTexture(mMenuTexture);
   }
 
   @Override
@@ -72,7 +73,7 @@ public class MenuExample extends BaseGameActivity implements
     mMainScene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
     final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
-    face.addSpriteModifier(new MoveModifier(30, 0, CAMERA_WIDTH
+    face.addShapeModifier(new MoveModifier(30, 0, CAMERA_WIDTH
         - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
     mMainScene.getTopLayer().addEntity(face);
 

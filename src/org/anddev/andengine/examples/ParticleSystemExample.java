@@ -14,9 +14,10 @@ import org.anddev.andengine.entity.particle.modifier.AccelerationModifier;
 import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
 import org.anddev.andengine.entity.particle.modifier.VelocityModifier;
 import org.anddev.andengine.opengl.texture.Texture;
+import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.TextureOptions;
-import org.anddev.andengine.opengl.texture.TextureRegion;
-import org.anddev.andengine.opengl.texture.TextureRegionFactory;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 public class ParticleSystemExample extends BaseGameActivity {
@@ -51,7 +52,7 @@ public class ParticleSystemExample extends BaseGameActivity {
         GL10.GL_CLAMP_TO_EDGE));
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface.png", 0, 0);
-    getEngine().loadTexture(mTexture);
+    TextureManager.loadTexture(mTexture);
   }
 
   @Override

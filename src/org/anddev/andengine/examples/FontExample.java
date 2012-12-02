@@ -9,8 +9,10 @@ import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.entity.text.Text.HorizontalAlign;
-import org.anddev.andengine.opengl.text.Font;
+import org.anddev.andengine.opengl.font.Font;
+import org.anddev.andengine.opengl.font.FontManager;
 import org.anddev.andengine.opengl.texture.Texture;
+import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.graphics.Color;
@@ -27,10 +29,10 @@ public class FontExample extends BaseGameActivity {
   @Override
   public Scene onLoadScene() {
     getEngine().registerPreFrameHandler(new FPSCounter());
-    Scene scene = new Scene(1);
+    final Scene scene = new Scene(1);
 
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
-    Text text = new Text(100, 50, mFont,
+    final Text text = new Text(100, 50, mFont,
         "Hello AndEngine!\nYou can even have multilined text!",
         HorizontalAlign.CENTER);
     scene.getTopLayer().addEntity(text);
@@ -43,8 +45,8 @@ public class FontExample extends BaseGameActivity {
     mFontTexture = new Texture(256, 256);
     mFont = new Font(mFontTexture, Typeface.create(Typeface.DEFAULT,
         Typeface.BOLD), 24, true, Color.RED);
-    getEngine().loadTexture(mFontTexture);
-    getEngine().loadFont(mFont);
+    TextureManager.loadTexture(mFontTexture);
+    FontManager.loadFont(mFont);
   }
 
   @Override

@@ -8,11 +8,12 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.CameraScene;
 import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
+import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.sprite.modifier.MoveModifier;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureRegion;
-import org.anddev.andengine.opengl.texture.TextureRegionFactory;
+import org.anddev.andengine.opengl.texture.TextureManager;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
@@ -46,7 +47,7 @@ public class PauseExample extends BaseGameActivity {
     mMainScene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
     final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
-    face.addSpriteModifier(new MoveModifier(30, 0,
+    face.addShapeModifier(new MoveModifier(30, 0,
         CAMERA_WIDTH - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
     mMainScene.getTopLayer().addEntity(face);
 
@@ -60,7 +61,7 @@ public class PauseExample extends BaseGameActivity {
         "gfx/paused.png", 0, 0);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface_menu.png", 0, 50);
-    getEngine().loadTexture(mTexture);
+    TextureManager.loadTexture(mTexture);
   }
 
   @Override
