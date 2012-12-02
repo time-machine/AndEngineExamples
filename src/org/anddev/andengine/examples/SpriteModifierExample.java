@@ -43,7 +43,6 @@ public class SpriteModifierExample extends BaseGameActivity {
     final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final AnimatedSprite face = new AnimatedSprite(x, y, mFaceTextureRegion);
-    face.animate(100);
 
     face.addShapeModifier(new SequenceModifier(new IModifierListener() {
       @Override
@@ -59,7 +58,7 @@ public class SpriteModifierExample extends BaseGameActivity {
       }
     },
     new RotateByModifier(5, 90),
-    new DelayModifier(2),
+    new DelayModifier(1),
     new AlphaModifier(3, 1, 0),
     new AlphaModifier(3, 0, 1),
     new ScaleModifier(3, 1, 0.5f),

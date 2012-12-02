@@ -28,8 +28,8 @@ import android.view.MotionEvent;
 
 public class PhysicsExample extends BaseGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
-  private static final int GAME_WIDTH = 720;
-  private static final int GAME_HEIGHT = 480;
+  private static final int CAMERA_WIDTH = 720;
+  private static final int CAMERA_HEIGHT = 480;
 
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
@@ -40,29 +40,29 @@ IAccelerometerListener, IOnSceneTouchListener {
     getEngine().registerPostFrameHandler(new FPSCounter());
     //
     mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    final Rectangle ground = new Rectangle(0, GAME_HEIGHT - 1, GAME_WIDTH, 1);
+    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
     scene.getLayer(0).addEntity(ground);
     mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE));
 
-    final Rectangle roof = new Rectangle(0, 0, GAME_WIDTH, 2);
+    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
     scene.getLayer(0).addEntity(roof);
     mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE));
 
-    final Rectangle left = new Rectangle(0, 0, 1, GAME_HEIGHT);
+    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
     scene.getLayer(0).addEntity(left);
     mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE));
 
-    final Rectangle right = new Rectangle(GAME_WIDTH - 1, 0, 1, GAME_HEIGHT);
+    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
     scene.getLayer(0).addEntity(right);
     mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE));
@@ -87,9 +87,9 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
-    final Camera camera = new Camera(0, 0, GAME_WIDTH, GAME_HEIGHT);
+    final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(GAME_WIDTH, GAME_HEIGHT), camera));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
   }
 
   @Override

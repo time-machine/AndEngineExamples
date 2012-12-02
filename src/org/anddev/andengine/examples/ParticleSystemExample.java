@@ -36,10 +36,10 @@ public class ParticleSystemExample extends BaseGameActivity {
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
     final ParticleSystem particleSystem = new ParticleSystem(0, CAMERA_HEIGHT, 0, 0,
-        5, 10, 200, mFaceTextureRegion);
+        8, 12, 200, mFaceTextureRegion);
     particleSystem.addParticleModifier(new VelocityModifier(20, 30, -80, -120));
     particleSystem.addParticleModifier(new AccelerationModifier(10, 20));
-    particleSystem.addParticleModifier(new ExpireModifier(15, 20));
+    particleSystem.addParticleModifier(new ExpireModifier(12, 12));
     scene.getTopLayer().addEntity(particleSystem);
 
     return scene;
