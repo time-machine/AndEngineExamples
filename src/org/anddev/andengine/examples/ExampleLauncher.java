@@ -33,6 +33,7 @@ public class ExampleLauncher extends ListActivity {
     SPRITE(SpriteExample.class, "Sprite Example"),
     SPRITEMODIFIER(ShapeModifierExample.class, "SpriteModifier Example"),
     SPRITES(SpritesExample.class, "Sprites Example"),
+    ANIMATEDSPRITES(AnimatedSpritesExample.class, "Animated Sprites Example"),
     TEXTUREOPTIONS(TextureOptionsExample.class, "TextureOptions Example"),
     PAUSE(PauseExample.class, "Pause Example"),
     MENU(MenuExample.class, "Menu Example"),
