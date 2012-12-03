@@ -13,12 +13,11 @@ import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.font.FontManager;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureManager;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
 
-public class FontExample extends BaseGameActivity {
+public class FontExample extends BaseExampleGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 

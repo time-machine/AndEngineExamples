@@ -15,12 +15,11 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class VBOExample extends BaseGameActivity {
+public class VBOExample extends BaseExampleGameActivity {
   private static final long RANDOM_SEED = 1234567890;
 
   private static final int CAMERA_WIDTH = 720;

@@ -21,12 +21,11 @@ import org.anddev.andengine.physics.StaticPhysicsBody;
 import org.anddev.andengine.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
 
-public class PhysicsExample extends BaseGameActivity implements
+public class PhysicsExample extends BaseExampleGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;

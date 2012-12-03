@@ -17,9 +17,8 @@ import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.opengl.vertex.RectangleVertexBuffer;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
 
-public class SpritesExample extends BaseGameActivity {
+public class SpritesExample extends BaseExampleGameActivity {
   private static final long RANDOM_SEED = 1234567890;
 
   private static final int CAMERA_WIDTH = 720;

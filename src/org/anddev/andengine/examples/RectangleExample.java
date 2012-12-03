@@ -8,9 +8,8 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.primitives.Rectangle;
-import org.anddev.andengine.ui.activity.BaseGameActivity;
 
-public class RectangleExample extends BaseGameActivity {
+public class RectangleExample extends BaseExampleGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT= 480;
 
