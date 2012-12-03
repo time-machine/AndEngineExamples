@@ -27,7 +27,7 @@
         <activity android:name=".LineExample" />
         <activity android:name=".RectangleExample" />
         <activity android:name=".SpriteExample" />
-        <activity android:name=".SpriteModifierExample" />
+        <activity android:name=".ShapeModifierExample" />
         <activity android:name=".SpritesExample" />
         <activity android:name=".TextureOptionsExample" />
         <activity android:name=".PauseExample" />

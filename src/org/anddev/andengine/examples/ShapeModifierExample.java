@@ -24,7 +24,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.widget.Toast;
 
-public class SpriteModifierExample extends BaseExampleGameActivity {
+public class ShapeModifierExample extends BaseExampleGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -47,10 +47,10 @@ public class SpriteModifierExample extends BaseExampleGameActivity {
       @Override
       public void onModifierFinished(final IShapeModifier pShapeModifier,
           final Shape pShape) {
-        SpriteModifierExample.this.runOnUiThread(new Runnable() {
+        ShapeModifierExample.this.runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            Toast.makeText(SpriteModifierExample.this, "Sequence ended",
+            Toast.makeText(ShapeModifierExample.this, "Sequence ended",
                 Toast.LENGTH_LONG).show();
           }
         });
