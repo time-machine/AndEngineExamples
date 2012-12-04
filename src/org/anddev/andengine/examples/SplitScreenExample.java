@@ -95,7 +95,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     mChaseCamera = secondCamera;
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
         ScreenOrientation.LANDSCAPE, new FillResolutionPolicy(), firstCamera,
-        secondCamera));
+        secondCamera, false));
   }
 
   @Override
