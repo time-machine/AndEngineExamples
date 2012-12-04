@@ -81,7 +81,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
-    enableAccelerometer(this);
+    enableAccelerometerSensor(this);
   }
 
   @Override

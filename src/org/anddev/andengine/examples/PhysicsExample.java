@@ -36,7 +36,7 @@ IAccelerometerListener, IOnSceneTouchListener {
   @Override
   public Scene onLoadScene() {
     getEngine().registerPostFrameHandler(new FPSCounter());
-    //
+
     mPhysicsSpace = new Box2DPhysicsSpace();
     mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
@@ -76,7 +76,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
-    enableAccelerometer(this);
+    enableAccelerometerSensor(this);
   }
 
   @Override
