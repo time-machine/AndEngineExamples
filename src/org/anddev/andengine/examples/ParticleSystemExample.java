@@ -1,7 +1,5 @@
 package org.anddev.andengine.examples;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
@@ -46,9 +44,7 @@ public class ParticleSystemExample extends BaseExampleGameActivity {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(32, 32, new TextureOptions(GL10.GL_NEAREST,
-        GL10.GL_LINEAR, GL10.GL_MODULATE, GL10.GL_CLAMP_TO_EDGE,
-        GL10.GL_CLAMP_TO_EDGE));
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface.png", 0, 0);
     TextureManager.loadTexture(mTexture);
