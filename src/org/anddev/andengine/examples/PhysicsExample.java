@@ -11,7 +11,6 @@ import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.input.touch.IOnSceneTouchListener;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.physics.DynamicPhysicsBody;
@@ -76,7 +75,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     mTexture = new Texture(64, 32);
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
     enableAccelerometer(this);
   }
 

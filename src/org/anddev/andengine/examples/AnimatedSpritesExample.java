@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
@@ -65,7 +64,7 @@ public class AnimatedSpritesExample extends BaseGameActivity {
         mTexture, this, "gfx/banana_tiled.png", 96, 0, 4, 2);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
         mTexture, this, "gfx/boxface_tiled.png", 96, 70, 2, 1);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
   }
 
   @Override

@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
@@ -55,7 +54,7 @@ public class TextureOptionsExample extends BaseExampleGameActivity {
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
     mFaceTextureRegionBilinear = TextureRegionFactory.createTiledFromAsset(
         mTextureBilinear, this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
-    TextureManager.loadTextures(mTexture, mTextureBilinear);
+    getEngine().getTextureManager().loadTextures(mTexture, mTextureBilinear);
   }
 
   @Override

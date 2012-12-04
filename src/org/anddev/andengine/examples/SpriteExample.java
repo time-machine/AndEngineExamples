@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
@@ -41,7 +40,7 @@ public class SpriteExample extends BaseExampleGameActivity {
     mTexture = new Texture(64, 32);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface.png", 0, 0);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
   }
 
   @Override

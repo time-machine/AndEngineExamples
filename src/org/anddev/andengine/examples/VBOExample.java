@@ -56,7 +56,7 @@ public class VBOExample extends BaseExampleGameActivity {
     mTexture = new Texture(64, 32);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
   }
 
   @Override

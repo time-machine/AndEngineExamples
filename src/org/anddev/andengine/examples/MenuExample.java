@@ -13,7 +13,6 @@ import org.anddev.andengine.entity.menu.MenuScene;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
@@ -52,14 +51,14 @@ IOnMenuItemClickerListener {
     mTexture = new Texture(64, 64);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface_menu.png", 0, 0);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
 
     mMenuTexture = new Texture(256, 128);
     mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(
         mMenuTexture, this, "gfx/menu_reset.png", 0, 0);
     mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,
         this, "gfx/menu_quit.png", 0, 50);
-    TextureManager.loadTexture(mMenuTexture);
+    getEngine().getTextureManager().loadTexture(mMenuTexture);
   }
 
   @Override

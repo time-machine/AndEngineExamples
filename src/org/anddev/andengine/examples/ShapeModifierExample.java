@@ -21,7 +21,6 @@ import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
 import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.opengl.texture.Texture;
-import org.anddev.andengine.opengl.texture.TextureManager;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
@@ -91,7 +90,7 @@ public class ShapeModifierExample extends BaseExampleGameActivity {
     mTexture = new Texture(64, 32);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
-    TextureManager.loadTexture(mTexture);
+    getEngine().getTextureManager().loadTexture(mTexture);
   }
 
   @Override
