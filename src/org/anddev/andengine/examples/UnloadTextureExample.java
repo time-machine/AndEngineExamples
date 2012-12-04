@@ -22,7 +22,7 @@ public class UnloadTextureExample extends BaseExampleGameActivity {
 
   private Camera mCamera;
   private Texture mTexture;
-  private TextureRegion mTankTextureRegion;
+  private TextureRegion mClickToUnloadTextureRegion;
 
   @Override
   public Engine onLoadEngine() {
@@ -35,7 +35,7 @@ public class UnloadTextureExample extends BaseExampleGameActivity {
   public void onLoadResources() {
     mTexture = new Texture(128, 128);
     TextureRegionFactory.setAssetBasePath("gfx/");
-    mTankTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
+    mClickToUnloadTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "click_to_unload.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
@@ -46,9 +46,9 @@ public class UnloadTextureExample extends BaseExampleGameActivity {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final int x = (CAMERA_WIDTH - mTankTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mTankTextureRegion.getHeight()) / 2;
-    final Sprite clickToUnload = new Sprite(x, y, mTankTextureRegion);
+    final int x = (CAMERA_WIDTH - mClickToUnloadTextureRegion.getWidth()) / 2;
+    final int y = (CAMERA_HEIGHT - mClickToUnloadTextureRegion.getHeight()) / 2;
+    final Sprite clickToUnload = new Sprite(x, y, mClickToUnloadTextureRegion);
     clickToUnload.setColor(0, 1, 0);
     scene.getTopLayer().addEntity(clickToUnload);
 
