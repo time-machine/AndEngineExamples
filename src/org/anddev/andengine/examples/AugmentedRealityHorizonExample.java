@@ -15,6 +15,7 @@ import org.anddev.andengine.sensor.orientation.IOrientationListener;
 import org.anddev.andengine.sensor.orientation.OrientationData;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class AugmentedRealityHorizonExample extends
     BaseAugmentedRealityGameActivity implements IOrientationListener {
@@ -53,6 +54,9 @@ public class AugmentedRealityHorizonExample extends
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "If you don't see a sprite moving over the screen, " +
+        "try starting this while already being in Landscape orientation!!",
+        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));

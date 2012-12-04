@@ -12,6 +12,8 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
+import android.widget.Toast;
+
 public class AugmentedRealityExample extends BaseAugmentedRealityGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
@@ -46,6 +48,9 @@ public class AugmentedRealityExample extends BaseAugmentedRealityGameActivity {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "If you don't see a sprite moving over the screen, " +
+        "try starting this while already being in Landscape orientation!!",
+        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
