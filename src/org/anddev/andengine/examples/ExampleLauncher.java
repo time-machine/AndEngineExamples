@@ -44,7 +44,9 @@ public class ExampleLauncher extends ListActivity {
     PHYSICS(PhysicsExample.class, "Physics Example"),
     SPLITSCREEN(SplitScreenExample.class, "SplitScreen Example"),
     AR(AugmentedRealityExample.class, "AugmentedReality Example"),
-    ARHORIZON(AugmentedRealityHorizonExample.class, "AugmentedReality Horizon Example");
+    ARHORIZON(AugmentedRealityHorizonExample.class, "AugmentedReality Horizon Example"),
+    UNLOADTEXTURE(SoundExample.class, "Unload Texture Example"),
+    SOUND(UnloadTextureExample.class, "Sound Example");
 
     public final Class<? extends Activity> CLASS;
     public final String NAME;

@@ -42,6 +42,8 @@
         <activity android:name=".SplitScreenExample" />
         <activity android:name=".AugmentedRealityExample" />
         <activity android:name=".AugmentedRealityHorizonExample" />
+        <activity android:name="org.anddev.andengine.examples.SoundExample" />
+        <activity android:name="org.anddev.andengine.examples.UnloadTextureExample" />
     </application>
 
 </manifest>
