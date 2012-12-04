@@ -24,6 +24,7 @@ import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class SplitScreenExample extends BaseExampleGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
@@ -89,6 +90,7 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "Touch the screen to add boxes.", Toast.LENGTH_LONG).show();
     final Camera firstCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     final ChaseCamera secondCamera = new ChaseCamera(0, 0, CAMERA_WIDTH / 2,
         CAMERA_HEIGHT / 2, null);
