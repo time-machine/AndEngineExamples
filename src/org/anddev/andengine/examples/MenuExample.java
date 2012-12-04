@@ -7,7 +7,7 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.menu.IOnMenuItemClickerListener;
+import org.anddev.andengine.entity.menu.IOnMenuItemClickListener;
 import org.anddev.andengine.entity.menu.MenuItem;
 import org.anddev.andengine.entity.menu.MenuScene;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
@@ -19,7 +19,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import android.view.KeyEvent;
 
 public class MenuExample extends BaseExampleGameActivity implements
-IOnMenuItemClickerListener {
+IOnMenuItemClickListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -100,9 +100,9 @@ IOnMenuItemClickerListener {
   }
 
   @Override
-  public void onMenuItemClicked(final MenuScene pMenuScene,
+  public boolean onMenuItemClicked(final MenuScene pMenuScene,
       final MenuItem pMenuItem) {
-    switch (pMenuItem.getMenuID()) {
+    switch (pMenuItem.getID()) {
     case MENU_RESET:
       // restart the animation
       mMainScene.reset();
@@ -110,12 +110,12 @@ IOnMenuItemClickerListener {
       // remove the menu and reset it
       mMainScene.clearChildScene();
       mMenuScene.reset();
-      break;
+      return true;
     case MENU_QUIT:
       finish();
-      break;
+      return true;
     default:
-      break;
+      return false;
     }
   }
 
@@ -127,7 +127,7 @@ IOnMenuItemClickerListener {
     menuScene.buildAnimations();
 
     menuScene.setBackgroundEnabled(false);
-    menuScene.setOnMenuItemClickerListener(this);
+    menuScene.setOnMenuItemClickListener(this);
 
     return menuScene;
   }
