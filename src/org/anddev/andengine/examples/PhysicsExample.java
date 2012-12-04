@@ -22,7 +22,6 @@ import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class PhysicsExample extends BaseExampleGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
@@ -31,7 +30,10 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
+  private TiledTextureRegion mCircleFaceTextureRegion;
+
   private Box2DPhysicsSpace mPhysicsSpace;
+  private int mFaceCount = 0;
 
   @Override
   public Scene onLoadScene() {
@@ -73,8 +75,11 @@ IAccelerometerListener, IOnSceneTouchListener {
   @Override
   public void onLoadResources() {
     mTexture = new Texture(64, 32);
+    TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
+        this, "boxface_tiled.png", 0, 0, 2, 1);
+    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
+        this, "circleface_tiled.png", 0, 32, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
     enableAccelerometerSensor(this);
   }
@@ -85,7 +90,6 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "Touch the screen to add boxes.", Toast.LENGTH_LONG).show();
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera, false));
@@ -110,12 +114,22 @@ IAccelerometerListener, IOnSceneTouchListener {
   }
 
   private void addFace(final float pX, final float pY) {
+    mFaceCount++;
+    final AnimatedSprite face;
+
+    if (mFaceCount % 2 == 1) {
+      face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
+      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
+          PhysicsShape.RECTANGLE, false));
+    }
+    else {
+      face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
+      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
+          PhysicsShape.CIRCLE, false));
+    }
+
     final Scene scene = getEngine().getScene();
-    final AnimatedSprite face = new AnimatedSprite(pX, pY,
-        mBoxFaceTextureRegion);
-    face.animate(new long[] { 100, 100 }, 0, 1, true);
+    face.animate(new long[] { 200, 200 }, 0, 1, true);
     scene.getLayer(1).addEntity(face);
-    mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE, false));
   }
 }
