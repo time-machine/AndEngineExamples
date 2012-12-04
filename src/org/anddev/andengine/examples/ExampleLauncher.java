@@ -45,8 +45,8 @@ public class ExampleLauncher extends ListActivity {
     SPLITSCREEN(SplitScreenExample.class, "SplitScreen Example"),
     AR(AugmentedRealityExample.class, "AugmentedReality Example"),
     ARHORIZON(AugmentedRealityHorizonExample.class, "AugmentedReality Horizon Example"),
-    UNLOADTEXTURE(SoundExample.class, "Unload Texture Example"),
-    SOUND(UnloadTextureExample.class, "Sound Example");
+    UNLOADTEXTURE(UnloadTextureExample.class, "Unload Texture Example"),
+    SOUND(SoundExample.class, "Sound Example");
 
     public final Class<? extends Activity> CLASS;
     public final String NAME;
