@@ -37,9 +37,9 @@ public class TickerTextExample extends BaseExampleGameActivity {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final Text text = new TickerText(50, 100, mFont,
-        "There are also ticker texts!\n\nYou'll see the answer to life in... " +
-            "5 4 3 2 1...\n\n42\n\nIndeed very funny!",
+    final Text text = new TickerText(30, 60, mFont,
+        "There are also ticker texts!\n\nYou'll see the answer to life & " +
+            "universe in...\n\n5 4 3 2 1...\n\n42\n\nIndeed very funny!",
             HorizontalAlign.CENTER, 5);
     text.addShapeModifier(new SequenceModifier(
         new ParallelModifier(
