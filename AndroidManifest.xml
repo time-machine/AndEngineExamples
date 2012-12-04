@@ -40,8 +40,8 @@
         <activity android:name=".ParticleSystemExample" />
         <activity android:name=".PhysicsExample" />
         <activity android:name=".SplitScreenExample" />
-        <activity android:name="org.anddev.andengine.examples.AugmentedRealityExample" />
-        <activity android:name="org.anddev.andengine.examples.AugmentedRealityHorizonExample" />
+        <activity android:name=".AugmentedRealityExample" />
+        <activity android:name=".AugmentedRealityHorizonExample" />
     </application>
 
 </manifest>
