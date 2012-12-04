@@ -1,4 +1,5 @@
 package org.anddev.andengine.examples;
+
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.SingleSceneSplitScreenEngine;
 import org.anddev.andengine.engine.camera.Camera;
@@ -27,7 +28,7 @@ import android.view.MotionEvent;
 
 public class SplitScreenExample extends BaseExampleGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
-  private static final int CAMERA_WIDTH = 800;
+  private static final int CAMERA_WIDTH = 400;
   private static final int CAMERA_HEIGHT = 480;
 
   private Texture mTexture;
@@ -45,11 +46,11 @@ IAccelerometerListener, IOnSceneTouchListener {
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
+    scene.setOnSceneTouchListener(this);
 
     getEngine().registerPostFrameHandler(new FPSCounter());
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH,
-        1);
+    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
     scene.getLayer(0).addEntity(ground);
     mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
         PhysicsShape.RECTANGLE));
@@ -89,10 +90,9 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
-    final Camera firstCamera = new Camera(0, 0, CAMERA_WIDTH / 2,
-        CAMERA_HEIGHT / 2);
-    final ChaseCamera secondCamera = new ChaseCamera(0, CAMERA_HEIGHT + 1,
-        CAMERA_WIDTH / 2, -CAMERA_HEIGHT, null);
+    final Camera firstCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    final ChaseCamera secondCamera = new ChaseCamera(0, 0, CAMERA_WIDTH / 2,
+        CAMERA_HEIGHT / 2, null);
     mChaseCamera = secondCamera;
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
         ScreenOrientation.LANDSCAPE, new FillResolutionPolicy(), firstCamera,
@@ -109,11 +109,6 @@ IAccelerometerListener, IOnSceneTouchListener {
       }
     }
     return false;
-  }
-
-  @Override
-  public boolean onTouchEvent(final MotionEvent pMotionEvent) {
-    return super.onTouchEvent(pMotionEvent);
   }
 
   @Override
