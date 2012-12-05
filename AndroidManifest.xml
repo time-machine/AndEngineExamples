@@ -42,8 +42,9 @@
         <activity android:name=".SplitScreenExample" />
         <activity android:name=".AugmentedRealityExample" />
         <activity android:name=".AugmentedRealityHorizonExample" />
-        <activity android:name=".SoundExample" />
         <activity android:name=".UnloadTextureExample" />
+        <activity android:name=".SoundExample" />
+        <activity android:name=".MusicExample" />
     </application>
 
 </manifest>

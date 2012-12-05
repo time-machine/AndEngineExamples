@@ -46,7 +46,8 @@ public class ExampleLauncher extends ListActivity {
     AR(AugmentedRealityExample.class, "AugmentedReality Example"),
     ARHORIZON(AugmentedRealityHorizonExample.class, "AugmentedReality Horizon Example"),
     UNLOADTEXTURE(UnloadTextureExample.class, "Unload Texture Example"),
-    SOUND(SoundExample.class, "Sound Example");
+    SOUND(SoundExample.class, "Sound Example"),
+    MUSIC(MusicExample.class, "Music Example");
 
     public final Class<? extends Activity> CLASS;
     public final String NAME;

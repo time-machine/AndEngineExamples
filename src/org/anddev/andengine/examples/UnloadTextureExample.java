@@ -57,7 +57,9 @@ public class UnloadTextureExample extends BaseExampleGameActivity {
       @Override
       public boolean onAreaTouched(final ITouchArea pTouchArea,
           final MotionEvent pSceneMotionEvent) {
-        getEngine().getTextureManager().unloadTexture(mTexture);
+        if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+          getEngine().getTextureManager().unloadTexture(mTexture);
+        }
         return true;
       }
     });
