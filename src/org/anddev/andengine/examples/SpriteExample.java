@@ -27,8 +27,11 @@ public class SpriteExample extends BaseExampleGameActivity {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
+    // calculate the coordinates for the face, so its centered on the camera
     final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+
+    // create the face and add it to the scene
     final Sprite face = new Sprite(x, y, mFaceTextureRegion);
     scene.getTopLayer().addEntity(face);
 
