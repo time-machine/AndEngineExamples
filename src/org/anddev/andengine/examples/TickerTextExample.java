@@ -39,15 +39,14 @@ public class TickerTextExample extends BaseExampleGameActivity {
 
     final Text text = new TickerText(30, 60, mFont,
         "There are also ticker texts!\n\nYou'll see the answer to life & " +
-            "universe in...\n\n5 4 3 2 1...\n\n42\n\nIndeed very funny!",
-            HorizontalAlign.CENTER, 5);
+        "universe in...\n\n5 4 3 2 1...\n\n42\n\nIndeed very funny!",
+        HorizontalAlign.CENTER, 10);
     text.addShapeModifier(new SequenceModifier(
         new ParallelModifier(
-            new AlphaModifier(20, 0, 1), new ScaleModifier(20, 0.5f, 1)
-            ),
-            new RotateModifier(6, 0, 360)
-        )
-        );
+            new AlphaModifier(10, 0, 1), new ScaleModifier(10, 0.5f, 1)
+        ),
+        new RotateModifier(5, 0, 360)
+    ));
 
     scene.getTopLayer().addEntity(text);
 
