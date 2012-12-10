@@ -17,7 +17,7 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".ExampleLauncher"
+            android:name=".launcher.ExampleLauncher"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +28,10 @@
         <activity android:name=".AnimatedSpritesExample" />
         <activity android:name=".AugmentedRealityExample" />
         <activity android:name=".AugmentedRealityHorizonExample" />
+        <activity android:name=".CustomFontExample" />
         <activity android:name=".LineExample" />
         <activity android:name=".MenuExample" />
+        <activity android:name=".MovingBallExample" />
         <activity android:name=".MusicExample" />
         <activity android:name=".ParticleSystemExample" />
         <activity android:name=".PauseExample" />
