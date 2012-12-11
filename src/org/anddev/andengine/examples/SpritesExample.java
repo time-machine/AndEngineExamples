@@ -49,14 +49,7 @@ public class SpritesExample extends BaseExampleGameActivity {
       final AnimatedSprite face = new AnimatedSprite(
           random.nextFloat() * (CAMERA_WIDTH - 32),
           random.nextFloat() * (CAMERA_HEIGHT - 32), mFaceTextureRegion,
-          sharedVertexBuffer) {
-        @Override
-        protected void onManagedUpdate(final float pSecondsElapsed) {
-          super.onManagedUpdate(pSecondsElapsed);
-          setAngle(((int)(getAngle() + 360 * pSecondsElapsed)) % 360);
-        }
-      };
-      face.setAngle(i * 360 / SPRITE_COUNT);
+          sharedVertexBuffer);
       scene.getTopLayer().addEntity(face);
     }
 

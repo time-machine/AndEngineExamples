@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="13" />
+        android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -34,6 +34,7 @@
         <activity android:name=".MovingBallExample" />
         <activity android:name=".MusicExample" />
         <activity android:name=".ParticleSystemExample" />
+        <activity android:name=".PathModifierExample" />
         <activity android:name=".PauseExample" />
         <activity android:name=".PhysicsExample" />
         <activity android:name=".RectangleExample" />

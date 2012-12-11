@@ -75,12 +75,12 @@ public class ShapeModifierExample extends BaseExampleGameActivity {
         new ParallelModifier(
             new ScaleModifier(3, 0.5f, 5),
             new RotateByModifier(3, 90)
-            ),
-            new ParallelModifier(
-                new ScaleModifier(3, 5, 1),
-                new RotateModifier(3, 180, 0)
-                )
-        );
+        ),
+        new ParallelModifier(
+            new ScaleModifier(3, 5, 1),
+            new RotateModifier(3, 180, 0)
+        )
+    );
 
     face.addShapeModifier(shapeModifier);
     rect.addShapeModifier(shapeModifier.clone());
