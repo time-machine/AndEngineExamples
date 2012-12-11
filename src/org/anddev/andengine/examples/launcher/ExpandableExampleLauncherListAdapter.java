@@ -97,7 +97,7 @@ public class ExpandableExampleLauncherListAdapter extends
     }
     else {
       groupView = LayoutInflater.from(mContext).inflate(
-          R.layout.listrow_example, null);
+          R.layout.listrow_examplegroup, null);
     }
 
     ((TextView)groupView.findViewById(R.id.tv_listrow_examplegroup_name)).setText(
