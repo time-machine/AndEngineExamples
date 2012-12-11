@@ -32,7 +32,8 @@ public class CustomFontExample extends BaseExampleGameActivity {
   @Override
   public Engine onLoadEngine() {
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
   }
 
   @Override
@@ -40,9 +41,11 @@ public class CustomFontExample extends BaseExampleGameActivity {
     mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
     mCustomFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
 
-    mFont = FontFactory.create(mFontTexture, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 48, true, Color.BLACK);
+    mFont = FontFactory.create(mFontTexture,
+        Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 48, true, Color.BLACK);
     FontFactory.setAssetBasePath("fonts/");
-    mCustomFont = FontFactory.createFromAsset(mCustomFontTexture, this, "DroidSans.ttf", 48, true, Color.BLACK);
+    mCustomFont = FontFactory.createFromAsset(mCustomFontTexture, this,
+        "DroidSans.ttf", 48, true, Color.BLACK);
 
     getEngine().getTextureManager().loadTextures(mFontTexture, mCustomFontTexture);
     getEngine().getFontManager().loadFonts(mFont, mCustomFont);
@@ -55,8 +58,10 @@ public class CustomFontExample extends BaseExampleGameActivity {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final Text textDefaultFont = new Text(100, 140, mFont, "Default font example... ", HorizontalAlign.CENTER);
-    final Text textCustomFont = new Text(90, 280, mCustomFont, "Custom font example... ", HorizontalAlign.CENTER);
+    final Text textDefaultFont = new Text(100, 140, mFont,
+        "Default font example... ", HorizontalAlign.CENTER);
+    final Text textCustomFont = new Text(90, 280, mCustomFont,
+        "Custom font example... ", HorizontalAlign.CENTER);
 
     scene.getTopLayer().addEntity(textDefaultFont);
     scene.getTopLayer().addEntity(textCustomFont);
