@@ -7,13 +7,16 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.FPSCounter;
 import org.anddev.andengine.entity.Scene;
+import org.anddev.andengine.entity.handler.runnable.RunnableHandler;
 import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
 import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
 import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.input.touch.IOnAreaTouchListener;
 import org.anddev.andengine.input.touch.IOnSceneTouchListener;
+import org.anddev.andengine.input.touch.ITouchArea;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
@@ -23,8 +26,8 @@ import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
 
-public class PhysicsExample extends BaseExampleGameActivity implements
-IAccelerometerListener, IOnSceneTouchListener {
+public class PhysicsRemoveExample extends BaseExampleGameActivity implements
+    IAccelerometerListener, IOnSceneTouchListener, IOnAreaTouchListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -34,6 +37,26 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   private Box2DPhysicsSpace mPhysicsSpace;
   private int mFaceCount = 0;
+  private RunnableHandler mRemoveRunnableHandler;
+
+  @Override
+  public Engine onLoadEngine() {
+    final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera, false));
+  }
+
+  @Override
+  public void onLoadResources() {
+    mTexture = new Texture(64, 64);
+    TextureRegionFactory.setAssetBasePath("gfx/");
+    mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
+        this, "boxface_tiled.png", 0, 0, 2, 1);
+    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
+        this, "circleface_tiled.png", 0, 32, 2, 1);
+    getEngine().getTextureManager().loadTexture(mTexture);
+    enableAccelerometerSensor(this);
+  }
 
   @Override
   public Scene onLoadScene() {
@@ -69,19 +92,12 @@ IAccelerometerListener, IOnSceneTouchListener {
 
     scene.registerPreFrameHandler(mPhysicsSpace);
 
-    return scene;
-  }
+    scene.setOnAreaTouchListener(this);
 
-  @Override
-  public void onLoadResources() {
-    mTexture = new Texture(64, 32);
-    TextureRegionFactory.setAssetBasePath("gfx/");
-    mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "boxface_tiled.png", 0, 0, 2, 1);
-    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "circleface_tiled.png", 0, 32, 2, 1);
-    getEngine().getTextureManager().loadTexture(mTexture);
-    enableAccelerometerSensor(this);
+    mRemoveRunnableHandler = new RunnableHandler();
+    scene.registerPostFrameHandler(mRemoveRunnableHandler);
+
+    return scene;
   }
 
   @Override
@@ -89,10 +105,22 @@ IAccelerometerListener, IOnSceneTouchListener {
   }
 
   @Override
-  public Engine onLoadEngine() {
-    final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera, false));
+  public boolean onAreaTouched(final ITouchArea pTouchArea,
+      final MotionEvent pSceneMotionEvent) {
+    if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      mRemoveRunnableHandler.addRunnable(new Runnable() {
+        @Override
+        public void run() {
+          final AnimatedSprite face = (AnimatedSprite)pTouchArea;
+          final Scene scene = PhysicsRemoveExample.this.getEngine().getScene();
+
+          mPhysicsSpace.removeDynamicBodyByShape(face);
+          scene.unregisterTouchArea(face);
+          scene.getTopLayer().removeEntity(face);
+        }
+      });
+    }
+    return false;
   }
 
   @Override
@@ -130,6 +158,7 @@ IAccelerometerListener, IOnSceneTouchListener {
 
     final Scene scene = getEngine().getScene();
     face.animate(new long[] { 200, 200 }, 0, 1, true);
+    scene.registerTouchArea(face);
     scene.getTopLayer().addEntity(face);
   }
 }
