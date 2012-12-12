@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 public class ExampleLauncher extends ExpandableListActivity {
   private static final String PREF_LAST_APP_LAUNCH_VERSIONCODE_ID =
@@ -83,7 +82,7 @@ public class ExampleLauncher extends ExpandableListActivity {
 
       final int versionDescriptionStartIndex = Math.max(0,
           Arrays.binarySearch(versionCodes, mVersionCodeLastLaunch) + 1);
-      Toast.makeText(this, Integer.toString(versionDescriptionStartIndex), Toast.LENGTH_LONG).show();
+
       final String[] versionDescriptions =
           getResources().getStringArray(R.array.new_in_version_changes);
 
