@@ -25,6 +25,7 @@ import org.anddev.andengine.examples.TextExample;
 import org.anddev.andengine.examples.TextureOptionsExample;
 import org.anddev.andengine.examples.TickerTextExample;
 import org.anddev.andengine.examples.TouchDragExample;
+import org.anddev.andengine.examples.TouchDragManyExample;
 import org.anddev.andengine.examples.UnloadTextureExample;
 
 import android.app.Activity;
@@ -55,6 +56,7 @@ enum Example {
   TEXTUREOPTIONS(TextureOptionsExample.class, "TextureOptions Example"),
   TICKERTEXT(TickerTextExample.class, "Ticker Text Example"),
   TOUCHDRAG(TouchDragExample.class, "TouchDrag Example"),
+  TOUCHDRAGMANY(TouchDragManyExample.class, "TouchDrag Many Example"),
   UNLOADTEXTURE(UnloadTextureExample.class, "Unload Texture Example");
 
   public final Class<? extends Activity> CLASS;
