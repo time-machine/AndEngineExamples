@@ -15,8 +15,10 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.extension.multiplayer.protocol.adt.message.client.BaseClientMessage;
 import org.anddev.andengine.extension.multiplayer.protocol.adt.message.server.BaseServerMessage;
+import org.anddev.andengine.extension.multiplayer.protocol.adt.message.server.connection.ConnectionAcceptedServerMessage;
+import org.anddev.andengine.extension.multiplayer.protocol.adt.message.server.connection.ConnectionRefusedServerMessage;
 import org.anddev.andengine.extension.multiplayer.protocol.client.BaseServerConnectionListener;
-import org.anddev.andengine.extension.multiplayer.protocol.client.IServerMessageSwitch;
+import org.anddev.andengine.extension.multiplayer.protocol.client.BaseServerMessageSwitch;
 import org.anddev.andengine.extension.multiplayer.protocol.client.ServerConnector;
 import org.anddev.andengine.extension.multiplayer.protocol.client.ServerMessageExtractor;
 import org.anddev.andengine.extension.multiplayer.protocol.server.BaseClientConnectionListener;
@@ -246,6 +248,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
                   @Override
                   public void doSwitch(final BaseClientMessage pClientMessage)
                       throws IOException {
+                    super.doSwitch(pClientMessage);
                     log("SERVER: ClientMessage received: " +
                         pClientMessage.toString());
                   }
@@ -272,9 +275,10 @@ public class MultiplayerExample extends BaseExampleGameActivity {
             }
           }
         },
-        new IServerMessageSwitch() {
+        new BaseServerMessageSwitch() {
           @Override
-          public void doSwitch(final BaseServerMessage pServerMessage) throws IOException {
+          public void doSwitch(final BaseServerMessage pServerMessage)
+              throws IOException {
             switch (pServerMessage.getFlag()) {
             case FLAG_ADD_FACE:
               final AddFaceServerMessage addFaceServerMessage =
@@ -283,9 +287,21 @@ public class MultiplayerExample extends BaseExampleGameActivity {
                   addFaceServerMessage.mY);
               break;
             default:
-                log("CLIENT: ServerMessage received: " +
-                  pServerMessage.toString());
+              super.doSwitch(pServerMessage);
+              log("CLIENT: ServerMessage received: " + pServerMessage.toString());
             }
+          }
+
+          @Override
+          protected void onHandleConnectionRefusedServerMessage(
+              final ConnectionRefusedServerMessage pServerMessage) {
+            log("CLIENT: Connection refused.");
+          }
+
+          @Override
+          protected void onHandleConnectionAcceptedServerMessage(
+              final ConnectionAcceptedServerMessage pServerMessage) {
+            log("CLIENT: Connection accepted.");
           }
         }
     );
@@ -339,6 +355,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
     @Override
     protected void onDisconnectInner(final BaseConnector<BaseServerMessage> pConnector) {
       log("CLIENT: Disconnected from server...");
+      finish();
     }
   }
 
