@@ -246,9 +246,10 @@ public class MultiplayerExample extends BaseExampleGameActivity {
                 },
                 new BaseClientMessageSwitch() {
                   @Override
-                  public void doSwitch(final BaseClientMessage pClientMessage)
+                  public void doSwitch(final ClientConnector pClientConnector,
+                      final BaseClientMessage pClientMessage)
                       throws IOException {
-                    super.doSwitch(pClientMessage);
+                    super.doSwitch(pClientConnector, pClientMessage);
                     log("SERVER: ClientMessage received: " +
                         pClientMessage.toString());
                   }
@@ -277,7 +278,8 @@ public class MultiplayerExample extends BaseExampleGameActivity {
         },
         new BaseServerMessageSwitch() {
           @Override
-          public void doSwitch(final BaseServerMessage pServerMessage)
+          public void doSwitch(final ServerConnector pServerConnector,
+              final BaseServerMessage pServerMessage)
               throws IOException {
             switch (pServerMessage.getFlag()) {
             case FLAG_ADD_FACE:
@@ -287,19 +289,21 @@ public class MultiplayerExample extends BaseExampleGameActivity {
                   addFaceServerMessage.mY);
               break;
             default:
-              super.doSwitch(pServerMessage);
+              super.doSwitch(pServerConnector, pServerMessage);
               log("CLIENT: ServerMessage received: " + pServerMessage.toString());
             }
           }
 
           @Override
           protected void onHandleConnectionRefusedServerMessage(
+              final ServerConnector pServerConnector,
               final ConnectionRefusedServerMessage pServerMessage) {
             log("CLIENT: Connection refused.");
           }
 
           @Override
           protected void onHandleConnectionAcceptedServerMessage(
+              final ServerConnector pServerConnector,
               final ConnectionAcceptedServerMessage pServerMessage) {
             log("CLIENT: Connection accepted.");
           }

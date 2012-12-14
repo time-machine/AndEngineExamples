@@ -111,7 +111,7 @@ public class PhysicsRemoveExample extends BaseExampleGameActivity implements
   public boolean onAreaTouched(final ITouchArea pTouchArea,
       final MotionEvent pSceneMotionEvent) {
     if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      mRemoveRunnableHandler.addRunnable(new Runnable() {
+      mRemoveRunnableHandler.postRunnable(new Runnable() {
         @Override
         public void run() {
           final AnimatedSprite face = (AnimatedSprite)pTouchArea;
