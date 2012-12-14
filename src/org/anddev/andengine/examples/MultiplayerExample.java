@@ -63,7 +63,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
   private Texture mTexture;
   private TextureRegion mFaceTextureRegion;
 
-  private BaseServer mServer;
+  private BaseServer<ClientConnector> mServer;
   private ServerConnector mServerConnector;
 
   private String mServerIP = "127.0.0.1";
@@ -230,7 +230,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
   }
 
   private void initServer() {
-    mServer = new BaseServer(SERVER_PORT, new ExampleClientConnectionListener(),
+    mServer = new BaseServer<ClientConnector>(SERVER_PORT, new ExampleClientConnectionListener(),
         new ExampleServerStateListener()) {
           @Override
           protected ClientConnector newClientConnector(final Socket pClientSocket,
