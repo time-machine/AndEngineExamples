@@ -29,6 +29,7 @@ import org.anddev.andengine.extension.multiplayer.protocol.shared.BaseConnector;
 import org.anddev.andengine.extension.multiplayer.protocol.util.IPUtils;
 import org.anddev.andengine.input.touch.IOnSceneTouchListener;
 import org.anddev.andengine.opengl.texture.Texture;
+import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.util.Debug;
@@ -152,7 +153,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32);
+    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);

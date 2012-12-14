@@ -22,6 +22,7 @@ import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class PhysicsExample extends BaseExampleGameActivity implements
 IAccelerometerListener, IOnSceneTouchListener {
@@ -90,6 +91,8 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "Touch the screen to add objects.", Toast.LENGTH_LONG)
+        .show();
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera, false));
