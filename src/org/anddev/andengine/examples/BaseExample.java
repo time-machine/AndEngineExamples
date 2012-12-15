@@ -5,7 +5,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public abstract class BaseExampleGameActivity extends BaseGameActivity {
+public abstract class BaseExample extends BaseGameActivity {
   private static final int MENU_TRACE = Menu.FIRST;
 
   @Override

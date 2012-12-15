@@ -9,7 +9,7 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
 import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
@@ -24,7 +24,7 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class PhysicsExample extends BaseExampleGameActivity implements
+public class PhysicsExample extends BaseExample implements
 IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
@@ -38,7 +38,7 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPostFrameHandler(new FPSCounter());
+    getEngine().registerPostFrameHandler(new FPSLogger());
 
     mPhysicsSpace = new Box2DPhysicsSpace();
     mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);

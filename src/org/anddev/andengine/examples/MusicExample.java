@@ -13,7 +13,7 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.Scene.ITouchArea;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -22,7 +22,7 @@ import org.anddev.andengine.util.Debug;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class MusicExample extends BaseExampleGameActivity {
+public class MusicExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -61,7 +61,7 @@ public class MusicExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);

@@ -17,7 +17,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class SpriteRemoveExample extends BaseExampleGameActivity {
+public class SpriteRemoveExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 

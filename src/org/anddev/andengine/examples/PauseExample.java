@@ -9,14 +9,14 @@ import org.anddev.andengine.entity.CameraScene;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
 import android.view.KeyEvent;
 
-public class PauseExample extends BaseExampleGameActivity {
+public class PauseExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT= 480;
 
@@ -30,7 +30,7 @@ public class PauseExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     mPauseScene = new CameraScene(1, mCamera);
 

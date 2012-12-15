@@ -11,15 +11,14 @@ import org.anddev.andengine.entity.menu.MenuItem;
 import org.anddev.andengine.entity.menu.MenuScene;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
 import android.view.KeyEvent;
 
-public class MenuExample extends BaseExampleGameActivity implements
-IOnMenuItemClickListener {
+public class MenuExample extends BaseExample implements IOnMenuItemClickListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -63,7 +62,7 @@ IOnMenuItemClickListener {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
     mMenuScene = createMenuScene();
 
     // a simple scene with an animated face flying around

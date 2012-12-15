@@ -20,14 +20,14 @@ import org.anddev.andengine.entity.shape.modifier.RotateModifier;
 import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
 import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.widget.Toast;
 
-public class ShapeModifierExample extends BaseExampleGameActivity {
+public class ShapeModifierExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -37,7 +37,7 @@ public class ShapeModifierExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);

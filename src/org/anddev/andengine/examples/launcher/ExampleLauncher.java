@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 public class ExampleLauncher extends ExpandableListActivity {
   private static final String PREF_LAST_APP_LAUNCH_VERSIONCODE_ID =
@@ -109,6 +110,16 @@ public class ExampleLauncher extends ExpandableListActivity {
     default:
       return super.onCreateDialog(id);
     }
+  }
+
+  @Override
+  public void onGroupExpand(final int pGroupPosition) {
+    switch (mExpandableExampleLauncherListAdapter.getGroup(pGroupPosition)) {
+    case BENCHMARKS:
+      Toast.makeText(this, "When running a benchmark, a dialog with the results will appear after some seconds.",
+          Toast.LENGTH_LONG).show();
+    }
+    super.onGroupExpand(pGroupPosition);
   }
 
   @Override

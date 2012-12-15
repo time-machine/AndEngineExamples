@@ -11,17 +11,17 @@ import android.widget.TextView;
 
 class ExpandableExampleLauncherListAdapter extends
     BaseExpandableListAdapter {
-  private static final String[] EXAMPLEGROUPS = {
-    "Simple",
-    "Modifier & Animation",
-    "Touch",
-    "Advanced",
-    "Multiplayer",
-    "Physics",
-    "Text",
-    "Audio",
-    "Other",
-    "Benchmark"
+  private static final ExampleGroup[] EXAMPLEGROUPS = {
+    ExampleGroup.SIMPLE,
+    ExampleGroup.MODIFIER_AND_ANIMATION,
+    ExampleGroup.TOUCH,
+    ExampleGroup.ADVANCED,
+    ExampleGroup.MULTIPLAYER,
+    ExampleGroup.PHYSICS,
+    ExampleGroup.TEXT,
+    ExampleGroup.AUDIO,
+    ExampleGroup.OTHERS,
+    ExampleGroup.BENCHMARKS
   };
 
   private static final Example[][] EXAMPLES = {
@@ -29,14 +29,15 @@ class ExpandableExampleLauncherListAdapter extends
           Example.SPRITES },
     { Example.SHAPEMODIFIER, Example.PATHMODIFIER, Example.MOVINGBALL, Example.ANIMATEDSPRITES },
     { Example.TOUCHDRAG, Example.TOUCHDRAGMANY },
-    { Example.SPLITSCREEN, Example.PARTICLESYSTEM, Example.AR, Example.ARHORIZON },
+    { Example.SPLITSCREEN, Example.PARTICLESYSTEM, Example.AUGMENTEDREALITY,
+          Example.AUGMENTEDREALITYHORIZON },
     { Example.MULTIPLAYER },
     { Example.PHYSICS, Example.PHYSICSREMOVE },
     { Example.TEXT, Example.TICKERTEXT, Example.CUSTOMFONT },
     { Example.SOUND, Example.MUSIC },
     { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
           Example.UNLOADTEXTURE, Example.ZOOM },
-    { }
+    { Example.BENCHMARK_SPRITES }
   };
 
   private final Context mContext;
@@ -68,7 +69,7 @@ class ExpandableExampleLauncherListAdapter extends
     }
 
     ((TextView)childView.findViewById(R.id.tv_listrow_example_name)).setText(
-        getChild(groupPosition, childPosition).toString());
+        getChild(groupPosition, childPosition).NAMERESID);
 
     return childView;
   }
@@ -79,7 +80,7 @@ class ExpandableExampleLauncherListAdapter extends
   }
 
   @Override
-  public String getGroup(final int groupPosition) {
+  public ExampleGroup getGroup(final int groupPosition) {
     return EXAMPLEGROUPS[groupPosition];
   }
 
@@ -106,7 +107,7 @@ class ExpandableExampleLauncherListAdapter extends
     }
 
     ((TextView)groupView.findViewById(R.id.tv_listrow_examplegroup_name)).setText(
-        getGroup(groupPosition).toString());
+        getGroup(groupPosition).NAMERESID);
 
     return groupView;
   }

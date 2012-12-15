@@ -11,7 +11,7 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
 import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
@@ -26,7 +26,7 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class SplitScreenExample extends BaseExampleGameActivity implements
+public class SplitScreenExample extends BaseExample implements
 IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 400;
   private static final int CAMERA_HEIGHT = 480;
@@ -48,7 +48,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    getEngine().registerPostFrameHandler(new FPSCounter());
+    getEngine().registerPostFrameHandler(new FPSLogger());
 
     final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
     scene.getLayer(0).addEntity(ground);

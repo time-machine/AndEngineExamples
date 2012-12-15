@@ -11,13 +11,13 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.opengl.vertex.RectangleVertexBuffer;
 
-public class SpritesExample extends BaseExampleGameActivity {
+public class SpritesExample extends BaseExample {
   private static final long RANDOM_SEED = 1234567890;
 
   private static final int CAMERA_WIDTH = 720;
@@ -31,7 +31,7 @@ public class SpritesExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);

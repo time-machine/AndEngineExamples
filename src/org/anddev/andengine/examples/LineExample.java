@@ -9,9 +9,9 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.primitives.Line;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 
-public class LineExample extends BaseExampleGameActivity {
+public class LineExample extends BaseExample {
   // initializing the Random generator produces a comparable result over
   // different versions
   private static final long RANDOM_SEED = 1234567890;
@@ -25,7 +25,7 @@ public class LineExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
@@ -33,9 +33,16 @@ public class LineExample extends BaseExampleGameActivity {
     final Random random = new Random(RANDOM_SEED);
     for (int i = 0; i < LINE_COUNT; i++) {
       // top left to bottom right
-      final Line line = new Line(random.nextFloat() * CAMERA_WIDTH,
-          random.nextFloat() * CAMERA_HEIGHT, random.nextFloat() * CAMERA_WIDTH,
-          random.nextFloat() * CAMERA_HEIGHT);
+//      final Line line = new Line(random.nextFloat() * CAMERA_WIDTH,
+//          random.nextFloat() * CAMERA_HEIGHT, random.nextFloat() * CAMERA_WIDTH,
+//          random.nextFloat() * CAMERA_HEIGHT);
+      final float x1 = random.nextFloat() * CAMERA_WIDTH;
+      final float x2 = random.nextFloat() * CAMERA_WIDTH;
+      final float y1 = random.nextFloat() * CAMERA_HEIGHT;
+      final float y2 = random.nextFloat() * CAMERA_HEIGHT;
+      final float lineWidth = random.nextFloat() * 5;
+
+      final Line line = new Line(x1, y1, x2, y2, lineWidth);
       line.setColor(random.nextFloat(), random.nextFloat(), random.nextFloat());
       scene.getTopLayer().addEntity(line);
     }

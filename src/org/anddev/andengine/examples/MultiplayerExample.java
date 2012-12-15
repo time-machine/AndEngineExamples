@@ -13,7 +13,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.multiplayer.protocol.adt.message.client.BaseClientMessage;
 import org.anddev.andengine.extension.multiplayer.protocol.adt.message.server.BaseServerMessage;
 import org.anddev.andengine.extension.multiplayer.protocol.adt.message.server.connection.ConnectionAcceptedServerMessage;
@@ -44,7 +44,7 @@ import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class MultiplayerExample extends BaseExampleGameActivity {
+public class MultiplayerExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -163,7 +163,7 @@ public class MultiplayerExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);

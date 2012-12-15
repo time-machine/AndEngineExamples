@@ -12,7 +12,7 @@ import org.anddev.andengine.entity.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.Scene.ITouchArea;
 import org.anddev.andengine.entity.sprite.Sprite;
-import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.examples.adt.card.Card;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -60,7 +60,7 @@ public class TouchDragManyExample extends BaseGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSCounter());
+    getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setOnAreaTouchTraversalFrontToBack();

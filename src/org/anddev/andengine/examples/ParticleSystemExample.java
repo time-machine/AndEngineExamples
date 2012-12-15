@@ -15,7 +15,7 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
-public class ParticleSystemExample extends BaseExampleGameActivity {
+public class ParticleSystemExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -25,8 +25,6 @@ public class ParticleSystemExample extends BaseExampleGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    //getEngine().registerPreFrameHandler(new FrameLengthLogger(1000));
-
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
