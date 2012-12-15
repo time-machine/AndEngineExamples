@@ -27,6 +27,7 @@ import org.anddev.andengine.examples.TickerTextExample;
 import org.anddev.andengine.examples.TouchDragExample;
 import org.anddev.andengine.examples.TouchDragManyExample;
 import org.anddev.andengine.examples.UnloadTextureExample;
+import org.anddev.andengine.examples.ZoomExample;
 
 import android.app.Activity;
 
@@ -57,7 +58,8 @@ enum Example {
   TICKERTEXT(TickerTextExample.class, "Ticker Text Example"),
   TOUCHDRAG(TouchDragExample.class, "TouchDrag Example"),
   TOUCHDRAGMANY(TouchDragManyExample.class, "TouchDrag Many Example"),
-  UNLOADTEXTURE(UnloadTextureExample.class, "Unload Texture Example");
+  UNLOADTEXTURE(UnloadTextureExample.class, "Unload Texture Example"),
+  ZOOM(ZoomExample.class, "Zoom Example");
 
   public final Class<? extends Activity> CLASS;
   public final String NAME;
