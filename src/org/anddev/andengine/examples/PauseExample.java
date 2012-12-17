@@ -11,6 +11,7 @@ import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
+import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
@@ -54,7 +55,7 @@ public class PauseExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(256, 128);
+    mTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mPauseTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/paused.png", 0, 0);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
