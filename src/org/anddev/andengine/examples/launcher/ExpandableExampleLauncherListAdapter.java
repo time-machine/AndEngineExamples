@@ -25,8 +25,7 @@ class ExpandableExampleLauncherListAdapter extends
   };
 
   private static final Example[][] EXAMPLES = {
-    { Example.LINE, Example.RECTANGLE, Example.SPRITE, Example.SPRITEREMOVE,
-          Example.SPRITES },
+    { Example.LINE, Example.RECTANGLE, Example.SPRITE, Example.SPRITEREMOVE },
     { Example.SHAPEMODIFIER, Example.PATHMODIFIER, Example.MOVINGBALL, Example.ANIMATEDSPRITES },
     { Example.TOUCHDRAG, Example.TOUCHDRAGMANY },
     { Example.SPLITSCREEN, Example.PARTICLESYSTEM, Example.AUGMENTEDREALITY,
@@ -37,7 +36,7 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.SOUND, Example.MUSIC },
     { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
           Example.UNLOADTEXTURE, Example.ZOOM },
-    { Example.BENCHMARK_SPRITES }
+    { Example.BENCHMARK_SPRITES, Example.BENCHMARK_SHAPEMODIFIER }
   };
 
   private final Context mContext;

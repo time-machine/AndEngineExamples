@@ -2,7 +2,7 @@ package org.anddev.andengine.examples.benchmark;
 
 import java.util.Random;
 
-import javax.microedition.khronos.opengles.GL11;
+import javax.microedition.khronos.opengles.GL10;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
@@ -10,22 +10,28 @@ import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.Scene;
+import org.anddev.andengine.entity.primitives.Rectangle;
+import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
+import org.anddev.andengine.entity.shape.modifier.DelayModifier;
+import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
+import org.anddev.andengine.entity.shape.modifier.RotateByModifier;
+import org.anddev.andengine.entity.shape.modifier.RotateModifier;
+import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
-import org.anddev.andengine.opengl.vertex.RectangleVertexBuffer;
 
-public class SpriteBenchmark extends BaseBenchmark {
-  // initializing the Random generator produces a comparable result over
-  // different versions
+public class ShapeModifierBenchmark extends BaseBenchmark {
   private static final long RANDOM_SEED = 1234567890;
 
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
-  private static final int SPRITE_COUNT = 500;
+  private static final int SPRITE_COUNT = 100;
 
   private Camera mCamera;
   private Texture mTexture;
@@ -52,30 +58,51 @@ public class SpriteBenchmark extends BaseBenchmark {
   public void onLoadResources() {
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface.png", 0, 0);
+        "gfx/boxface_tiled.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 
   @Override
   public Scene onLoadScene() {
+    getEngine().registerPreFrameHandler(new FPSLogger());
+
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
+    final SequenceModifier shapeModifier = new SequenceModifier(
+        new RotateByModifier(2, 90),
+        new AlphaModifier(1.5f, 1, 0),
+        new AlphaModifier(1.5f, 0, 1),
+        new ScaleModifier(2.5f, 1, 0.5f),
+        new DelayModifier(0.5f),
+        new ParallelModifier(
+            new ScaleModifier(2f, 0.5f, 5),
+            new RotateByModifier(2, 90)
+        ),
+        new ParallelModifier(
+            new ScaleModifier(2f, 5, 1),
+            new RotateModifier(2f, 180, 0)
+        )
+    );
+
     final Random random = new Random(RANDOM_SEED);
 
-    // as we are creating quite a lot of the same Sprites, we can let them share
-    // a VertexBuffer to significantly increase performance
-    final RectangleVertexBuffer sharedVertexBuffer =
-        new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
-    sharedVertexBuffer.onUpdate(0, 0, mFaceTextureRegion.getWidth(),
-        mFaceTextureRegion.getHeight());
-
     for (int i = 0; i < SPRITE_COUNT; i++) {
+      final Rectangle rect = new Rectangle(
+          (CAMERA_WIDTH - 32) * random.nextFloat(),
+          (CAMERA_HEIGHT - 32) * random.nextFloat(), 32, 32);
+      rect.setColor(1, 0, 0);
+      rect.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+
       final Sprite face = new Sprite(
-          random.nextFloat() * (CAMERA_WIDTH - 32),
-          random.nextFloat() * (CAMERA_HEIGHT - 32), mFaceTextureRegion,
-          sharedVertexBuffer);
+          (CAMERA_WIDTH - 32) * random.nextFloat(),
+          (CAMERA_HEIGHT - 32) * random.nextFloat(), mFaceTextureRegion);
+
+      face.addShapeModifier(shapeModifier.clone());
+      rect.addShapeModifier(shapeModifier.clone());
+
       scene.getTopLayer().addEntity(face);
+      scene.getTopLayer().addEntity(rect);
     }
 
     return scene;
