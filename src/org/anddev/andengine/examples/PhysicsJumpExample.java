@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.Scene.ITouchArea;
-import org.anddev.andengine.entity.handler.runnable.RunnableHandler;
 import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -40,7 +39,6 @@ public class PhysicsJumpExample extends BaseExample implements
 
   private Box2DPhysicsSpace mPhysicsSpace;
   private int mFaceCount = 0;
-  private RunnableHandler mShootRunnableHandle;
 
   private float mGravityX;
   private float mGravityY;
@@ -102,9 +100,6 @@ public class PhysicsJumpExample extends BaseExample implements
 
     scene.setOnAreaTouchListener(this);
 
-    mShootRunnableHandle = new RunnableHandler();
-    scene.registerPostFrameHandler(mShootRunnableHandle);
-
     return scene;
   }
 
@@ -116,16 +111,11 @@ public class PhysicsJumpExample extends BaseExample implements
   public boolean onAreaTouched(final ITouchArea pTouchArea,
       final MotionEvent pSceneMotionEvent) {
     if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      mShootRunnableHandle.postRunnable(new Runnable() {
-        @Override
-        public void run() {
-          final AnimatedSprite face = (AnimatedSprite)pTouchArea;
-          final DynamicPhysicsBody facePhysicsBody =
-              mPhysicsSpace.findDynamicBodyByShape(face);
-          mPhysicsSpace.setVelocity(facePhysicsBody, mGravityX * -10,
-              mGravityY * -10);
-        }
-      });
+      final AnimatedSprite face = (AnimatedSprite)pTouchArea;
+      final DynamicPhysicsBody facePhysicsBody =
+          mPhysicsSpace.findDynamicBodyByShape(face);
+      mPhysicsSpace.setVelocity(facePhysicsBody, mGravityX * -10,
+          mGravityY * -10);
     }
     return false;
   }

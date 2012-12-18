@@ -67,7 +67,7 @@
             android:name=".PhysicsExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".PhysicsBulletExample"
+            android:name=".PhysicsJumpExample"
             android:configChanges="orientation" />
         <activity
             android:name=".PhysicsRemoveExample"
