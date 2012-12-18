@@ -28,22 +28,26 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class PhysicsRemoveExample extends BaseExample implements
+public class PhysicsJumpExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener, IOnAreaTouchListener {
-  private static final int CAMERA_WIDTH = 720;
-  private static final int CAMERA_HEIGHT = 480;
+  private static final int CAMERA_WIDTH = 360;
+  private static final int CAMERA_HEIGHT = 240;
 
   private Texture mTexture;
+
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
   private Box2DPhysicsSpace mPhysicsSpace;
   private int mFaceCount = 0;
-  private RunnableHandler mRemoveRunnableHandler;
+  private RunnableHandler mShootRunnableHandle;
+
+  private float mGravityX;
+  private float mGravityY;
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "Touch the screen to add objects. Touch an object to remove it",
+    Toast.makeText(this, "Touch the screen to add objects. Touch an object to shoot it up into the air.",
         Toast.LENGTH_LONG).show();
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
@@ -98,8 +102,8 @@ public class PhysicsRemoveExample extends BaseExample implements
 
     scene.setOnAreaTouchListener(this);
 
-    mRemoveRunnableHandler = new RunnableHandler();
-    scene.registerPostFrameHandler(mRemoveRunnableHandler);
+    mShootRunnableHandle = new RunnableHandler();
+    scene.registerPostFrameHandler(mShootRunnableHandle);
 
     return scene;
   }
@@ -112,17 +116,14 @@ public class PhysicsRemoveExample extends BaseExample implements
   public boolean onAreaTouched(final ITouchArea pTouchArea,
       final MotionEvent pSceneMotionEvent) {
     if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      mRemoveRunnableHandler.postRunnable(new Runnable() {
+      mShootRunnableHandle.postRunnable(new Runnable() {
         @Override
         public void run() {
           final AnimatedSprite face = (AnimatedSprite)pTouchArea;
-          final Scene scene = PhysicsRemoveExample.this.getEngine().getScene();
-
           final DynamicPhysicsBody facePhysicsBody =
               mPhysicsSpace.findDynamicBodyByShape(face);
-          mPhysicsSpace.removeDynamicBody(facePhysicsBody);
-          scene.unregisterTouchArea(face);
-          scene.getTopLayer().removeEntity(face);
+          mPhysicsSpace.setVelocity(facePhysicsBody, mGravityX * -10,
+              mGravityY * -10);
         }
       });
     }
@@ -143,8 +144,9 @@ public class PhysicsRemoveExample extends BaseExample implements
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsSpace.setGravity(4 * pAccelerometerData.getY(),
-        4 * pAccelerometerData.getX());
+    mGravityX = pAccelerometerData.getY();
+    mGravityY = pAccelerometerData.getX();
+    mPhysicsSpace.setGravity(4 * mGravityX, 4 * mGravityY);
   }
 
   private void addFace(final float pX, final float pY) {
@@ -164,7 +166,6 @@ public class PhysicsRemoveExample extends BaseExample implements
 
     final Scene scene = getEngine().getScene();
     face.animate(new long[] { 200, 200 }, 0, 1, true);
-    scene.registerTouchArea(face);
     scene.getTopLayer().addEntity(face);
   }
 }

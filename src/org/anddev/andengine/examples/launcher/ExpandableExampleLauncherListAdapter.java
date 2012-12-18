@@ -31,7 +31,7 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.SPLITSCREEN, Example.PARTICLESYSTEM, Example.AUGMENTEDREALITY,
           Example.AUGMENTEDREALITYHORIZON },
     { Example.MULTIPLAYER },
-    { Example.PHYSICS, Example.PHYSICSREMOVE },
+    { Example.PHYSICS, Example.PHYSICSJUMP, Example.PHYSICSREMOVE },
     { Example.TEXT, Example.TICKERTEXT, Example.CUSTOMFONT },
     { Example.SOUND, Example.MUSIC },
     { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
