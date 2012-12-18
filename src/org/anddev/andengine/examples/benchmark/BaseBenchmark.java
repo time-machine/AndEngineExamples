@@ -1,5 +1,7 @@
 package org.anddev.andengine.examples.benchmark;
 
+import java.util.Random;
+
 import org.anddev.andengine.entity.handler.timer.ITimerCallback;
 import org.anddev.andengine.entity.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.util.FPSCounter;
@@ -18,8 +20,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 public abstract class BaseBenchmark extends BaseGameActivity {
+  private static final long RANDOM_SEED = 1234567890;
   private static final int DIALOG_SHOW_RESULT = 1;
   private float mFPS;
+  protected final Random mRandom = new Random(RANDOM_SEED);
 
   protected void showResult(final float pFPS) {
     mFPS = pFPS;
@@ -64,9 +68,9 @@ public abstract class BaseBenchmark extends BaseGameActivity {
     switch (pID) {
     case DIALOG_SHOW_RESULT:
       return new AlertDialog.Builder(this)
-      .setTitle(getClass().getSimpleName() + "-Results")
-      .setMessage(String.format("FPS: %.2f", mFPS))
-      .setPositiveButton("Submit", new OnClickListener() {
+      .setTitle(getClass().getSimpleName())
+      .setMessage(String.format("Result: %.2f FPS", mFPS))
+      .setPositiveButton("Submit (Please!)", new OnClickListener() {
         @Override
         public void onClick(final DialogInterface dialog, final int which) {
           sendResultMail();

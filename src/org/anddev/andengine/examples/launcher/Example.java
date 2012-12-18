@@ -29,6 +29,7 @@ import org.anddev.andengine.examples.TouchDragExample;
 import org.anddev.andengine.examples.TouchDragManyExample;
 import org.anddev.andengine.examples.UnloadTextureExample;
 import org.anddev.andengine.examples.ZoomExample;
+import org.anddev.andengine.examples.benchmark.AnimationBenchmark;
 import org.anddev.andengine.examples.benchmark.ShapeModifierBenchmark;
 import org.anddev.andengine.examples.benchmark.SpriteBenchmark;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
@@ -65,9 +66,11 @@ enum Example {
   UNLOADTEXTURE(UnloadTextureExample.class, R.string.example_unloadtexture),
   ZOOM(ZoomExample.class, R.string.example_zoom),
 
-  BENCHMARK_SPRITES(SpriteBenchmark.class, R.string.example_benchmark_sprites),
+  BENCHMARK_ANIMATION(AnimationBenchmark.class,
+      R.string.example_benchmark_animation),
   BENCHMARK_SHAPEMODIFIER(ShapeModifierBenchmark.class,
-      R.string.example_benchmark_shapemodifier);
+      R.string.example_benchmark_shapemodifier),
+  BENCHMARK_SPRITE(SpriteBenchmark.class, R.string.example_benchmark_sprite);
 
   public final Class<? extends BaseGameActivity> CLASS;
   public final int NAMERESID;

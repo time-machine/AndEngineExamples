@@ -36,7 +36,8 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.SOUND, Example.MUSIC },
     { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
           Example.UNLOADTEXTURE, Example.ZOOM },
-    { Example.BENCHMARK_SPRITES, Example.BENCHMARK_SHAPEMODIFIER }
+    { Example.BENCHMARK_SPRITE, Example.BENCHMARK_SHAPEMODIFIER,
+          Example.BENCHMARK_ANIMATION }
   };
 
   private final Context mContext;
