@@ -3,6 +3,7 @@ import org.anddev.andengine.examples.AnimatedSpritesExample;
 import org.anddev.andengine.examples.AugmentedRealityExample;
 import org.anddev.andengine.examples.AugmentedRealityHorizonExample;
 import org.anddev.andengine.examples.CustomFontExample;
+import org.anddev.andengine.examples.ImageFormatsExample;
 import org.anddev.andengine.examples.LineExample;
 import org.anddev.andengine.examples.MenuExample;
 import org.anddev.andengine.examples.MovingBallExample;
@@ -44,6 +45,7 @@ enum Example {
   AUGMENTEDREALITYHORIZON(AugmentedRealityHorizonExample.class,
       R.string.example_augmentedrealityhorizon),
   CUSTOMFONT(CustomFontExample.class, R.string.example_customfont),
+  IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),
   LINE(LineExample.class, R.string.example_line),
   MENU(MenuExample.class, R.string.example_menu),
   MOVINGBALL(MovingBallExample.class, R.string.example_movingball),

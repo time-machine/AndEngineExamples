@@ -27,7 +27,8 @@ class ExpandableExampleLauncherListAdapter extends
 
   private static final Example[][] EXAMPLES = {
     { Example.LINE, Example.RECTANGLE, Example.SPRITE, Example.SPRITEREMOVE },
-    { Example.MOVINGBALL, Example.SHAPEMODIFIER, Example.PATHMODIFIER, Example.ANIMATEDSPRITES },
+    { Example.MOVINGBALL, Example.SHAPEMODIFIER, Example.PATHMODIFIER,
+          Example.ANIMATEDSPRITES },
     { Example.TOUCHDRAG, Example.TOUCHDRAGMANY },
     { Example.PARTICLESYSTEMSIMPLE, Example.PARTICLESYSTEMCOOL,
           Example.PARTICLESYSTEMNEXUS },
@@ -35,9 +36,10 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.PHYSICS, Example.PHYSICSJUMP, Example.PHYSICSREMOVE },
     { Example.TEXT, Example.TICKERTEXT, Example.CUSTOMFONT },
     { Example.SOUND, Example.MUSIC },
-    { Example.SPLITSCREEN, Example.AUGMENTEDREALITY, Example.AUGMENTEDREALITYHORIZON },
-    { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
-          Example.UNLOADTEXTURE, Example.ZOOM },
+    { Example.SPLITSCREEN, Example.AUGMENTEDREALITY,
+          Example.AUGMENTEDREALITYHORIZON },
+    { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.IMAGEFORMATS,
+          Example.TEXTUREOPTIONS, Example.UNLOADTEXTURE, Example.ZOOM },
     { Example.BENCHMARK_SPRITE, Example.BENCHMARK_SHAPEMODIFIER,
           Example.BENCHMARK_ANIMATION, Example.BENCHMARK_TICKERTEXT,
           Example.BENCHMARK_PARTICLESYSTEM }
