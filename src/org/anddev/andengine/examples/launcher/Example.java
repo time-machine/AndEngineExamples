@@ -32,6 +32,7 @@ import org.anddev.andengine.examples.ZoomExample;
 import org.anddev.andengine.examples.benchmark.AnimationBenchmark;
 import org.anddev.andengine.examples.benchmark.ShapeModifierBenchmark;
 import org.anddev.andengine.examples.benchmark.SpriteBenchmark;
+import org.anddev.andengine.examples.benchmark.TickerTextBenchmark;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 enum Example {
@@ -70,7 +71,9 @@ enum Example {
       R.string.example_benchmark_animation),
   BENCHMARK_SHAPEMODIFIER(ShapeModifierBenchmark.class,
       R.string.example_benchmark_shapemodifier),
-  BENCHMARK_SPRITE(SpriteBenchmark.class, R.string.example_benchmark_sprite);
+  BENCHMARK_SPRITE(SpriteBenchmark.class, R.string.example_benchmark_sprite),
+  BENCHMARK_TICKERTEXT(TickerTextBenchmark.class,
+      R.string.example_benchmark_tickertext);
 
   public final Class<? extends BaseGameActivity> CLASS;
   public final int NAMERESID;

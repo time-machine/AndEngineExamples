@@ -37,7 +37,7 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.PAUSE, Example.MENU, Example.SUBMENU, Example.TEXTUREOPTIONS,
           Example.UNLOADTEXTURE, Example.ZOOM },
     { Example.BENCHMARK_SPRITE, Example.BENCHMARK_SHAPEMODIFIER,
-          Example.BENCHMARK_ANIMATION }
+          Example.BENCHMARK_ANIMATION, Example.BENCHMARK_TICKERTEXT }
   };
 
   private final Context mContext;
