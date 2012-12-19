@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.anddev.andengine.examples"
-    android:versionCode="11"
-    android:versionName="1.1.1" >
+    android:versionCode="12"
+    android:versionName="1.1.2" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -55,7 +55,10 @@
             android:name=".MusicExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".ParticleSystemExample"
+            android:name=".ParticleSystemCoolExample"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".ParticleSystemSimpleExample"
             android:configChanges="orientation" />
         <activity
             android:name=".PathModifierExample"
@@ -114,8 +117,12 @@
         <activity
             android:name=".ZoomExample"
             android:configChanges="orientation" />
+        
         <activity
             android:name=".benchmark.AnimationBenchmark"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".benchmark.ParticleSystemBenchmark"
             android:configChanges="orientation" />
         <activity
             android:name=".benchmark.ShapeModifierBenchmark"
