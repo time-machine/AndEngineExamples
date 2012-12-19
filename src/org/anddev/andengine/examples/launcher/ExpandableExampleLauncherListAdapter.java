@@ -27,9 +27,10 @@ class ExpandableExampleLauncherListAdapter extends
 
   private static final Example[][] EXAMPLES = {
     { Example.LINE, Example.RECTANGLE, Example.SPRITE, Example.SPRITEREMOVE },
-    { Example.SHAPEMODIFIER, Example.PATHMODIFIER, Example.MOVINGBALL, Example.ANIMATEDSPRITES },
+    { Example.MOVINGBALL, Example.SHAPEMODIFIER, Example.PATHMODIFIER, Example.ANIMATEDSPRITES },
     { Example.TOUCHDRAG, Example.TOUCHDRAGMANY },
-    { Example.PARTICLESYSTEMSIMPLE, Example.PARTICLESYSTEMCOOL },
+    { Example.PARTICLESYSTEMSIMPLE, Example.PARTICLESYSTEMCOOL,
+          Example.PARTICLESYSTEMNEXUS },
     { Example.MULTIPLAYER },
     { Example.PHYSICS, Example.PHYSICSJUMP, Example.PHYSICSREMOVE },
     { Example.TEXT, Example.TICKERTEXT, Example.CUSTOMFONT },

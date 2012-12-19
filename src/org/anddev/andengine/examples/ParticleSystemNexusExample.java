@@ -1,4 +1,4 @@
-package org.anddev.andengine.examples.benchmark;
+package org.anddev.andengine.examples;
 
 import javax.microedition.khronos.opengles.GL10;
 
@@ -17,16 +17,17 @@ import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
 import org.anddev.andengine.entity.particle.modifier.RotateInitializer;
 import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.entity.particle.modifier.VelocityInitializer;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
-public class ParticleSystemBenchmark extends BaseBenchmark {
+public class ParticleSystemNexusExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
-  private static final float RATE_MIN = 15;
-  private static final float RATE_MAX = 20;
+  private static final float RATE_MIN = 8;
+  private static final float RATE_MAX = 12;
   private static final int PARTICLES_MAX = 200;
 
   private Camera mCamera;
@@ -50,6 +51,8 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
+    getEngine().registerPreFrameHandler(new FPSLogger());
+
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.0f, 0.0f, 0.0f);
 
@@ -139,13 +142,6 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
   }
 
   @Override
-  protected float getBenchmarkDuration() {
-    return 15;
+  public void onLoadComplete() {
   }
-
-  @Override
-  protected float getBenchmarkStartOffset() {
-    return 5;
-  }
-
 }
