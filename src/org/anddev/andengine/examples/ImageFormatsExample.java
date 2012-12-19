@@ -10,9 +10,11 @@ import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
+import org.anddev.andengine.opengl.texture.Texture.ITextureStateListener;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
+import org.anddev.andengine.opengl.texture.source.ITextureSource;
 
 import android.widget.Toast;
 
@@ -29,7 +31,8 @@ public class ImageFormatsExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "GIF is not supported yet. Use PNG instead, it's a better format anyway!",
+    Toast.makeText(this, "GIF is not supported yet. " +
+        "Use PNG instead, it's a better format anyway!",
         Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
@@ -38,15 +41,28 @@ public class ImageFormatsExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(128, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(128, 128, TextureOptions.BILINEAR,
+        new ITextureStateListener.TextureStateAdapter() {
+      @Override
+      public void onTextureSourceLoadExeption(final Texture pTexture,
+          final ITextureSource pTextureSource, final Throwable pThrowable) {
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            Toast.makeText(ImageFormatsExample.this,
+                "Failed loading TextureSource: " + pTextureSource.toString(),
+                Toast.LENGTH_LONG).show();
+          }
+        });
+      }
+    });
+
     mPngTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
         this, "gfx/imageformat_png.png", 0, 0);
     mJpgTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
         this, "gfx/imageformat_jpg.jpg", 49, 0);
-
-    // GIF is not supported yet. Use PNG instead, it's a better format anyway!
     mGifTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
-        this, "gfx/imageformat_gif.png", 0, 49);
+        this, "gfx/imageformat_gif.gif", 0, 49);
     mBmpTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
         this, "gfx/imageformat_bmp.bmp", 49, 49);
 

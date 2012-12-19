@@ -15,6 +15,7 @@
         <item>11</item>
         <item>12</item>
         <item>13</item>
+        <item>14</item>
     </array>
 
     <string-array name="new_in_version_changes">
@@ -31,6 +32,7 @@
         <item> - Added TickerText Benchmark</item>
         <item> - Added ParticleSystemCool Example\n - Added ParticleSystemNexus Example\n - Added ParticleSystem Benchmark</item>
         <item> - Added ImageFormat Example (PNG, JPG, GIF, BMP)</item>
+        <item> - Added LoadTextureExample\n - Added UpdateTextureExample</item>
     </string-array>
 
 </resources>

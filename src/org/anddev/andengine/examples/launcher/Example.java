@@ -5,6 +5,7 @@ import org.anddev.andengine.examples.AugmentedRealityHorizonExample;
 import org.anddev.andengine.examples.CustomFontExample;
 import org.anddev.andengine.examples.ImageFormatsExample;
 import org.anddev.andengine.examples.LineExample;
+import org.anddev.andengine.examples.LoadTextureExample;
 import org.anddev.andengine.examples.MenuExample;
 import org.anddev.andengine.examples.MovingBallExample;
 import org.anddev.andengine.examples.MultiplayerExample;
@@ -31,6 +32,7 @@ import org.anddev.andengine.examples.TickerTextExample;
 import org.anddev.andengine.examples.TouchDragExample;
 import org.anddev.andengine.examples.TouchDragManyExample;
 import org.anddev.andengine.examples.UnloadTextureExample;
+import org.anddev.andengine.examples.UpdateTextureExample;
 import org.anddev.andengine.examples.ZoomExample;
 import org.anddev.andengine.examples.benchmark.AnimationBenchmark;
 import org.anddev.andengine.examples.benchmark.ParticleSystemBenchmark;
@@ -47,6 +49,7 @@ enum Example {
   CUSTOMFONT(CustomFontExample.class, R.string.example_customfont),
   IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),
   LINE(LineExample.class, R.string.example_line),
+  LOADTEXTURE(LoadTextureExample.class, R.string.example_loadtexture),
   MENU(MenuExample.class, R.string.example_menu),
   MOVINGBALL(MovingBallExample.class, R.string.example_movingball),
   MULTIPLAYER(MultiplayerExample.class, R.string.example_multiplayer),
@@ -75,6 +78,7 @@ enum Example {
   TOUCHDRAG(TouchDragExample.class, R.string.example_touchdrag),
   TOUCHDRAGMANY(TouchDragManyExample.class, R.string.example_touchdragmany),
   UNLOADTEXTURE(UnloadTextureExample.class, R.string.example_unloadtexture),
+  UPDATETEXTURE(UpdateTextureExample.class, R.string.example_updatetexture),
   ZOOM(ZoomExample.class, R.string.example_zoom),
 
   BENCHMARK_ANIMATION(AnimationBenchmark.class,
