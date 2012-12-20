@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import org.anddev.andengine.entity.handler.timer.ITimerCallback;
 import org.anddev.andengine.entity.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.util.FPSCounter;
+import org.anddev.andengine.examples.R;
 import org.anddev.andengine.opengl.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Callback;
@@ -114,7 +115,8 @@ public abstract class BaseBenchmark extends BaseGameActivity {
   }
 
   private void submitResults() {
-    doAsync(android.R.string.ok, android.R.string.ok, new Callable<Boolean>() {
+    doAsync(R.string.dialog_benchmark_submit_title,
+        R.string.dialog_benchmark_submit_message, new Callable<Boolean>() {
       @Override
       public Boolean call() throws Exception {
         // create a new HttpClient and Post Header
@@ -183,16 +185,18 @@ public abstract class BaseBenchmark extends BaseGameActivity {
           }
         });
       }
-    }, new Callback<Throwable>() {
+    }, new Callback<Exception>() {
       @Override
-      public void onCallback(final Throwable pCallbackValue) {
-        Debug.e(pCallbackValue);
+      public void onCallback(final Exception pException) {
+        Debug.e(pException);
+        Toast.makeText(BaseBenchmark.this, "Exception occurred: " +
+            pException.getClass().getSimpleName(), Toast.LENGTH_SHORT).show();
         finish();
       }
     });
   }
 
-    public static String getVersionName(final Context ctx) {
+  public static String getVersionName(final Context ctx) {
     try {
       final PackageInfo pi = ctx.getPackageManager().getPackageInfo(
           ctx.getPackageName(), 0);
