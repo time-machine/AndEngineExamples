@@ -8,7 +8,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
 import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
-import org.anddev.andengine.entity.shape.modifier.RotateModifier;
+import org.anddev.andengine.entity.shape.modifier.RotationModifier;
 import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
 import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.text.Text;
@@ -47,7 +47,7 @@ public class TickerTextExample extends BaseExample {
                 new AlphaModifier(10, 0, 1),
                 new ScaleModifier(10, 0.5f, 1)
             ),
-            new RotateModifier(5, 0, 360)
+            new RotationModifier(5, 0, 360)
         )
     );
 

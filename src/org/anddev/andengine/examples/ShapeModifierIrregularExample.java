@@ -1,19 +1,14 @@
 package org.anddev.andengine.examples;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.primitives.Rectangle;
 import org.anddev.andengine.entity.shape.IModifierListener;
 import org.anddev.andengine.entity.shape.IShapeModifier;
 import org.anddev.andengine.entity.shape.Shape;
-import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
-import org.anddev.andengine.entity.shape.modifier.DelayModifier;
 import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationModifier;
@@ -28,7 +23,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.widget.Toast;
 
-public class ShapeModifierExample extends BaseExample {
+public class ShapeModifierIrregularExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -37,59 +32,10 @@ public class ShapeModifierExample extends BaseExample {
   private TiledTextureRegion mFaceTextureRegion;
 
   @Override
-  public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
-
-    final Scene scene = new Scene(1);
-    scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
-
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-
-    final Rectangle rect = new Rectangle(x + 100, y, 32, 32);
-    rect.setColor(1, 0, 0);
-    rect.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-
-    final AnimatedSprite face = new AnimatedSprite(x - 100, y,
-        mFaceTextureRegion);
-    face.animate(100);
-
-    final SequenceModifier shapeModifier = new SequenceModifier(
-        new IModifierListener() {
-          @Override
-          public void onModifierFinished(final IShapeModifier pShapeModifier,
-              final Shape pShape) {
-            runOnUiThread(new Runnable() {
-              @Override
-              public void run() {
-                Toast.makeText(ShapeModifierExample.this, "Sequence ended.",
-                    Toast.LENGTH_LONG).show();
-              }
-            });
-          }
-        },
-        new RotationByModifier(2, 90),
-        new AlphaModifier(2, 1, 0),
-        new AlphaModifier(1, 0, 1),
-        new ScaleModifier(2, 1, 0.5f),
-        new DelayModifier(0.5f),
-        new ParallelModifier(
-            new ScaleModifier(3, 0.5f, 5),
-            new RotationByModifier(3, 90)
-        ),
-        new ParallelModifier(
-            new ScaleModifier(3, 5, 1),
-            new RotationModifier(3, 180, 0)
-        )
-    );
-
-    face.addShapeModifier(shapeModifier);
-    rect.addShapeModifier(shapeModifier.clone());
-
-    scene.getTopLayer().addEntity(face);
-    scene.getTopLayer().addEntity(rect);
-
-    return scene;
+  public Engine onLoadEngine() {
+    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
   }
 
   @Override
@@ -101,13 +47,65 @@ public class ShapeModifierExample extends BaseExample {
   }
 
   @Override
-  public void onLoadComplete() {
+  public Scene onLoadScene() {
+    getEngine().registerPreFrameHandler(new FPSLogger());
+
+    final Scene scene = new Scene(1);
+    scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
+
+    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+
+    final AnimatedSprite face1Reference = new AnimatedSprite(x - 100, y,
+        mFaceTextureRegion);
+    final AnimatedSprite face2Reference = new AnimatedSprite(x + 100, y,
+        mFaceTextureRegion);
+
+    final AnimatedSprite face1 = new AnimatedSprite(x - 100, y, mFaceTextureRegion);
+    face1.setRotationCenter(0, 0);
+    face1.setScaleCenter(0, 0);
+    face1.animate(100);
+
+    final AnimatedSprite face2 = new AnimatedSprite(x + 100, y, mFaceTextureRegion);
+    face2.animate(100);
+
+    final SequenceModifier shapeModifier = new SequenceModifier(
+        new IModifierListener() {
+          @Override
+          public void onModifierFinished(final IShapeModifier pShapeModifier,
+              final Shape pShape) {
+            runOnUiThread(new Runnable() {
+              @Override
+              public void run() {
+                Toast.makeText(ShapeModifierIrregularExample.this,
+                    "Sequence ended.", Toast.LENGTH_LONG).show();
+              }
+            });
+          }
+        },
+        new ScaleModifier(2, 1, 1.25f, 1, 2.5f),
+        new ParallelModifier(
+            new ScaleModifier(3, 1.25f, 5, 2.5f, 5),
+            new RotationByModifier(3, 90)
+        ),
+        new ParallelModifier(
+            new ScaleModifier(3, 5, 1),
+            new RotationModifier(3, 180, 0)
+        )
+    );
+
+    face1.addShapeModifier(shapeModifier);
+    face2.addShapeModifier(shapeModifier.clone());
+
+    scene.getTopLayer().addEntity(face1);
+    scene.getTopLayer().addEntity(face2);
+    scene.getTopLayer().addEntity(face1Reference);
+    scene.getTopLayer().addEntity(face2Reference);
+
+    return scene;
   }
 
   @Override
-  public Engine onLoadEngine() {
-    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
+  public void onLoadComplete() {
   }
 }

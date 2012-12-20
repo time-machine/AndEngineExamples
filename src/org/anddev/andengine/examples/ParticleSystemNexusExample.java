@@ -15,7 +15,7 @@ import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
 import org.anddev.andengine.entity.particle.modifier.ColorInitializer;
 import org.anddev.andengine.entity.particle.modifier.ColorModifier;
 import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
-import org.anddev.andengine.entity.particle.modifier.RotateInitializer;
+import org.anddev.andengine.entity.particle.modifier.RotationInitializer;
 import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.entity.particle.modifier.VelocityInitializer;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -66,7 +66,7 @@ public class ParticleSystemNexusExample extends BaseExample {
 
       particleSystem.addParticleInitializer(new VelocityInitializer(35, 45, 0, -10));
       particleSystem.addParticleInitializer(new AccelerationInitializer(5, -11));
-      particleSystem.addParticleInitializer(new RotateInitializer(0.0f, 360.0f));
+      particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
       particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 1.0f, 0.0f));
 
       particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
@@ -87,7 +87,7 @@ public class ParticleSystemNexusExample extends BaseExample {
 
       particleSystem.addParticleInitializer(new VelocityInitializer(-35, -45, 0, -10));
       particleSystem.addParticleInitializer(new AccelerationInitializer(-5, -11));
-      particleSystem.addParticleInitializer(new RotateInitializer(0.0f, 360.0f));
+      particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
       particleSystem.addParticleInitializer(new ColorInitializer(0.0f, 1.0f, 0.0f));
 
       particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
@@ -107,7 +107,7 @@ public class ParticleSystemNexusExample extends BaseExample {
 
       particleSystem.addParticleInitializer(new VelocityInitializer(35, 45, 0, 10));
       particleSystem.addParticleInitializer(new AccelerationInitializer(5, 11));
-      particleSystem.addParticleInitializer(new RotateInitializer(0.0f, 360.0f));
+      particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
       particleSystem.addParticleInitializer(new ColorInitializer(0.0f, 0.0f, 1.0f));
 
       particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
@@ -127,7 +127,7 @@ public class ParticleSystemNexusExample extends BaseExample {
 
       particleSystem.addParticleInitializer(new VelocityInitializer(-35, -45, 0, 10));
       particleSystem.addParticleInitializer(new AccelerationInitializer(-5, 11));
-      particleSystem.addParticleInitializer(new RotateInitializer(0.0f, 360.0f));
+      particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
       particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f, 0.0f));
 
       particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));

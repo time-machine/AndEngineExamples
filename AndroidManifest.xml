@@ -42,7 +42,7 @@
             android:configChanges="orientation" />
         <activity
             android:name=".ImageFormatsExample"
-            android:configChanges="orientation" />
+            android:configChanges="orientation" />        
         <activity
             android:name=".LineExample"
             android:configChanges="orientation" />
@@ -90,6 +90,9 @@
             android:configChanges="orientation" />
         <activity
             android:name=".ShapeModifierExample"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".ShapeModifierIrregularExample"
             android:configChanges="orientation" />
         <activity
             android:name=".SoundExample"
