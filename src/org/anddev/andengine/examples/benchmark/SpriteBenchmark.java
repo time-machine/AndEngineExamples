@@ -75,4 +75,9 @@ public class SpriteBenchmark extends BaseBenchmark {
 
     return scene;
   }
+
+  @Override
+  protected float getBenchmarkID() {
+    return SPRITEBENCHMARK_ID;
+  }
 }

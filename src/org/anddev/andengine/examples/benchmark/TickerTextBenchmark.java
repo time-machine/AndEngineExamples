@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.Layer;
 import org.anddev.andengine.entity.Scene;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.entity.text.TickerText;
-import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -46,8 +45,6 @@ public class TickerTextBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
-
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
     final Layer topLayer = scene.getTopLayer();
@@ -72,5 +69,10 @@ public class TickerTextBenchmark extends BaseBenchmark {
   @Override
   protected float getBenchmarkStartOffset() {
     return 2;
+  }
+
+  @Override
+  protected float getBenchmarkID() {
+    return TICKERTEXTBENCHMARK_ID;
   }
 }

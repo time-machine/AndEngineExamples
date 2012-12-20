@@ -148,4 +148,8 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
     return 5;
   }
 
+  @Override
+  protected float getBenchmarkID() {
+    return PARTICLESYSTEMBENCHMARK_ID;
+  }
 }
