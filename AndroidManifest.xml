@@ -136,6 +136,9 @@
             android:name=".benchmark.ParticleSystemBenchmark"
             android:configChanges="orientation" />
         <activity
+            android:name=".benchmark.PhysicsBenchmark"
+            android:configChanges="orientation" />
+        <activity
             android:name=".benchmark.ShapeModifierBenchmark"
             android:configChanges="orientation" />
         <activity

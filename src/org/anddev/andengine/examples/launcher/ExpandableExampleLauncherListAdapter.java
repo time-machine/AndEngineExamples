@@ -43,7 +43,7 @@ class ExpandableExampleLauncherListAdapter extends
           Example.UPDATETEXTURE, Example.UNLOADTEXTURE },
     { Example.BENCHMARK_SPRITE, Example.BENCHMARK_SHAPEMODIFIER,
           Example.BENCHMARK_ANIMATION, Example.BENCHMARK_TICKERTEXT,
-          Example.BENCHMARK_PARTICLESYSTEM }
+          Example.BENCHMARK_PARTICLESYSTEM, Example.BENCHMARK_PHYSICS }
   };
 
   private final Context mContext;
