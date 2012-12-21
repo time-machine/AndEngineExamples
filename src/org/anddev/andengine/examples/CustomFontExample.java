@@ -24,16 +24,16 @@ public class CustomFontExample extends BaseExample {
 
   private Camera mCamera;
 
-  private Texture mDroidFontTexture;
+  private Font mDroidFont;
   private Font mPlokFont;
   private Font mNeverwinterNightsFont;
-  private Font mUnrealTournameFont;
+  private Font mUnrealTournamentFont;
   private Font mKingdomOfHeartsFont;
 
-  private Font mDroidFont;
+  private Texture mDroidFontTexture;
   private Texture mPlokFontTexture;
   private Texture mNeverwinterNightsFontTexture;
-  private Texture mUnrealTournameFontTexture;
+  private Texture mUnrealTournamentFontTexture;
   private Texture mKingdomOfHeartsFontTexture;
 
   @Override
@@ -50,7 +50,7 @@ public class CustomFontExample extends BaseExample {
     mKingdomOfHeartsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
     mNeverwinterNightsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
     mPlokFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
-    mUnrealTournameFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
+    mUnrealTournamentFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
 
     FontFactory.setAssetBasePath("fonts/");
     mDroidFont = FontFactory.createFromAsset(mDroidFontTexture, this,
@@ -63,14 +63,16 @@ public class CustomFontExample extends BaseExample {
         this, "NeverwinterNights.ttf", FONT_SIZE, true, Color.BLACK);
     mPlokFont = FontFactory.createFromAsset(mPlokFontTexture, this, "Plok.ttf",
         FONT_SIZE, true, Color.BLACK);
-    mUnrealTournameFont = FontFactory.createFromAsset(mUnrealTournameFontTexture,
-        this, "UnrealTourname.ttf", FONT_SIZE, true, Color.BLACK);
+    mUnrealTournamentFont = FontFactory.createFromAsset(
+        mUnrealTournamentFontTexture, this, "UnrealTournament.ttf", FONT_SIZE,
+        true, Color.BLACK);
 
     getEngine().getTextureManager().loadTextures(mDroidFontTexture,
         mKingdomOfHeartsFontTexture, mNeverwinterNightsFontTexture,
-        mPlokFontTexture, mUnrealTournameFontTexture);
+        mPlokFontTexture, mUnrealTournamentFontTexture);
+
     getEngine().getFontManager().loadFonts(mDroidFont, mKingdomOfHeartsFont,
-        mNeverwinterNightsFont, mPlokFont, mUnrealTournameFont);
+        mNeverwinterNightsFont, mPlokFont, mUnrealTournamentFont);
   }
 
   @Override
@@ -88,7 +90,7 @@ public class CustomFontExample extends BaseExample {
     topLayer.addEntity(new Text(110, 210, mNeverwinterNightsFont,
         "Neverwinter Nights Font"));
     topLayer.addEntity(new Text(140, 300, mPlokFont, "Plok Font"));
-    topLayer.addEntity(new Text(25, 390, mUnrealTournameFont,
+    topLayer.addEntity(new Text(25, 390, mUnrealTournamentFont,
         "Unreal Tournament Font"));
 
     return scene;
