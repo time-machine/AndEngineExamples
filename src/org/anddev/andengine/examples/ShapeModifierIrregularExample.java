@@ -5,10 +5,10 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.shape.IModifierListener;
-import org.anddev.andengine.entity.shape.IShapeModifier;
-import org.anddev.andengine.entity.shape.Shape;
+import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.shape.IShape;
+import org.anddev.andengine.entity.shape.modifier.IShapeModifier;
+import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
 import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationModifier;
@@ -67,10 +67,10 @@ public class ShapeModifierIrregularExample extends BaseExample {
     face2.animate(100);
 
     final SequenceModifier shapeModifier = new SequenceModifier(
-        new IModifierListener() {
+        new IShapeModifierListener() {
           @Override
           public void onModifierFinished(final IShapeModifier pShapeModifier,
-              final Shape pShape) {
+              final IShape pShape) {
             runOnUiThread(new Runnable() {
               @Override
               public void run() {

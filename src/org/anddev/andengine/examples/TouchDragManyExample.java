@@ -7,10 +7,10 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.Scene.IOnAreaTouchListener;
-import org.anddev.andengine.entity.Scene.IOnSceneTouchListener;
-import org.anddev.andengine.entity.Scene.ITouchArea;
+import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
+import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
+import org.anddev.andengine.entity.scene.Scene.ITouchArea;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.examples.adt.card.Card;
@@ -21,6 +21,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 public class TouchDragManyExample extends BaseGameActivity {
   private static final int CAMERA_WIDTH = 720;
@@ -35,6 +36,8 @@ public class TouchDragManyExample extends BaseGameActivity {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "This is NOT meant to be MultiTouch!",
+        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));

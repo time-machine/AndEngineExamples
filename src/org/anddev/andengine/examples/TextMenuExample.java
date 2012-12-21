@@ -8,19 +8,23 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
+import org.anddev.andengine.entity.scene.menu.item.ColorfulTextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
-import org.anddev.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
+import org.anddev.andengine.opengl.font.Font;
+import org.anddev.andengine.opengl.font.FontFactory;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
+import android.graphics.Color;
 import android.view.KeyEvent;
 
-public class MenuExample extends BaseExample implements IOnMenuItemClickListener {
+public class TextMenuExample extends BaseExample
+    implements IOnMenuItemClickListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -34,11 +38,10 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
   private Texture mTexture;
   private TextureRegion mFaceTextureRegion;
 
-  protected MenuScene mMenuScene;
+  private Texture mFontTexture;
+  private Font mFont;
 
-  private Texture mMenuTexture;
-  protected TextureRegion mMenuResetTextureRegion;
-  protected TextureRegion mMenuQuitTextureRegion;
+  protected MenuScene mMenuScene;
 
   @Override
   public Engine onLoadEngine() {
@@ -49,22 +52,26 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
 
   @Override
   public void onLoadResources() {
+    // load font/textures
+    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
+
+    FontFactory.setAssetBasePath("fonts/");
+    mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 48,
+        true, Color.WHITE);
+    getEngine().getTextureManager().loadTexture(mFontTexture);
+    getEngine().getFontManager().loadFont(mFont);
+
+    // load sprite-textures
     mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/boxface_menu.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
-
-    mMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR);
-    mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(
-        mMenuTexture, this, "gfx/menu_reset.png", 0, 0);
-    mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,
-        this, "gfx/menu_quit.png", 0, 50);
-    getEngine().getTextureManager().loadTexture(mMenuTexture);
   }
 
   @Override
   public Scene onLoadScene() {
     getEngine().registerPreFrameHandler(new FPSLogger());
+
     mMenuScene = createMenuScene();
 
     // a simple scene with an animated face flying around
@@ -100,7 +107,6 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
       return super.onKeyDown(pKeyCode, pEvent);
     }
   }
-
   @Override
   public boolean onMenuItemClicked(final MenuScene pMenuScene,
       final IMenuItem pMenuItem) {
@@ -114,6 +120,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
       mMenuScene.reset();
       return true;
     case MENU_QUIT:
+      // end activity
       finish();
       return true;
     default:
@@ -124,8 +131,10 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
   protected MenuScene createMenuScene() {
     final MenuScene menuScene = new MenuScene(mCamera);
 
-    menuScene.addMenuItem(new SpriteMenuItem(MENU_RESET, mMenuResetTextureRegion));
-    menuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT, mMenuQuitTextureRegion));
+    menuScene.addMenuItem(new ColorfulTextMenuItem(MENU_RESET, mFont, "RESET",
+        1, 0, 0, 0, 0, 0));
+    menuScene.addMenuItem(new ColorfulTextMenuItem(MENU_QUIT, mFont, "QUIT",
+        1, 0, 0, 0, 0, 0));
     menuScene.buildAnimations();
 
     menuScene.setBackgroundEnabled(false);

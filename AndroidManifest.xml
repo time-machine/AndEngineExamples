@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="13" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -111,6 +111,9 @@
             android:configChanges="orientation" />
         <activity
             android:name=".TextExample"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".TextMenuExample"
             android:configChanges="orientation" />
         <activity
             android:name=".TextureOptionsExample"

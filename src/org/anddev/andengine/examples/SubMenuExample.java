@@ -1,8 +1,9 @@
 package org.anddev.andengine.examples;
 
-import org.anddev.andengine.entity.menu.MenuItem;
-import org.anddev.andengine.entity.menu.MenuScene;
-import org.anddev.andengine.entity.menu.animator.SlideMenuAnimator;
+import org.anddev.andengine.entity.scene.menu.MenuScene;
+import org.anddev.andengine.entity.scene.menu.animator.SlideMenuAnimator;
+import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
+import org.anddev.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -32,7 +33,7 @@ public class SubMenuExample extends MenuExample {
 
   @Override
   public boolean onMenuItemClicked(final MenuScene pMenuScene,
-      final MenuItem pMenuItem) {
+      final IMenuItem pMenuItem) {
     switch (pMenuItem.getID()) {
     case MENU_RESET:
       mMainScene.reset();
@@ -57,8 +58,8 @@ public class SubMenuExample extends MenuExample {
     final MenuScene mainMenuScene = super.createMenuScene();
 
     mSubMenuScene = new MenuScene(mCamera);
-    mSubMenuScene.addMenuItem(new MenuItem(MENU_QUIT_OK, mMenuOkTextureRegion));
-    mSubMenuScene.addMenuItem(new MenuItem(MENU_QUIT_BACK,
+    mSubMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT_OK, mMenuOkTextureRegion));
+    mSubMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT_BACK,
         mMenuBackTextureRegion));
     mSubMenuScene.setMenuAnimator(new SlideMenuAnimator());
     mSubMenuScene.buildAnimations();

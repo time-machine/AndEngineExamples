@@ -9,7 +9,7 @@ import org.anddev.andengine.entity.handler.timer.ITimerCallback;
 import org.anddev.andengine.entity.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.util.FPSCounter;
 import org.anddev.andengine.examples.R;
-import org.anddev.andengine.opengl.GLHelper;
+import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Callback;
 import org.anddev.andengine.util.Debug;

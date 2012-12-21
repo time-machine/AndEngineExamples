@@ -5,10 +5,10 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.Scene;
-import org.anddev.andengine.entity.shape.IModifierListener;
-import org.anddev.andengine.entity.shape.IShapeModifier;
-import org.anddev.andengine.entity.shape.Shape;
+import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.shape.IShape;
+import org.anddev.andengine.entity.shape.modifier.IShapeModifier;
+import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
 import org.anddev.andengine.entity.shape.modifier.PathModifier;
 import org.anddev.andengine.entity.shape.modifier.PathModifier.IPathModifierListener;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -58,10 +58,10 @@ public class PathModifierExample extends BaseExample {
     final Path path = new Path(7).to(x, y).to(100, 100).to(100, 200).to(200, 200)
         .to(200, 100).to(100, 100).to(x, y);
     face.addShapeModifier(new PathModifier(20, path,
-        new IModifierListener() {
+        new IShapeModifierListener() {
           @Override
           public void onModifierFinished(final IShapeModifier pShapeModifier,
-              final Shape pShape) {
+              final IShape pShape) {
             PathModifierExample.this.runOnUiThread(new Runnable() {
               @Override
               public void run() {
@@ -74,7 +74,7 @@ public class PathModifierExample extends BaseExample {
         new IPathModifierListener() {
           @Override
           public void onWaypointPassed(final PathModifier pPathModifier,
-              final Shape pShape, final int pWaypointIndex) {
+              final IShape pShape, final int pWaypointIndex) {
             PathModifierExample.this.runOnUiThread(new Runnable() {
               @Override
               public void run() {
