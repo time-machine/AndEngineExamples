@@ -8,7 +8,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
-import org.anddev.andengine.entity.scene.menu.item.ColorfulTextMenuItem;
+import org.anddev.andengine.entity.scene.menu.item.ColoredTextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -131,9 +131,9 @@ public class TextMenuExample extends BaseExample
   protected MenuScene createMenuScene() {
     final MenuScene menuScene = new MenuScene(mCamera);
 
-    menuScene.addMenuItem(new ColorfulTextMenuItem(MENU_RESET, mFont, "RESET",
+    menuScene.addMenuItem(new ColoredTextMenuItem(MENU_RESET, mFont, "RESET",
         1, 0, 0, 0, 0, 0));
-    menuScene.addMenuItem(new ColorfulTextMenuItem(MENU_QUIT, mFont, "QUIT",
+    menuScene.addMenuItem(new ColoredTextMenuItem(MENU_QUIT, mFont, "QUIT",
         1, 0, 0, 0, 0, 0));
     menuScene.buildAnimations();
 
