@@ -1,9 +1,11 @@
 package org.anddev.andengine.examples.launcher;
+import org.anddev.andengine.examples.AnalogOnScreenControlExample;
 import org.anddev.andengine.examples.AnimatedSpritesExample;
 import org.anddev.andengine.examples.AugmentedRealityExample;
 import org.anddev.andengine.examples.AugmentedRealityHorizonExample;
 import org.anddev.andengine.examples.ChangeableTextExample;
 import org.anddev.andengine.examples.CustomFontExample;
+import org.anddev.andengine.examples.DigitalOnScreenControlExample;
 import org.anddev.andengine.examples.ImageFormatsExample;
 import org.anddev.andengine.examples.LineExample;
 import org.anddev.andengine.examples.LoadTextureExample;
@@ -48,12 +50,16 @@ import org.anddev.andengine.examples.game.snake.SnakeGameActivity;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
 enum Example {
+  ANALOGONSCREENCONTROL(AnalogOnScreenControlExample.class,
+      R.string.example_analogonscreencontrol),
   ANIMATEDSPRITES(AnimatedSpritesExample.class, R.string.example_animatedsprites),
   AUGMENTEDREALITY(AugmentedRealityExample.class, R.string.example_augmentedreality),
   AUGMENTEDREALITYHORIZON(AugmentedRealityHorizonExample.class,
       R.string.example_augmentedrealityhorizon),
   CHANGEABLETEXT(ChangeableTextExample.class, R.string.example_changeabletext),
   CUSTOMFONT(CustomFontExample.class, R.string.example_customfont),
+  DIGITALONSCREENCONTROL(DigitalOnScreenControlExample.class,
+      R.string.example_digitalonscreencontrol),
   IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),
   LINE(LineExample.class, R.string.example_line),
   LOADTEXTURE(LoadTextureExample.class, R.string.example_loadtexture),

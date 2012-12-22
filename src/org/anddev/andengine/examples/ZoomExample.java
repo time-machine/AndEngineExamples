@@ -33,8 +33,7 @@ public class ZoomExample extends BaseExample {
     mSmoothCamera = new SmoothCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 10, 10,
         1.0f);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mSmoothCamera,
-        false));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mSmoothCamera));
   }
 
   @Override

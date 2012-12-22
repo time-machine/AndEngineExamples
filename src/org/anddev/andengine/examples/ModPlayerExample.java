@@ -40,7 +40,7 @@ public class ModPlayerExample extends BaseExample {
         Toast.LENGTH_LONG).show();
     final Camera mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, true));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
   }
 
   @Override

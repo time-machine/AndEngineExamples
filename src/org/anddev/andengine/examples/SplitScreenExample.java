@@ -99,7 +99,7 @@ IAccelerometerListener, IOnSceneTouchListener {
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
         ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH * 2, CAMERA_HEIGHT), firstCamera,
-        secondCamera, false));
+        secondCamera));
   }
 
   @Override

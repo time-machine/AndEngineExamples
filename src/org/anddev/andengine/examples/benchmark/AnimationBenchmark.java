@@ -34,8 +34,8 @@ public class AnimationBenchmark extends BaseBenchmark {
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     final EngineOptions engineOptions = new EngineOptions(true,
        ScreenOrientation.LANDSCAPE,
-       new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false);
-    engineOptions.getRenderHints().disableExtensionVertexBufferObjects();
+       new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
+    engineOptions.getRenderOptions().disableExtensionVertexBufferObjects();
     return new Engine(engineOptions);
   }
 

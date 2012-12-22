@@ -29,6 +29,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AnalogOnScreenControlExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".AnimatedSpritesExample"
             android:configChanges="orientation" />
         <activity
@@ -42,6 +45,9 @@
             android:configChanges="orientation" />
         <activity
             android:name=".CustomFontExample"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".DigitalOnScreenControlExample"
             android:configChanges="orientation" />
         <activity
             android:name=".ImageFormatsExample"

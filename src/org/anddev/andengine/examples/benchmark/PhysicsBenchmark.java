@@ -41,7 +41,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
   public Engine onLoadEngine() {
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera, false));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
   }
 
   @Override
