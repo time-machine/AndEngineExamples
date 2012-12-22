@@ -8,9 +8,9 @@ public class BaseSnakePart extends Sprite implements SnakeConstants {
   protected int mCellX;
   protected int mCellY;
 
-  public BaseSnakePart(final int pCellX, final int pCellY,
-      final TextureRegion pTextureRegion) {
-    super(pCellX * CELL_WIDTH, pCellY * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT,
+  public BaseSnakePart(final int pCellX, final int pCellY, final int pWidth,
+      final int pHeight, final TextureRegion pTextureRegion) {
+    super(pCellX * CELL_WIDTH, pCellY * CELL_HEIGHT, pWidth, pHeight,
         pTextureRegion);
     mCellX = pCellX;
     mCellY = pCellY;

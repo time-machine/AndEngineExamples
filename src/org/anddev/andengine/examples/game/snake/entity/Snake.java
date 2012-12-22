@@ -17,10 +17,10 @@ public class Snake extends DynamicCapacityLayer {
   public Snake(final Direction pInitialDirection, final int pCellX,
       final int pCellY, final TextureRegion pHeadTextureRegion,
       final TextureRegion pTailPartTextureRegion) {
-    mDirection = pInitialDirection;
     mTailPartTextureRegion = pTailPartTextureRegion;
     mHead = new SnakeHead(pCellX, pCellY, pHeadTextureRegion);
     addEntity(mHead);
+    setDirection(pInitialDirection);
   }
 
   public Direction getDirection() {
@@ -29,10 +29,19 @@ public class Snake extends DynamicCapacityLayer {
 
   public void setDirection(final Direction pDirection) {
     mDirection = pDirection;
+    mHead.setRotation(pDirection);
   }
 
   public int getTailLength() {
     return mTail.size();
+  }
+
+  public SnakeHead getHead() {
+    return mHead;
+  }
+
+  public void grow() {
+    mGrow = true;
   }
 
   public int getNextX() {
@@ -45,6 +54,7 @@ public class Snake extends DynamicCapacityLayer {
 
   public void move() {
     if (mGrow) {
+      mGrow = false;
       // if the snake should grow, simply add a new part in the front of the
       // tail, where the head currently is
       final SnakeTailPart newTailPart = new SnakeTailPart(mHead,

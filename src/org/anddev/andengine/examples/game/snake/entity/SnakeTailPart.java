@@ -10,7 +10,7 @@ public class SnakeTailPart extends BaseSnakePart implements Cloneable {
 
   public SnakeTailPart(final int pCellX, final int pCellY,
       final TextureRegion pTextureRegion) {
-    super(pCellX, pCellY, pTextureRegion);
+    super(pCellX, pCellY, CELL_WIDTH, CELL_HEIGHT, pTextureRegion);
   }
 
   @Override
