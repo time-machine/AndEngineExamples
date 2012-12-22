@@ -50,7 +50,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1);
+    final Scene scene = new Scene(1, true, 4);
     scene.setBackgroundColor(0.0f, 0.0f, 0.0f);
 
     // lower left to lower right particle system

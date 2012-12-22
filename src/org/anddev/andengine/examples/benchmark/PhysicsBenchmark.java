@@ -61,7 +61,8 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     mPhysicsSpace.setGravity(0, SensorManager.GRAVITY_EARTH);
 
-    final Scene scene = new Scene(2);
+    final Scene scene = new Scene(2, true, 4,
+        (COUNT_VERTICAL - 1) * (COUNT_HORIZONTAL - 1));
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 

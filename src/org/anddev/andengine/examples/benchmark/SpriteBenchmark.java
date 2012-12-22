@@ -7,7 +7,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.Layer;
+import org.anddev.andengine.entity.layer.ILayer;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -39,11 +39,8 @@ public class SpriteBenchmark extends BaseBenchmark {
   @Override
   public Engine onLoadEngine() {
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    final EngineOptions engineOptions = new EngineOptions(true,
-        ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false);
-    engineOptions.getRenderHints().disableExtensionVertexBufferObjects();
-    return new Engine(engineOptions);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera, false));
   }
 
   @Override
@@ -56,7 +53,7 @@ public class SpriteBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1);
+    final Scene scene = new Scene(1, true, SPRITE_COUNT);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
     // as we are creating quite a lot of the same Sprites, we can let them share
@@ -66,7 +63,7 @@ public class SpriteBenchmark extends BaseBenchmark {
     sharedVertexBuffer.onUpdate(0, 0, mFaceTextureRegion.getWidth(),
         mFaceTextureRegion.getHeight());
 
-    final Layer topLayer = scene.getTopLayer();
+    final ILayer topLayer = scene.getTopLayer();
 
     for (int i = 0; i < SPRITE_COUNT; i++) {
       final Sprite face = new Sprite(

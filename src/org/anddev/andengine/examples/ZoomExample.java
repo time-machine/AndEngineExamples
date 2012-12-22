@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.SmoothCamera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.Layer;
+import org.anddev.andengine.entity.layer.ILayer;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -56,7 +56,7 @@ public class ZoomExample extends BaseExample {
     final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
     // create some faces and add them to the scene
-    final Layer topLayer = scene.getTopLayer();
+    final ILayer topLayer = scene.getTopLayer();
     topLayer.addEntity(new Sprite(x - 25, y - 25, mFaceTextureRegion));
     topLayer.addEntity(new Sprite(x + 25, y - 25, mFaceTextureRegion));
     topLayer.addEntity(new Sprite(x, y + 25, mFaceTextureRegion));

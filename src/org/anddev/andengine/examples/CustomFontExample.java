@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.Layer;
+import org.anddev.andengine.entity.layer.ILayer;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -82,7 +82,7 @@ public class CustomFontExample extends BaseExample {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final Layer topLayer = scene.getTopLayer();
+    final ILayer topLayer = scene.getTopLayer();
 
     topLayer.addEntity(new Text(230, 30, mDroidFont, "Droid Font"));
     topLayer.addEntity(new Text(160, 120, mKingdomOfHeartsFont,
