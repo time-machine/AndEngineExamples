@@ -79,7 +79,7 @@ public class PauseExample extends BaseExample {
     if (keyCode == KeyEvent.KEYCODE_MENU &&
         event.getAction() == KeyEvent.ACTION_DOWN) {
       if (getEngine().isRunning()) {
-        mMainScene.setChildScene(mPauseScene, false, true);
+        mMainScene.setChildScene(mPauseScene, false, true, true);
         getEngine().stop();
       }
       else {

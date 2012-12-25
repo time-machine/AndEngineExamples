@@ -31,7 +31,7 @@ class ExpandableExampleLauncherListAdapter extends
     { Example.MOVINGBALL, Example.SHAPEMODIFIER, Example.SHAPEMODIFIERIRREGULAR,
           Example.PATHMODIFIER, Example.ANIMATEDSPRITES },
     { Example.TOUCHDRAG, Example.TOUCHDRAGMANY, Example.ANALOGONSCREENCONTROL,
-          Example.DIGITALONSCREENCONTROL },
+          Example.DIGITALONSCREENCONTROL, Example.ANALOGONSCREENCONTROLS },
     { Example.PARTICLESYSTEMSIMPLE, Example.PARTICLESYSTEMCOOL,
           Example.PARTICLESYSTEMNEXUS },
     { Example.MULTIPLAYER },

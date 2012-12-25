@@ -92,7 +92,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
         mMenuScene.back();
       } else {
         // attach the menu
-        mMainScene.setChildScene(mMenuScene, false, true);
+        mMainScene.setChildScene(mMenuScene, false, true, true);
       }
       return true;
     }

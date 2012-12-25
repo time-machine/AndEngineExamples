@@ -15,10 +15,9 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
+import org.anddev.andengine.util.MathUtils;
 
-import android.widget.Toast;
-
-public class AnalogOnScreenControlExample extends BaseExample {
+public class AnalogOnScreenControlsExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
 
@@ -33,8 +32,6 @@ public class AnalogOnScreenControlExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "MultiTouch is NOT yet supported!",
-        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
@@ -66,14 +63,17 @@ public class AnalogOnScreenControlExample extends BaseExample {
 
     final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-
     final Sprite face = new Sprite(x, y, mFaceTextureRegion);
+
     scene.getTopLayer().addEntity(face);
 
-    final AnalogOnScreenControl analogOnScreenControl = new AnalogOnScreenControl(
-        0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
-        mCamera, mOnScreenControlBaseTextureRegion,
-        mOnScreenControlKnobTextureRegion, 0.1f, new OnScreenControlListener() {
+    // velocity control (left)
+    final AnalogOnScreenControl velocityOnScreenControl =
+        new AnalogOnScreenControl(
+            0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
+            mCamera, mOnScreenControlBaseTextureRegion,
+            mOnScreenControlKnobTextureRegion, 0.1f,
+            new OnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
@@ -82,10 +82,37 @@ public class AnalogOnScreenControlExample extends BaseExample {
           }
         });
 
-    analogOnScreenControl.getControlBase().setAlpha(0.5f);
-    analogOnScreenControl.getControlKnob().setAlpha(0.5f);
+    velocityOnScreenControl.getControlBase().setAlpha(0.5f);
+    velocityOnScreenControl.getControlKnob().setAlpha(0.5f);
 
-    scene.setChildScene(analogOnScreenControl);
+    scene.setChildScene(velocityOnScreenControl);
+
+    // rotation control (right)
+    final AnalogOnScreenControl rotationOnScreenControl =
+        new AnalogOnScreenControl(
+            CAMERA_WIDTH - mOnScreenControlBaseTextureRegion.getWidth(),
+            CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
+            mCamera, mOnScreenControlBaseTextureRegion,
+            mOnScreenControlKnobTextureRegion, 0.1f,
+            new OnScreenControlListener() {
+          @Override
+          public void onControlChange(
+              final BaseOnScreenControl pBaseOnScreenControl,
+              final float pValueX, final float pValueY) {
+            if (pValueX == 0 && pValueY == 0) {
+              face.setRotation(0);
+            }
+            else {
+              face.setRotation(MathUtils.radToDeg(
+                  (float)Math.atan2(pValueX, -pValueY)));
+            }
+          }
+        });
+
+    rotationOnScreenControl.getControlBase().setAlpha(0.5f);
+    rotationOnScreenControl.getControlKnob().setAlpha(0.5f);
+
+    velocityOnScreenControl.setChildScene(rotationOnScreenControl);
 
     return scene;
   }
