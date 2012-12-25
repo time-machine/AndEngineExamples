@@ -19,9 +19,9 @@ public class TextureOptionsExample extends BaseExample {
   private static final int CAMERA_HEIGHT = 480;
 
   private Camera mCamera;
+
   private Texture mTexture;
   private Texture mTextureBilinear;
-
   private Texture mTextureRepeating;
 
   private TextureRegion mFaceTextureRegion;
@@ -63,6 +63,7 @@ public class TextureOptionsExample extends BaseExample {
   @Override
   public void onLoadResources() {
     TextureRegionFactory.setAssetBasePath("gfx/");
+
     mTexture = new Texture(32, 32, TextureOptions.DEFAULT);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "boxface.png", 0, 0);
@@ -71,7 +72,7 @@ public class TextureOptionsExample extends BaseExample {
     mFaceTextureRegionBilinear = TextureRegionFactory.createFromAsset(
         mTextureBilinear, this, "boxface.png", 0, 0);
 
-    mTextureRepeating = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTextureRepeating = new Texture(32, 32, TextureOptions.REPEATING);
     mFaceTextureRegionRepeating = TextureRegionFactory.createFromAsset(
         mTextureRepeating, this, "boxface.png", 0, 0);
 
