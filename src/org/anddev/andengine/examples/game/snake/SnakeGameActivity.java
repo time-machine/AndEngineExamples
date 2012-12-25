@@ -93,6 +93,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
   @Override
   public void onLoadResources() {
+    // load the font we are going to use
     FontFactory.setAssetBasePath("fonts/");
     mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR);
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 32,
@@ -101,6 +102,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mEngine.getTextureManager().loadTexture(mFontTexture);
     mEngine.getFontManager().loadFont(mFont);
 
+    // load all the textures this game needs
     mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mHeadTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
@@ -122,6 +124,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mEngine.getTextureManager().loadTextures(mBackgroundTexture, mTexture,
         mOnScreenControlTexture);
 
+    // load all the sounds this game needs
     try {
       SoundFactory.setAssetBasePath("mfx/");
       mGameOverSound = SoundFactory.createSoundFromAsset(getSoundManager(),
@@ -214,7 +217,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
       }
     }));
 
-    // the title text
+    // the title-text
     final Text titleText = new Text(0, 0, mFont, "Snake\non a Phone!",
         HorizontalAlign.CENTER);
     titleText.setPosition((CAMERA_WIDTH - titleText.getWidth()) * 0.5f,
@@ -223,6 +226,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     titleText.addShapeModifier(new ScaleModifier(2, 0, 1));
     scene.getLayer(LAYER_SCORE).addEntity(titleText);
 
+    // the handler that removes the title-text and starts the game
     scene.registerPreFrameHandler(new TimerHandler(3, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
@@ -232,6 +236,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
       }
     }));
 
+    // the game-over text
     mGameOverText = new Text(0, 0, mFont, "Game\nOver", HorizontalAlign.CENTER);
     mGameOverText.setPosition((CAMERA_WIDTH - mGameOverText.getWidth()) * 0.5f,
         (CAMERA_HEIGHT - mGameOverText.getHeight()) * 0.5f);
