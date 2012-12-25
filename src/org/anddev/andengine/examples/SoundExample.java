@@ -14,6 +14,7 @@ import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -74,8 +75,8 @@ public class SoundExample extends BaseExample {
     scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
       @Override
       public boolean onAreaTouched(final ITouchArea pTouchArea,
-          final MotionEvent pSceneMotionEvent) {
-        if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+          final TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
           mExplosionSound.play();
         }
         return true;

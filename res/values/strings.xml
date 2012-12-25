@@ -43,6 +43,7 @@
     <string name="example_modplayer">Playing .MOD Music</string>
     <string name="example_movingball">A Moving Ball</string>
     <string name="example_multiplayer">Multiplayer Example</string>
+    <string name="example_multitouch">MultiTouch Example</string>
     <string name="example_music">Playing Music</string>
     <string name="example_pause">Pausing the Game</string>
     <string name="example_pathmodifier">Using a PathModifier</string>
@@ -64,8 +65,7 @@
     <string name="example_textmenu">Using TextMenus</string>
     <string name="example_textureoptions">Using TextureOptions</string>
     <string name="example_tickertext">Drawing a TickerText</string>
-    <string name="example_touchdrag">Touch &amp; Drag Sprites</string>
-    <string name="example_touchdragmany">Touch &amp; Drag Multiple Sprites</string>
+    <string name="example_touchdrag">Touch &amp; Drag Sprites</string>    
     <string name="example_unloadtexture">Unloading Textures Dynamic</string>
     <string name="example_updatetexture">Updating Textures Dynamic</string>
     <string name="example_zoom">Using a ZoomCamera</string>

@@ -14,6 +14,10 @@ import org.anddev.andengine.entity.scene.Scene.ITouchArea;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.examples.adt.card.Card;
+import org.anddev.andengine.extenion.input.touch.controller.MultiTouch;
+import org.anddev.andengine.extenion.input.touch.controller.MultiTouchController;
+import org.anddev.andengine.extenion.input.touch.controller.MultiTouchException;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -23,24 +27,51 @@ import org.anddev.andengine.ui.activity.BaseGameActivity;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class TouchDragManyExample extends BaseGameActivity {
+public class MultiTouchExample extends BaseGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
   private Camera mCamera;
   private Texture mCardDeckTexture;
 
-  protected Sprite mSelectedSprite;
+  protected HashMap<Integer, Sprite> mPointerIDToSpriteMap =
+      new HashMap<Integer, Sprite>();
 
   private HashMap<Card, TextureRegion> mCardToTextureRegionMap;
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "This is NOT meant to be MultiTouch!",
-        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+    final Engine engine = new Engine(new EngineOptions(true,
+        ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
+
+    try {
+      if (MultiTouch.isSupported(this)) {
+        engine.setTouchController(new MultiTouchController());
+
+        if (MultiTouch.isSupportedDistinct(this)) {
+          Toast.makeText(this, "MultiTouch detected --> Drag multiple Sprites" +
+              "with multiple fingers!", Toast.LENGTH_LONG).show();
+        }
+        else {
+          Toast.makeText(this, "MultiTouch detected --> Drag multiple Sprites" +
+              "with multiple fingers!\n\n(Your device might have problems to " +
+              "distinguish between separate fingers.)", Toast.LENGTH_LONG).show();
+        }
+      }
+      else {
+        Toast.makeText(this, "Sorry your device does NOT support MultiTouch!" +
+            "\n\n(Falling back to SingleTouch.)", Toast.LENGTH_LONG).show();
+      }
+    }
+    catch (final MultiTouchException e) {
+      Toast.makeText(this, "Sorry your Android Version does NOT support" +
+          "MultiTouch!\n\n(Falling back to SingleTouch.)", Toast.LENGTH_LONG)
+          .show();
+    }
+
+    return engine;
   }
 
   @Override
@@ -78,22 +109,25 @@ public class TouchDragManyExample extends BaseGameActivity {
     scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
       @Override
       public boolean onSceneTouchEvent(final Scene pScene,
-          final MotionEvent pSceneMotionEvent) {
-        return updateSelectedCardPosition(pSceneMotionEvent);
+          final TouchEvent pSceneTouchEvent) {
+        return updateSelectedCardPosition(pSceneTouchEvent);
       }
     });
 
     scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
       @Override
       public boolean onAreaTouched(final ITouchArea pTouchArea,
-          final MotionEvent pSceneMotionEvent) {
-        if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-          mSelectedSprite = (Sprite)pTouchArea;
-          mSelectedSprite.setScale(1.2f);
+          final TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+          final Sprite sprite = (Sprite)pTouchArea;
+          sprite.setScale(1.2f);
+
+          // associate pointer with card-sprite
+          mPointerIDToSpriteMap.put(pSceneTouchEvent.getPointerID(), sprite);
           return true;
         }
         else {
-          return updateSelectedCardPosition(pSceneMotionEvent);
+          return updateSelectedCardPosition(pSceneTouchEvent);
         }
       }
     });
@@ -105,21 +139,26 @@ public class TouchDragManyExample extends BaseGameActivity {
   public void onLoadComplete() {
   }
 
-  protected boolean updateSelectedCardPosition(final MotionEvent pSceneMotionEvent) {
-    if (mSelectedSprite != null) {
-      if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_MOVE) {
-        mSelectedSprite.setPosition(pSceneMotionEvent.getX() - Card.CARD_WIDTH / 2,
-            pSceneMotionEvent.getY() - Card.CARD_HEIGHT / 2);
+  private boolean updateSelectedCardPosition(final TouchEvent pSceneTouchEvent) {
+    if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_MOVE) {
+      // get associated card-sprite (if available)
+      final Sprite card = mPointerIDToSpriteMap.get(pSceneTouchEvent.getPointerID());
+
+      if (card != null) {
+        card.setPosition(pSceneTouchEvent.getX() - Card.CARD_WIDTH / 2,
+            pSceneTouchEvent.getY() - Card.CARD_HEIGHT / 2);
       }
-      else if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_UP) {
-        mSelectedSprite.setScale(1.0f);
-        mSelectedSprite = null;
+    }
+    else if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_UP) {
+      // 'Reset' associated card-sprite (if available)
+      final Sprite removed = mPointerIDToSpriteMap.remove(
+          pSceneTouchEvent.getPointerID());
+      if (removed != null) {
+        removed.setScale(1);
       }
-      return true;
     }
-    else {
-      return false;
-    }
+
+    return true;
   }
 
   private void addCard(final Scene pScene, final Card pCard, final int pX,

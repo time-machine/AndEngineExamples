@@ -30,6 +30,7 @@ import org.anddev.andengine.extension.multiplayer.protocol.server.ClientConnecto
 import org.anddev.andengine.extension.multiplayer.protocol.server.ClientMessageExtractor;
 import org.anddev.andengine.extension.multiplayer.protocol.shared.BaseConnector;
 import org.anddev.andengine.extension.multiplayer.protocol.util.IPUtils;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -170,12 +171,12 @@ public class MultiplayerExample extends BaseExample {
 
     scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
       @Override
-      public boolean onSceneTouchEvent(final Scene pScene, final MotionEvent pSceneMotionEvent) {
-        if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
           if (mServer != null) {
             try {
               mServer.sendBroadcastServerMessage(new AddFaceServerMessage(
-                pSceneMotionEvent.getX(), pSceneMotionEvent.getY()));
+                pSceneTouchEvent.getX(), pSceneTouchEvent.getY()));
             }
             catch (final IOException e) {
               Debug.e(e);

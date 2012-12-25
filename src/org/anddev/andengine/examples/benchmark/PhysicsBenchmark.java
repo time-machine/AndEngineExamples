@@ -15,6 +15,7 @@ import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
 import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
 import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -113,10 +114,10 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
-      final MotionEvent pSceneMotionEvent) {
+      final TouchEvent pSceneTouchEvent) {
     if (mPhysicsSpace != null) {
-      if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pScene, pSceneMotionEvent.getX(), pSceneMotionEvent.getY());
+      if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        addFace(pScene, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
         return true;
       }
     }

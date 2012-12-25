@@ -16,6 +16,7 @@ import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
 import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
 import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
 import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -109,8 +110,8 @@ public class PhysicsJumpExample extends BaseExample implements
 
   @Override
   public boolean onAreaTouched(final ITouchArea pTouchArea,
-      final MotionEvent pSceneMotionEvent) {
-    if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      final TouchEvent pSceneTouchEvent) {
+    if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
       final AnimatedSprite face = (AnimatedSprite)pTouchArea;
       final DynamicPhysicsBody facePhysicsBody =
           mPhysicsSpace.findDynamicBodyByShape(face);
@@ -122,10 +123,10 @@ public class PhysicsJumpExample extends BaseExample implements
 
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
-      final MotionEvent pSceneMotionEvent) {
+      final TouchEvent pSceneTouchEvent) {
     if (mPhysicsSpace != null) {
-      if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pSceneMotionEvent.getX(), pSceneMotionEvent.getY());
+      if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
         return true;
       }
     }

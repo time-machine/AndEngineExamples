@@ -9,6 +9,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
+import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
@@ -63,8 +64,8 @@ public class UpdateTextureExample extends BaseExample {
     scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
       @Override
       public boolean onSceneTouchEvent(final Scene pScene,
-          final MotionEvent pSceneMotionEvent) {
-        if (pSceneMotionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+          final TouchEvent pSceneTouchEvent) {
+        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
           toggle();
         }
         return true;
