@@ -6,6 +6,7 @@ import org.anddev.andengine.entity.layer.DynamicCapacityLayer;
 import org.anddev.andengine.examples.game.snake.adt.Direction;
 import org.anddev.andengine.examples.game.snake.adt.SnakeSuicideException;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 public class Snake extends DynamicCapacityLayer {
   private final SnakeHead mHead;
@@ -17,7 +18,7 @@ public class Snake extends DynamicCapacityLayer {
   private Direction mLastMoveDirection;
 
   public Snake(final Direction pInitialDirection, final int pCellX,
-      final int pCellY, final TextureRegion pHeadTextureRegion,
+      final int pCellY, final TiledTextureRegion pHeadTextureRegion,
       final TextureRegion pTailPartTextureRegion) {
     mTailPartTextureRegion = pTailPartTextureRegion;
     mHead = new SnakeHead(pCellX, pCellY, pHeadTextureRegion);

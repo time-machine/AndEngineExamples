@@ -1,17 +1,18 @@
 package org.anddev.andengine.examples.game.snake.entity;
 
-import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.examples.game.snake.util.constants.SnakeConstants;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
-public class CellEntity extends Sprite implements SnakeConstants, ICellEntity {
+public abstract class AnimatedCellEntity extends AnimatedSprite implements
+    SnakeConstants, ICellEntity {
   protected int mCellX;
   protected int mCellY;
 
-  public CellEntity(final int pCellX, final int pCellY, final int pWidth,
-      final int pHeight, final TextureRegion pTextureRegion) {
+  public AnimatedCellEntity(final int pCellX, final int pCellY, final int pWidth, final int pHeight,
+      final TiledTextureRegion pTiledTextureRegion) {
     super(pCellX * CELL_WIDTH, pCellY * CELL_HEIGHT, pWidth, pHeight,
-        pTextureRegion);
+        pTiledTextureRegion);
     mCellX = pCellX;
     mCellY = pCellY;
   }

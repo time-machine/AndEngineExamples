@@ -1,12 +1,12 @@
 package org.anddev.andengine.examples.game.snake.entity;
 
 import org.anddev.andengine.examples.game.snake.adt.Direction;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
+import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
-public class SnakeHead extends CellEntity {
+public class SnakeHead extends AnimatedCellEntity {
   public SnakeHead(final int pCellX, final int pCellY,
-      final TextureRegion pTextureRegion) {
-    super(pCellX, pCellY, CELL_WIDTH, 2 * CELL_HEIGHT, pTextureRegion);
+      final TiledTextureRegion pTiledTextureRegion) {
+    super(pCellX, pCellY, CELL_WIDTH, 2 * CELL_HEIGHT, pTiledTextureRegion);
     setRotationCenterY(CELL_HEIGHT / 2);
   }
 
