@@ -4,11 +4,11 @@ import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.examples.game.snake.util.constants.SnakeConstants;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 
-public class BaseSnakePart extends Sprite implements SnakeConstants {
+public class CellEntity extends Sprite implements SnakeConstants {
   protected int mCellX;
   protected int mCellY;
 
-  public BaseSnakePart(final int pCellX, final int pCellY, final int pWidth,
+  public CellEntity(final int pCellX, final int pCellY, final int pWidth,
       final int pHeight, final TextureRegion pTextureRegion) {
     super(pCellX * CELL_WIDTH, pCellY * CELL_HEIGHT, pWidth, pHeight,
         pTextureRegion);
@@ -24,7 +24,7 @@ public class BaseSnakePart extends Sprite implements SnakeConstants {
     return mCellY;
   }
 
-  public void setCell(final BaseSnakePart pSnakePart) {
+  public void setCell(final CellEntity pSnakePart) {
     setCell(pSnakePart.mCellX, pSnakePart.mCellY);
   }
 
@@ -32,5 +32,9 @@ public class BaseSnakePart extends Sprite implements SnakeConstants {
     mCellX = pCellX;
     mCellY = pCellY;
     setPosition(mCellX * CELL_WIDTH, mCellY * CELL_HEIGHT);
+  }
+
+  public boolean isInSameCell(final CellEntity pCellEntity) {
+    return mCellX == pCellEntity.mCellX && mCellY == pCellEntity.mCellY;
   }
 }

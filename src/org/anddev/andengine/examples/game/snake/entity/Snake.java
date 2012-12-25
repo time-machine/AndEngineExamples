@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.anddev.andengine.entity.layer.DynamicCapacityLayer;
 import org.anddev.andengine.examples.game.snake.adt.Direction;
+import org.anddev.andengine.examples.game.snake.adt.SnakeSuicideException;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 
 public class Snake extends DynamicCapacityLayer {
@@ -13,6 +14,7 @@ public class Snake extends DynamicCapacityLayer {
   private Direction mDirection;
   private boolean mGrow;
   private final TextureRegion mTailPartTextureRegion;
+  private Direction mLastMoveDirection;
 
   public Snake(final Direction pInitialDirection, final int pCellX,
       final int pCellY, final TextureRegion pHeadTextureRegion,
@@ -28,8 +30,10 @@ public class Snake extends DynamicCapacityLayer {
   }
 
   public void setDirection(final Direction pDirection) {
-    mDirection = pDirection;
-    mHead.setRotation(pDirection);
+    if (mLastMoveDirection != Direction.opposite(pDirection)) {
+      mDirection = pDirection;
+      mHead.setRotation(pDirection);
+    }
   }
 
   public int getTailLength() {
@@ -52,7 +56,9 @@ public class Snake extends DynamicCapacityLayer {
     return Direction.addToY(mDirection, mHead.getCellY());
   }
 
-  public void move() {
+  public void move() throws SnakeSuicideException {
+    mLastMoveDirection = mDirection;
+
     if (mGrow) {
       mGrow = false;
       // if the snake should grow, simply add a new part in the front of the
@@ -73,5 +79,12 @@ public class Snake extends DynamicCapacityLayer {
 
     // move the head into the direction of the snake
     mHead.setCell(getNextX(), getNextY());
+
+    // check if head collides with tail
+    for (int i = mTail.size() - 1; i >= 0; i--) {
+      if (mHead.isInSameCell(mTail.get(i))) {
+        throw new SnakeSuicideException();
+      }
+    }
   }
 }
