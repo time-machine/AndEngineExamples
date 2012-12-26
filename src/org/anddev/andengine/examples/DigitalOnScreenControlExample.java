@@ -60,10 +60,10 @@ public class DigitalOnScreenControlExample extends BaseExample {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
-    final Sprite face = new Sprite(x, y, mFaceTextureRegion);
     scene.getTopLayer().addEntity(face);
 
     final DigitalOnScreenControl digitalOnScreenControl = new DigitalOnScreenControl(

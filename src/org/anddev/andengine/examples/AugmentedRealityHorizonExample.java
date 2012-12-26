@@ -7,6 +7,7 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.augmentedreality.BaseAugmentedRealityGameActivity;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -30,11 +31,13 @@ public class AugmentedRealityHorizonExample extends
 
   @Override
   public Scene onLoadScene() {
+    mEngine.registerPreFrameHandler(new FPSLogger());
+
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0, 0, 0, 0);
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-    mFace = new Sprite(x, y, mFaceTextureRegion);
+    final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    mFace = new Sprite(centerX, centerY, mFaceTextureRegion);
     scene.getTopLayer().addEntity(mFace);
 
     return scene;

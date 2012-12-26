@@ -34,20 +34,21 @@ public class TextureOptionsExample extends BaseExample {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
-    final Sprite face = new Sprite(x - 160, y - 40, mFaceTextureRegion);
+    final Sprite face = new Sprite(centerX - 160, centerY - 40,
+        mFaceTextureRegion);
     face.setScale(4);
 
-    final Sprite faceBillinear = new Sprite(x + 160, y - 40,
+    final Sprite faceBillinear = new Sprite(centerX + 160, centerY - 40,
         mFaceTextureRegionBilinear);
     faceBillinear.setScale(4);
 
     // make sure sprite has the same size as mTextureRegionRepeating
     // giving the sprite twice the height shows you'd also have to change the
     // height of the TextureRegion!
-    final Sprite faceRepeating = new Sprite(x - 160, y + 100,
+    final Sprite faceRepeating = new Sprite(centerX - 160, centerY + 100,
         mFaceTextureRegionRepeating.getWidth(),
         mFaceTextureRegionRepeating.getHeight() * 2,
         mFaceTextureRegionRepeating);

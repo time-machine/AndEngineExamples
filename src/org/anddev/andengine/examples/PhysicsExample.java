@@ -84,11 +84,14 @@ IAccelerometerListener, IOnSceneTouchListener {
     mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "circleface_tiled.png", 0, 32, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
-    enableAccelerometerSensor(this);
   }
 
   @Override
   public void onLoadComplete() {
+    // we are choosing SensorManager.SENSOR_DELAY_UI here to stay comparable to
+    // older versions of this example
+    // visually there is no difference noticeable
+    enableAccelerometerSensor(this, SensorManager.SENSOR_DELAY_UI);
   }
 
   @Override

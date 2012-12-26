@@ -45,9 +45,9 @@ public class MovingBallExample extends BaseExample {
     final Scene scene = new Scene(1);
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-    final Ball ball = new Ball(x, y, mFaceTextureRegion);
+    final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    final Ball ball = new Ball(centerX, centerY, mFaceTextureRegion);
     ball.setVelocity(DEMO_VELOCITY, DEMO_VELOCITY);
 
     scene.getTopLayer().addEntity(ball);
