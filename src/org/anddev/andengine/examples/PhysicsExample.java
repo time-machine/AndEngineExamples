@@ -8,12 +8,12 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
+import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
-import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
-import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
-import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
-import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -21,13 +21,18 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
+import org.anddev.andengine.util.Debug;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class PhysicsExample extends BaseExample implements
-IAccelerometerListener, IOnSceneTouchListener {
+    IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -35,42 +40,36 @@ IAccelerometerListener, IOnSceneTouchListener {
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
-  private Box2DPhysicsSpace mPhysicsSpace;
+  private PhysicsWorld mPhysicsWorld;
   private int mFaceCount = 0;
 
   @Override
   public Scene onLoadScene() {
     getEngine().registerPostFrameHandler(new FPSLogger());
 
-    mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
-
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
+    mPhysicsWorld = new PhysicsWorld(
+        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
+
+    final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
+    final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
+    final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
+    final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
+
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+
     scene.getBottomLayer().addEntity(ground);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
     scene.getBottomLayer().addEntity(roof);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(left);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(right);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
 
-    scene.registerPreFrameHandler(mPhysicsSpace);
+    scene.registerPreFrameHandler(mPhysicsWorld);
 
     return scene;
   }
@@ -81,17 +80,14 @@ IAccelerometerListener, IOnSceneTouchListener {
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "boxface_tiled.png", 0, 0, 2, 1);
-    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "circleface_tiled.png", 0, 32, 2, 1);
-    getEngine().getTextureManager().loadTexture(mTexture);
+    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
+    mEngine.getTextureManager().loadTexture(mTexture);
+    enableAccelerometerSensor(this);
   }
 
   @Override
   public void onLoadComplete() {
-    // we are choosing SensorManager.SENSOR_DELAY_UI here to stay comparable to
-    // older versions of this example
-    // visually there is no difference noticeable
-    enableAccelerometerSensor(this, SensorManager.SENSOR_DELAY_UI);
   }
 
   @Override
@@ -106,9 +102,15 @@ IAccelerometerListener, IOnSceneTouchListener {
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    if (mPhysicsSpace != null) {
+    if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+        runOnUpdateThread(new Runnable() {
+          @Override
+          public void run() {
+            addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+          }
+        });
+
         return true;
       }
     }
@@ -117,27 +119,35 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsSpace.setGravity(4 * pAccelerometerData.getY(),
-        4 * pAccelerometerData.getX());
+    mPhysicsWorld.setGravity(new Vector2(4 * pAccelerometerData.getY(),
+        4 * pAccelerometerData.getX()));
   }
 
   private void addFace(final float pX, final float pY) {
-    mFaceCount++;
-    final AnimatedSprite face;
+    final Scene scene = mEngine.getScene();
 
-    if (mFaceCount % 2 == 1) {
+    mFaceCount++;
+    Debug.d("Faces:" + mFaceCount);
+
+    final AnimatedSprite face;
+    final Body body;
+
+    if (mFaceCount % 2 == 0) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.RECTANGLE, false));
+      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
     else {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.CIRCLE, false));
+      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
 
-    final Scene scene = getEngine().getScene();
-    face.animate(new long[] { 200, 200 }, 0, 1, true);
+    face.animate(200);
+    face.setUpdatePhysics(false);
+
     scene.getTopLayer().addEntity(face);
+    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
+        true, true, false, false));
   }
 }
