@@ -10,12 +10,12 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
+import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
-import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
-import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
-import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
-import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -28,6 +28,10 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class PhysicsJumpExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener, IOnAreaTouchListener {
   private static final int CAMERA_WIDTH = 360;
@@ -38,11 +42,14 @@ public class PhysicsJumpExample extends BaseExample implements
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
-  private Box2DPhysicsSpace mPhysicsSpace;
   private int mFaceCount = 0;
+
+  private PhysicsWorld mPhysicsWorld;
 
   private float mGravityX;
   private float mGravityY;
+
+  private final Vector2 mTempVector = new Vector2();
 
   @Override
   public Engine onLoadEngine() {
@@ -69,35 +76,29 @@ public class PhysicsJumpExample extends BaseExample implements
   public Scene onLoadScene() {
     getEngine().registerPostFrameHandler(new FPSLogger());
 
-    mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
+        2 * SensorManager.GRAVITY_EARTH), false);
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
+    final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
+    final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
+    final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
+    final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
+
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+
     scene.getBottomLayer().addEntity(ground);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
     scene.getBottomLayer().addEntity(roof);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(left);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(right);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
 
-    scene.registerPreFrameHandler(mPhysicsSpace);
+    scene.registerPreFrameHandler(mPhysicsWorld);
 
     scene.setOnAreaTouchListener(this);
 
@@ -112,24 +113,33 @@ public class PhysicsJumpExample extends BaseExample implements
   public boolean onAreaTouched(final ITouchArea pTouchArea,
       final TouchEvent pSceneTouchEvent) {
     if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      final AnimatedSprite face = (AnimatedSprite)pTouchArea;
-      final DynamicPhysicsBody facePhysicsBody =
-          mPhysicsSpace.findDynamicBodyByShape(face);
-      mPhysicsSpace.setVelocity(facePhysicsBody, mGravityX * -10,
-          mGravityY * -10);
+      mPhysicsWorld.postRunnable(new Runnable() {
+        @Override
+        public void run() {
+          final AnimatedSprite face = (AnimatedSprite)pTouchArea;
+          jumpFace(face);
+        }
+      });
     }
+
     return false;
   }
 
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    if (mPhysicsSpace != null) {
+    if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+        runOnUpdateThread(new Runnable() {
+          @Override
+          public void run() {
+            addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+          }
+        });
         return true;
       }
     }
+
     return false;
   }
 
@@ -137,26 +147,41 @@ public class PhysicsJumpExample extends BaseExample implements
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
     mGravityX = pAccelerometerData.getY();
     mGravityY = pAccelerometerData.getX();
-    mPhysicsSpace.setGravity(4 * mGravityX, 4 * mGravityY);
+    mTempVector.set(4 * mGravityX, 4 * mGravityY);
+    mPhysicsWorld.setGravity(mTempVector);
   }
 
   private void addFace(final float pX, final float pY) {
+    final Scene scene = mEngine.getScene();
+
     mFaceCount++;
     final AnimatedSprite face;
+    final Body body;
 
     if (mFaceCount % 2 == 1) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.RECTANGLE, false));
+      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
     else {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.CIRCLE, false));
+      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
 
-    final Scene scene = getEngine().getScene();
+    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
+        true, true, false, false));
+
     face.animate(new long[] { 200, 200 }, 0, 1, true);
+    face.setUpdatePhysics(false);
+    scene.registerTouchArea(face);
     scene.getTopLayer().addEntity(face);
+  }
+
+  private void jumpFace(final AnimatedSprite face) {
+    final Body faceBody = mPhysicsWorld.getPhysicsConnectorManager()
+        .findBodyByShape(face);
+    faceBody.setLinearVelocity(mTempVector.set(mGravityX * -10, mGravityY * -10));
+
   }
 }

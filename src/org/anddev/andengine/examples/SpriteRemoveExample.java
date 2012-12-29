@@ -2,7 +2,6 @@ package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.handler.runnable.RunnableHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -18,13 +17,15 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
 import android.widget.Toast;
 
-public class SpriteRemoveExample extends BaseExample {
+public class SpriteRemoveExample extends BaseExample
+    implements IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
   private Camera mCamera;
   private Texture mTexture;
   private TextureRegion mFaceTextureRegion;
+  private Sprite mFaceToRemove;
 
   @Override
   public Engine onLoadEngine() {
@@ -51,38 +52,35 @@ public class SpriteRemoveExample extends BaseExample {
     scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
 
     // calculate the coordinates for the face, so its centered on the camera
-    final int x = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
-    final int y = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
+    final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
+    final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
-    // create the face and add it to the scene
-    final Sprite face = new Sprite(x, y, mFaceTextureRegion);
-    scene.getTopLayer().addEntity(face);
+    mFaceToRemove = new Sprite(centerX, centerY, mFaceTextureRegion);
+    scene.getTopLayer().addEntity(mFaceToRemove);
 
-    // removing entities from a layer should be done after the layer (scene)
-    // has been updated, because doing it while updating/drawing can cause an
-    // exception with a suddenly missing entity
-    final RunnableHandler runnableRemoveHandler = new RunnableHandler();
-    scene.registerPreFrameHandler(runnableRemoveHandler);
-
-    scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
-      @Override
-      public boolean onSceneTouchEvent(final Scene pScene,
-          final TouchEvent pSceneTouchEvent) {
-        runnableRemoveHandler.postRunnable(new Runnable() {
-          @Override
-          public void run() {
-            // now it is save to remove the entity
-            scene.getTopLayer().removeEntity(face);
-          }
-        });
-        return false;
-      }
-    });
+    scene.setOnSceneTouchListener(this);
 
     return scene;
   }
 
   @Override
   public void onLoadComplete() {
+  }
+
+  @Override
+  public boolean onSceneTouchEvent(final Scene pScene,
+      final TouchEvent pSceneTouchEvent) {
+    // removing entities from a layer should be done after the layer (scene)
+    // has been updated, because doing it while updating/drawing can cause an
+    // exception with a suddenly missing entity
+    runOnUpdateThread(new Runnable() {
+      @Override
+      public void run() {
+        // now it is save to remove the entity
+        pScene.getTopLayer().removeEntity(mFaceToRemove);
+      }
+    });
+
+    return false;
   }
 }

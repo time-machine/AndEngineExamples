@@ -10,12 +10,12 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
+import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
-import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
-import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
-import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
-import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -28,51 +28,52 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class SplitScreenExample extends BaseExample implements
 IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 400;
   private static final int CAMERA_HEIGHT = 480;
 
+  private ChaseCamera mChaseCamera;
+
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
 
-  private Box2DPhysicsSpace mPhysicsSpace;
+  private PhysicsWorld mPhysicsWorld;
   private int mFaceCount;
-  private ChaseCamera mChaseCamera;
+
+  private Vector2 mTempVector;
 
   @Override
   public Scene onLoadScene() {
-    mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
+    mEngine.registerPostFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    getEngine().registerPostFrameHandler(new FPSLogger());
+    mPhysicsWorld = new PhysicsWorld(
+        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
-    scene.getLayer(0).addEntity(ground);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
+    final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
+    final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
+    final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
+    final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
 
-    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
-    scene.getLayer(0).addEntity(roof);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
 
-    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
-    scene.getLayer(0).addEntity(left);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
+    scene.getBottomLayer().addEntity(ground);
+    scene.getBottomLayer().addEntity(roof);
+    scene.getBottomLayer().addEntity(left);
+    scene.getBottomLayer().addEntity(right);
 
-    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
-    scene.getLayer(0).addEntity(right);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    getEngine().registerPreFrameHandler(mPhysicsSpace);
+    getEngine().registerPreFrameHandler(mPhysicsWorld);
 
     return scene;
   }
@@ -106,9 +107,16 @@ IAccelerometerListener, IOnSceneTouchListener {
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    if (mPhysicsSpace != null) {
+    if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+        runOnUpdateThread(new Runnable() {
+          @Override
+          public void run() {
+            addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+
+          }
+        });
+
         return true;
       }
     }
@@ -117,21 +125,26 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsSpace.setGravity(4 * pAccelerometerData.getY(),
-        4 * pAccelerometerData.getX());
+    mTempVector.set(4 * pAccelerometerData.getY(), 4 * pAccelerometerData.getX());
+    mPhysicsWorld.setGravity(mTempVector);
   }
 
   private void addFace(final float pX, final float pY) {
-    final Scene scene = getEngine().getScene();
-    final AnimatedSprite face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-    face.animate(new long[]{100, 100}, 0, 1, true);
-    scene.getLayer(1).addEntity(face);
-    mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE, false));
+    final Scene scene = mEngine.getScene();
+
+    final AnimatedSprite face = new AnimatedSprite(pX, pY,
+        mBoxFaceTextureRegion).animate(100);
+    final Body body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+        BodyType.DynamicBody);
+
+    scene.getTopLayer().addEntity(face);
+    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
+        true, true, false, false));
 
     if (mFaceCount == 0) {
       mChaseCamera.setChaseEntity(face);
     }
+
     mFaceCount++;
   }
 }

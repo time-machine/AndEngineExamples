@@ -2,7 +2,6 @@ package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.handler.runnable.RunnableHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -11,12 +10,12 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
+import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
-import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
-import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
-import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
-import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -29,6 +28,10 @@ import android.hardware.SensorManager;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+
 public class PhysicsRemoveExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener, IOnAreaTouchListener {
   private static final int CAMERA_WIDTH = 720;
@@ -38,9 +41,11 @@ public class PhysicsRemoveExample extends BaseExample implements
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
-  private Box2DPhysicsSpace mPhysicsSpace;
+  private PhysicsWorld mPhysicsWorld;
+
   private int mFaceCount = 0;
-  private RunnableHandler mRemoveRunnableHandler;
+
+  private Vector2 mTempVector;
 
   @Override
   public Engine onLoadEngine() {
@@ -65,42 +70,33 @@ public class PhysicsRemoveExample extends BaseExample implements
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPostFrameHandler(new FPSLogger());
-
-    mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mPhysicsSpace.setGravity(0, 2 * SensorManager.GRAVITY_EARTH);
+    mEngine.registerPostFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
+    mPhysicsWorld = new PhysicsWorld(
+        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
+
+    final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
+    final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
+    final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
+    final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
+
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+
     scene.getBottomLayer().addEntity(ground);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
     scene.getBottomLayer().addEntity(roof);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(left);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(right);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
 
-    scene.registerPreFrameHandler(mPhysicsSpace);
+    scene.registerPreFrameHandler(mPhysicsWorld);
 
     scene.setOnAreaTouchListener(this);
-
-    mRemoveRunnableHandler = new RunnableHandler();
-    scene.registerPostFrameHandler(mRemoveRunnableHandler);
 
     return scene;
   }
@@ -113,17 +109,11 @@ public class PhysicsRemoveExample extends BaseExample implements
   public boolean onAreaTouched(final ITouchArea pTouchArea,
       final TouchEvent pSceneTouchEvent) {
     if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      mRemoveRunnableHandler.postRunnable(new Runnable() {
+      runOnUpdateThread(new Runnable() {
         @Override
         public void run() {
           final AnimatedSprite face = (AnimatedSprite)pTouchArea;
-          final Scene scene = PhysicsRemoveExample.this.getEngine().getScene();
-
-          final DynamicPhysicsBody facePhysicsBody =
-              mPhysicsSpace.findDynamicBodyByShape(face);
-          mPhysicsSpace.removeDynamicBody(facePhysicsBody);
-          scene.unregisterTouchArea(face);
-          scene.getTopLayer().removeEntity(face);
+          removeFace(face);
         }
       });
     }
@@ -133,7 +123,7 @@ public class PhysicsRemoveExample extends BaseExample implements
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    if (mPhysicsSpace != null) {
+    if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
         addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
         return true;
@@ -144,28 +134,44 @@ public class PhysicsRemoveExample extends BaseExample implements
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsSpace.setGravity(4 * pAccelerometerData.getY(),
-        4 * pAccelerometerData.getX());
+    mTempVector.set(4 * pAccelerometerData.getY(), 4 * pAccelerometerData.getX());
+    mPhysicsWorld.setGravity(mTempVector);
   }
 
   private void addFace(final float pX, final float pY) {
-    mFaceCount++;
-    final AnimatedSprite face;
+    final Scene scene = mEngine.getScene();
 
-    if (mFaceCount % 2 == 1) {
+    mFaceCount++;
+
+    final AnimatedSprite face;
+    final Body body;
+
+    if (mFaceCount % 2 == 0) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.RECTANGLE, false));
+      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
     else {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.CIRCLE, false));
+      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
 
-    final Scene scene = getEngine().getScene();
-    face.animate(new long[] { 200, 200 }, 0, 1, true);
-    scene.registerTouchArea(face);
+    face.animate(200, true);
+    face.setUpdatePhysics(false);
+
     scene.getTopLayer().addEntity(face);
+    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
+        true, true, false, false));
+  }
+
+  private void removeFace(final AnimatedSprite face) {
+    final Scene scene = mEngine.getScene();
+
+    final Body faceBody = mPhysicsWorld.getPhysicsConnectorManager()
+        .findBodyByShape(face);
+    mPhysicsWorld.destroyBody(faceBody);
+    scene.unregisterTouchArea(face);
+    scene.getTopLayer().removeEntity(face);
   }
 }

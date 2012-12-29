@@ -10,11 +10,11 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
+import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.extension.physics.box2d.Box2DPhysicsSpace;
-import org.anddev.andengine.extension.physics.box2d.adt.DynamicPhysicsBody;
-import org.anddev.andengine.extension.physics.box2d.adt.PhysicsShape;
-import org.anddev.andengine.extension.physics.box2d.adt.StaticPhysicsBody;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
+import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -23,6 +23,10 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
+
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class PhysicsBenchmark extends BaseBenchmark implements
     IOnSceneTouchListener {
@@ -35,7 +39,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
-  private Box2DPhysicsSpace mPhysicsSpace;
+  private PhysicsWorld mPhysicsWorld;
   private int mFaceCount = 0;
 
   @Override
@@ -58,34 +62,28 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
   @Override
   public Scene onLoadScene() {
-    mPhysicsSpace = new Box2DPhysicsSpace();
-    mPhysicsSpace.createWorld(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mPhysicsSpace.setGravity(0, SensorManager.GRAVITY_EARTH);
-
     final Scene scene = new Scene(2, true, 4,
         (COUNT_VERTICAL - 1) * (COUNT_HORIZONTAL - 1));
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    final Rectangle ground = new Rectangle(0, CAMERA_HEIGHT - 1, CAMERA_WIDTH, 1);
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
+        2 * SensorManager.GRAVITY_EARTH), false);
+
+    final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
+    final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
+    final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
+    final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
+
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+
     scene.getBottomLayer().addEntity(ground);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(ground, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
     scene.getBottomLayer().addEntity(roof);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(roof, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle left = new Rectangle(0, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(left);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(left, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
-
-    final Rectangle right = new Rectangle(CAMERA_WIDTH - 1, 0, 1, CAMERA_HEIGHT);
     scene.getBottomLayer().addEntity(right);
-    mPhysicsSpace.addStaticBody(new StaticPhysicsBody(right, 0, 0.5f, 0.5f,
-        PhysicsShape.RECTANGLE));
 
     for (int x = 1; x < COUNT_HORIZONTAL; x++) {
       for (int y = 1; y < COUNT_VERTICAL; y++) {
@@ -99,11 +97,12 @@ public class PhysicsBenchmark extends BaseBenchmark implements
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
         scene.unregisterPreFrameHandler(pTimerHandler);
-        scene.registerPreFrameHandler(mPhysicsSpace);
+        scene.registerPreFrameHandler(mPhysicsWorld);
         scene.registerPreFrameHandler(new TimerHandler(10, new ITimerCallback() {
           @Override
           public void onTimePassed(final TimerHandler pTimerHandler) {
-            mPhysicsSpace.setGravity(0, -SensorManager.GRAVITY_EARTH);
+            mPhysicsWorld.setGravity(new Vector2(0,
+                -SensorManager.GRAVITY_EARTH));
           }
         }));
       }
@@ -115,7 +114,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    if (mPhysicsSpace != null) {
+    if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
         addFace(pScene, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
         return true;
@@ -138,19 +137,24 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     mFaceCount++;
 
     final AnimatedSprite face;
+    final Body body;
 
     if (mFaceCount % 2 == 1) {
-      face = new AnimatedSprite(pX - 16, pY - 16, mBoxFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.RECTANGLE, false));
+      face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
+      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
     else {
-      face = new AnimatedSprite(pX - 16, pY - 16, mCircleFaceTextureRegion);
-      mPhysicsSpace.addDynamicBody(new DynamicPhysicsBody(face, 1, 0.5f, 0.5f,
-          PhysicsShape.CIRCLE, false));
+      face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
+      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+          BodyType.DynamicBody);
     }
 
+    face.setUpdatePhysics(false);
+
     pScene.getTopLayer().addEntity(face);
+    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
+        true, true, false, false));
   }
 
   @Override
