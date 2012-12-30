@@ -18,7 +18,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = onLoadScene();
+    final Scene scene = super.onLoadScene();
     initJoints(scene);
     return scene;
   }
