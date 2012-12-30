@@ -33,7 +33,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
     final AnimatedSprite anchorFace = new AnimatedSprite(anchorFaceX,
         anchorFaceY, mBoxFaceTextureRegion);
     final Body anchorBody = PhysicsFactory.createBoxBody(mPhysicsWorld,
-        anchorFace, BodyType.DynamicBody);
+        anchorFace, BodyType.StaticBody);
 
     final AnimatedSprite movingFace = new AnimatedSprite(anchorFaceX,
         anchorFaceY + 100, mBoxFaceTextureRegion);
