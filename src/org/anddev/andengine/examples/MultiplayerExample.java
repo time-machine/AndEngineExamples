@@ -78,6 +78,7 @@ public class MultiplayerExample extends BaseExample {
       return new AlertDialog.Builder(this)
       .setIcon(android.R.drawable.ic_dialog_info)
       .setTitle("Your Server-IP ...")
+      .setCancelable(false)
       .setMessage("The IP of your Server is:\n" + IPUtils.getIPAddress(this))
       .setPositiveButton(android.R.string.ok, null)
       .create();
@@ -86,6 +87,7 @@ public class MultiplayerExample extends BaseExample {
       return new AlertDialog.Builder(this)
       .setIcon(android.R.drawable.ic_dialog_info)
       .setTitle("Enter Server-IP ...")
+      .setCancelable(false)
       .setView(ipEditText)
       .setPositiveButton("Connect", new OnClickListener() {
         @Override
@@ -105,6 +107,7 @@ public class MultiplayerExample extends BaseExample {
       return new AlertDialog.Builder(this)
       .setIcon(android.R.drawable.ic_dialog_info)
       .setTitle("Be Server or Client ...")
+      .setCancelable(false)
       .setPositiveButton("Client", new OnClickListener() {
         @Override
         public void onClick(final DialogInterface dialog, final int which) {
