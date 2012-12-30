@@ -70,7 +70,8 @@ public abstract class BaseBenchmark extends BaseGameActivity {
         getBenchmarkStartOffset(), new ITimerCallback() {
           @Override
           public void onTimePassed(final TimerHandler pTimerHandler) {
-            getEngine().unregisterPostFrameHandler(pTimerHandler);
+            mEngine.unregisterPostFrameHandler(pTimerHandler);
+            System.gc();
             setUpBenchmarkHandling();
           }
         }));

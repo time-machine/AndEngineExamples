@@ -24,6 +24,7 @@ import org.anddev.andengine.examples.PauseExample;
 import org.anddev.andengine.examples.PhysicsExample;
 import org.anddev.andengine.examples.PhysicsJumpExample;
 import org.anddev.andengine.examples.PhysicsRemoveExample;
+import org.anddev.andengine.examples.PhysicsRevoluteJointExample;
 import org.anddev.andengine.examples.R;
 import org.anddev.andengine.examples.RectangleExample;
 import org.anddev.andengine.examples.ShapeModifierExample;
@@ -47,6 +48,7 @@ import org.anddev.andengine.examples.benchmark.PhysicsBenchmark;
 import org.anddev.andengine.examples.benchmark.ShapeModifierBenchmark;
 import org.anddev.andengine.examples.benchmark.SpriteBenchmark;
 import org.anddev.andengine.examples.benchmark.TickerTextBenchmark;
+import org.anddev.andengine.examples.game.racer.RacerGameActivity;
 import org.anddev.andengine.examples.game.snake.SnakeGameActivity;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
@@ -82,6 +84,8 @@ enum Example {
       R.string.example_particlesystemsimple),
   PHYSICS(PhysicsExample.class, R.string.example_physics),
   PHYSICSJUMP(PhysicsJumpExample.class, R.string.example_physicsjump),
+  PHYSICSREVOLUTEJOINT(PhysicsRevoluteJointExample.class,
+      R.string.example_physicsrevolutejoint),
   PHYSICSREMOVE(PhysicsRemoveExample.class, R.string.example_physicsremove),
   RECTANGLE(RectangleExample.class, R.string.example_rectangle),
   SHAPEMODIFIER(ShapeModifierExample.class, R.string.example_shapemodifier),
@@ -113,7 +117,8 @@ enum Example {
   BENCHMARK_TICKERTEXT(TickerTextBenchmark.class,
       R.string.example_benchmark_tickertext),
 
-  GAME_SNAKE(SnakeGameActivity.class, R.string.example_game_snake);
+  GAME_SNAKE(SnakeGameActivity.class, R.string.example_game_snake),
+  GAME_RACER(RacerGameActivity.class, R.string.example_game_racer);
 
   public final Class<? extends BaseGameActivity> CLASS;
   public final int NAMERESID;

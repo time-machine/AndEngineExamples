@@ -1,9 +1,7 @@
-package org.anddev.andengine.examples.benchmark;
+package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.handler.timer.ITimerCallback;
-import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -12,6 +10,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
+import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
@@ -20,30 +19,36 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
+import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
+import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
+import org.anddev.andengine.util.Debug;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
-public class PhysicsBenchmark extends BaseBenchmark implements
-    IOnSceneTouchListener {
-  private static final int CAMERA_WIDTH = 720;
-  private static final int CAMERA_HEIGHT = 480;
-  private static final int COUNT_HORIZONTAL = 17;
-  private static final int COUNT_VERTICAL = 15;
+public class BasePhysicsJointExample extends BaseExample implements
+    IAccelerometerListener, IOnSceneTouchListener {
+  protected static final int CAMERA_WIDTH = 720;
+  protected static final int CAMERA_HEIGHT = 480;
 
   private Texture mTexture;
-  private TiledTextureRegion mBoxFaceTextureRegion;
+
+  protected TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
-  private PhysicsWorld mPhysicsWorld;
+  protected PhysicsWorld mPhysicsWorld;
+
   private int mFaceCount = 0;
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "Touch the screen to add objects.", Toast.LENGTH_LONG)
+        .show();
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
@@ -55,20 +60,22 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "boxface_tiled.png", 0, 0, 2, 1);
-    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "circleface_tiled.png", 0, 32, 2, 1);
-    getEngine().getTextureManager().loadTexture(mTexture);
+    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
+    mEngine.getTextureManager().loadTexture(mTexture);
+    enableAccelerometerSensor(this);
   }
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(2, true, 4,
-        (COUNT_VERTICAL - 1) * (COUNT_HORIZONTAL - 1));
+    mEngine.registerPostFrameHandler(new FPSLogger());
+
+    final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
-        2 * SensorManager.GRAVITY_EARTH), false);
+    mPhysicsWorld = new PhysicsWorld(
+        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -85,30 +92,13 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     scene.getBottomLayer().addEntity(left);
     scene.getBottomLayer().addEntity(right);
 
-    for (int x = 1; x < COUNT_HORIZONTAL; x++) {
-      for (int y = 1; y < COUNT_VERTICAL; y++) {
-        final float pX = (((float)CAMERA_WIDTH) / COUNT_HORIZONTAL) * x + y;
-        final float pY = (((float)CAMERA_HEIGHT) / COUNT_VERTICAL) * y;
-        addFace(scene, pX - 16, pY - 16);
-      }
-    }
-
-    scene.registerPreFrameHandler(new TimerHandler(2, new ITimerCallback() {
-      @Override
-      public void onTimePassed(final TimerHandler pTimerHandler) {
-        scene.unregisterPreFrameHandler(pTimerHandler);
-        scene.registerPreFrameHandler(mPhysicsWorld);
-        scene.registerPreFrameHandler(new TimerHandler(10, new ITimerCallback() {
-          @Override
-          public void onTimePassed(final TimerHandler pTimerHandler) {
-            mPhysicsWorld.setGravity(new Vector2(0,
-                -SensorManager.GRAVITY_EARTH));
-          }
-        }));
-      }
-    }));
+    scene.registerPreFrameHandler(mPhysicsWorld);
 
     return scene;
+  }
+
+  @Override
+  public void onLoadComplete() {
   }
 
   @Override
@@ -116,7 +106,12 @@ public class PhysicsBenchmark extends BaseBenchmark implements
       final TouchEvent pSceneTouchEvent) {
     if (mPhysicsWorld != null) {
       if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-        addFace(pScene, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+        runOnUpdateThread(new Runnable() {
+          @Override
+          public void run() {
+            addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
+          }
+        });
         return true;
       }
     }
@@ -124,22 +119,21 @@ public class PhysicsBenchmark extends BaseBenchmark implements
   }
 
   @Override
-  protected float getBenchmarkDuration() {
-    return 20;
+  public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
+    mPhysicsWorld.setGravity(new Vector2(4 * pAccelerometerData.getY(),
+        4 * pAccelerometerData.getX()));
   }
 
-  @Override
-  protected float getBenchmarkStartOffset() {
-    return 2;
-  }
+  private void addFace(final float pX, final float pY) {
+    final Scene scene = mEngine.getScene();
 
-  private void addFace(final Scene pScene, final float pX, final float pY) {
     mFaceCount++;
+    Debug.d("Faces:" + mFaceCount);
 
     final AnimatedSprite face;
     final Body body;
 
-    if (mFaceCount % 2 == 1) {
+    if (mFaceCount % 2 == 0) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
       body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
           BodyType.DynamicBody);
@@ -150,15 +144,11 @@ public class PhysicsBenchmark extends BaseBenchmark implements
           BodyType.DynamicBody);
     }
 
+    face.animate(200);
     face.setUpdatePhysics(false);
 
-    pScene.getTopLayer().addEntity(face);
+    scene.getTopLayer().addEntity(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
-  }
-
-  @Override
-  protected float getBenchmarkID() {
-    return PARTICLESYSTEMBENCHMARK_ID;
   }
 }
