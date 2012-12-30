@@ -37,22 +37,46 @@ public class PhysicsExample extends BaseExample implements
   private static final int CAMERA_HEIGHT = 480;
 
   private Texture mTexture;
+
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
 
   private PhysicsWorld mPhysicsWorld;
+
   private int mFaceCount = 0;
 
   @Override
+  public Engine onLoadEngine() {
+    Toast.makeText(this, "Touch the screen to add objects.",
+        Toast.LENGTH_LONG).show();
+    final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
+  }
+
+  @Override
+  public void onLoadResources() {
+    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    TextureRegionFactory.setAssetBasePath("gfx/");
+    mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "boxface_tiled.png", 0, 0, 2, 1);
+    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
+    mEngine.getTextureManager().loadTexture(mTexture);
+
+    enableAccelerometerSensor(this);
+  }
+
+  @Override
   public Scene onLoadScene() {
-    getEngine().registerPostFrameHandler(new FPSLogger());
+    mEngine.registerPostFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
     scene.setBackgroundColor(0, 0, 0);
     scene.setOnSceneTouchListener(this);
 
-    mPhysicsWorld = new PhysicsWorld(
-        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
+        2 * SensorManager.GRAVITY_EARTH), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -75,28 +99,7 @@ public class PhysicsExample extends BaseExample implements
   }
 
   @Override
-  public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
-    TextureRegionFactory.setAssetBasePath("gfx/");
-    mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "boxface_tiled.png", 0, 0, 2, 1);
-    mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
-    mEngine.getTextureManager().loadTexture(mTexture);
-    enableAccelerometerSensor(this);
-  }
-
-  @Override
   public void onLoadComplete() {
-  }
-
-  @Override
-  public Engine onLoadEngine() {
-    Toast.makeText(this, "Touch the screen to add objects.", Toast.LENGTH_LONG)
-        .show();
-    final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
   }
 
   @Override
@@ -110,7 +113,6 @@ public class PhysicsExample extends BaseExample implements
             addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
           }
         });
-
         return true;
       }
     }
@@ -127,7 +129,7 @@ public class PhysicsExample extends BaseExample implements
     final Scene scene = mEngine.getScene();
 
     mFaceCount++;
-    Debug.d("Faces:" + mFaceCount);
+    Debug.d("Faces: " + mFaceCount);
 
     final AnimatedSprite face;
     final Body body;
