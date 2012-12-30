@@ -128,7 +128,6 @@ public class RacerGameActivity extends BaseGameActivity {
         });
 
     analogOnScreenControl.getControlBase().setAlpha(0.5f);
-    analogOnScreenControl.getControlKnob().setAlpha(0.5f);
 
     scene.setChildScene(analogOnScreenControl);
   }

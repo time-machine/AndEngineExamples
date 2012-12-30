@@ -197,7 +197,6 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // make the controls semi-transparent
     mDigitalOnScreenControl.getControlBase().setAlpha(0.5f);
-    mDigitalOnScreenControl.getControlKnob().setAlpha(0.5f);
 
     scene.setChildScene(mDigitalOnScreenControl);
 

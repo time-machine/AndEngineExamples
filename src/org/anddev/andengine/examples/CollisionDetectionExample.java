@@ -5,10 +5,17 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.shape.modifier.LoopModifier;
+import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
+import org.anddev.andengine.entity.shape.modifier.RotationModifier;
+import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouch;
@@ -22,7 +29,7 @@ import org.anddev.andengine.util.MathUtils;
 
 import android.widget.Toast;
 
-public class AnalogOnScreenControlsExample extends BaseExample {
+public class CollisionDetectionExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
 
@@ -54,7 +61,6 @@ public class AnalogOnScreenControlsExample extends BaseExample {
         }
         else {
           mPlaceOnScreenControlsAtDifferentVerticalLocations = true;
-
           Toast.makeText(this, "MultiTouch detected, but your device has " +
               "problems distinguishing between fingers.\n\nControls are " +
               "placed at different vertical locations.",
@@ -77,17 +83,17 @@ public class AnalogOnScreenControlsExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
+    TextureRegionFactory.setAssetBasePath("gfx/");
+
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface.png", 0, 0);
+        "boxface.png", 0, 0);
 
     mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "gfx/onscreen_control_base.png",
-        0, 0);
+        mOnScreenControlTexture, this, "onscreen_control_base.png", 0, 0);
     mOnScreenControlKnobTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "gfx/onscreen_control_knob.png",
-        128, 0);
+        mOnScreenControlTexture, this, "onscreen_control_knob.png", 128, 0);
 
     mEngine.getTextureManager().loadTextures(mTexture, mOnScreenControlTexture);
   }
@@ -101,8 +107,16 @@ public class AnalogOnScreenControlsExample extends BaseExample {
 
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-    final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
+    // a spinning rectangle in the center of the screen
+    final Rectangle centerRectangle = new Rectangle(centerX, centerY, 32, 32);
+    centerRectangle.addShapeModifier(new LoopModifier(new ParallelModifier(
+        new RotationModifier(6, 0, 360), new SequenceModifier(
+            new ScaleModifier(3, 1, 1.5f), new ScaleModifier(3,  1.5f, 1)))));
+
+    scene.getTopLayer().addEntity(centerRectangle);
+
+    final Sprite face = new Sprite(centerX, centerY + 42, mFaceTextureRegion);
     scene.getTopLayer().addEntity(face);
 
     // velocity control (left)
@@ -149,8 +163,26 @@ public class AnalogOnScreenControlsExample extends BaseExample {
 
     velocityOnScreenControl.setChildScene(rotationOnScreenControl);
 
+    // the actual collision-checking
+    scene.registerPreFrameHandler(new IUpdateHandler() {
+      @Override
+      public void reset() {
+      }
+
+      @Override
+      public void onUpdate(final float pSecondsElapsed) {
+        if (centerRectangle.collidesWith(face)) {
+          centerRectangle.setColor(1, 0, 0);
+        }
+        else {
+          centerRectangle.setColor(0, 1, 0);
+        }
+      }
+    });
+
     return scene;
   }
+
 
   @Override
   public void onLoadComplete() {
