@@ -1,21 +1,18 @@
 package org.anddev.andengine.examples;
 
+import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
-import org.anddev.andengine.util.MathUtils;
 
-import android.widget.Toast;
-
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
 public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
-  private RevoluteJoint mRevoluteJoint;
-
   @Override
   public Scene onLoadScene() {
     final Scene scene = super.onLoadScene();
@@ -27,41 +24,60 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
     final int centerX = CAMERA_WIDTH / 2;
     final int centerY = CAMERA_HEIGHT / 2;
 
-    final float anchorFaceX = centerX - mBoxFaceTextureRegion.getWidth() * 0.5f;
-    final float anchorFaceY = centerY - mBoxFaceTextureRegion.getHeight() * 0.5f;
+    final int spriteWidth = mBoxFaceTextureRegion.getWidth();
+    final int spriteHeight = mBoxFaceTextureRegion.getHeight();
 
-    final AnimatedSprite anchorFace = new AnimatedSprite(anchorFaceX,
-        anchorFaceY, mBoxFaceTextureRegion);
-    final Body anchorBody = PhysicsFactory.createBoxBody(mPhysicsWorld,
-        anchorFace, BodyType.StaticBody);
+    final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
+        0.5f);
 
-    final AnimatedSprite movingFace = new AnimatedSprite(anchorFaceX,
-        anchorFaceY + 100, mBoxFaceTextureRegion);
-    final Body movingBody = PhysicsFactory.createBoxBody(mPhysicsWorld,
-        movingFace, BodyType.DynamicBody);
+    for (int i = 0; i < 4; i++) {
+      final float anchorFaceX = centerX - spriteWidth * 0.5f -
+          (spriteWidth + 2) * (i - 2);
+      final float anchorFaceY = centerY - spriteHeight * 0.5f - spriteHeight;
 
-    anchorFace.animate(200);
-    movingFace.animate(200);
-    anchorFace.setUpdatePhysics(false);
-    movingFace.setUpdatePhysics(false);
+      final AnimatedSprite anchorFace = new AnimatedSprite(anchorFaceX,
+          anchorFaceY, mBoxFaceTextureRegion);
+      final Body anchorBody = PhysicsFactory.createBoxBody(mPhysicsWorld,
+          anchorFace, BodyType.StaticBody, objectFixtureDef);
 
-    scene.getTopLayer().addEntity(anchorFace);
-    scene.getTopLayer().addEntity(movingFace);
+      final AnimatedSprite movingFace = new AnimatedSprite(anchorFaceX,
+          anchorFaceY + 100, mCircleFaceTextureRegion);
+      final Body movingBody = PhysicsFactory.createCircleBody(mPhysicsWorld,
+          movingFace, BodyType.DynamicBody, objectFixtureDef);
 
-    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(anchorFace,
-        anchorBody, true, true, false, false));
-    mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(movingFace,
-        movingBody, true, true, false, false));
+      anchorFace.animate(200);
+      movingFace.animate(200);
+      anchorFace.setUpdatePhysics(false);
+      movingFace.setUpdatePhysics(false);
 
-    final RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
-    revoluteJointDef.initialize(anchorBody, movingBody,
-        anchorBody.getWorldCenter());
-    revoluteJointDef.enableMotor = true;
-    revoluteJointDef.motorSpeed = MathUtils.degToRad(45);
-    revoluteJointDef.maxMotorTorque = 100;
+      scene.getTopLayer().addEntity(anchorFace);
+      scene.getTopLayer().addEntity(movingFace);
 
-    mRevoluteJoint = (RevoluteJoint)mPhysicsWorld.createJoint(revoluteJointDef);
-    Toast.makeText(this, "Motor speed: " + mRevoluteJoint.getMotorSpeed(),
-        Toast.LENGTH_LONG).show();
+      final Line connectionLine = new Line(anchorFaceX + spriteWidth / 2,
+          anchorFaceY + spriteHeight / 2, anchorFaceX + spriteWidth / 2,
+          anchorFaceY + spriteHeight / 2);
+      scene.getBottomLayer().addEntity(connectionLine);
+
+      mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(anchorFace,
+          anchorBody, true, true, false, false) {
+        @Override
+        public void onUpdate(final float pSecondsElapsed) {
+          super.onUpdate(pSecondsElapsed);
+          final Vector2 movingBodyWorldCenter = movingBody.getWorldCenter();
+          connectionLine.setPosition(connectionLine.getX1(),
+              connectionLine.getY1(), movingBodyWorldCenter.x,
+              movingBodyWorldCenter.y);
+        }
+      });
+
+      mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(movingFace,
+          movingBody, true, true, false, false));
+
+      final RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
+      revoluteJointDef.initialize(anchorBody, movingBody,
+          anchorBody.getWorldCenter());
+
+      mPhysicsWorld.createJoint(revoluteJointDef);
+    }
   }
 }

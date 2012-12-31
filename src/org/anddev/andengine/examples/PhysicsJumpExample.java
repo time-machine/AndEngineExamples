@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class PhysicsJumpExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener, IOnAreaTouchListener {
@@ -88,10 +89,16 @@ public class PhysicsJumpExample extends BaseExample implements
     final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
     final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
 
-    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+    final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0, 0.5f,
+        0.5f);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
+        wallFixtureDef);
 
     scene.getBottomLayer().addEntity(ground);
     scene.getBottomLayer().addEntity(roof);
@@ -147,7 +154,7 @@ public class PhysicsJumpExample extends BaseExample implements
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
     mGravityX = pAccelerometerData.getY();
     mGravityY = pAccelerometerData.getX();
-    mTempVector.set(4 * mGravityX, 4 * mGravityY);
+    mTempVector.set(10 * mGravityX, 10 * mGravityY);
     mPhysicsWorld.setGravity(mTempVector);
   }
 
@@ -158,15 +165,18 @@ public class PhysicsJumpExample extends BaseExample implements
     final AnimatedSprite face;
     final Body body;
 
+    final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
+        0.5f);
+
     if (mFaceCount % 2 == 1) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
       body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
-          BodyType.DynamicBody);
+          BodyType.DynamicBody, objectFixtureDef);
     }
     else {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
       body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
-          BodyType.DynamicBody);
+          BodyType.DynamicBody, objectFixtureDef);
     }
 
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
@@ -181,7 +191,6 @@ public class PhysicsJumpExample extends BaseExample implements
   private void jumpFace(final AnimatedSprite face) {
     final Body faceBody = mPhysicsWorld.getPhysicsConnectorManager()
         .findBodyByShape(face);
-    faceBody.setLinearVelocity(mTempVector.set(mGravityX * -10, mGravityY * -10));
-
+    faceBody.setLinearVelocity(mTempVector.set(mGravityX * -50, mGravityY * -50));
   }
 }

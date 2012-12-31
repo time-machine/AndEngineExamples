@@ -30,6 +30,7 @@ import org.anddev.andengine.util.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class RacerGameActivity extends BaseGameActivity {
   private static final int CAMERA_WIDTH = 768;
@@ -135,8 +136,10 @@ public class RacerGameActivity extends BaseGameActivity {
   private void initCar(final Scene scene) {
     mCar = new AnimatedSprite(20, 20, 32, 32, mVehiclesTextureRegion);
     mCar.setCurrentTileIndex(0);
+    final FixtureDef carFixtureDef = new FixtureDef();
+    carFixtureDef.restitution = 0;
     mCarBody = PhysicsFactory.createBoxBody(mPhysicsWorld, mCar,
-        BodyType.DynamicBody);
+        BodyType.DynamicBody, carFixtureDef);
     mCar.setUpdatePhysics(false);
 
     scene.getLayer(LAYER_CARS).addEntity(mCar);
@@ -219,15 +222,26 @@ public class RacerGameActivity extends BaseGameActivity {
     final Shape rightInner = new Rectangle(CAMERA_WIDTH - 2 - INSET, INSET,
         2, CAMERA_HEIGHT - 2 * INSET);
 
-    PhysicsFactory.createBoxBody(mPhysicsWorld, bottomOuter, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, topOuter, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, leftOuter, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, rightOuter, BodyType.StaticBody);
+    final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0, 0.5f,
+        0.5f);
 
-    PhysicsFactory.createBoxBody(mPhysicsWorld, bottomInner, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, topInner, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, leftInner, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, rightInner, BodyType.StaticBody);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, bottomOuter,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, topOuter,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, leftOuter,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, rightOuter,
+        BodyType.StaticBody, wallFixtureDef);
+
+    PhysicsFactory.createBoxBody(mPhysicsWorld, bottomInner,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, topInner,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, leftInner,
+        BodyType.StaticBody, wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, rightInner,
+        BodyType.StaticBody, wallFixtureDef);
 
     final ILayer bottomLayer =  scene.getLayer(LAYER_BORDERS);
     bottomLayer.addEntity(bottomOuter);

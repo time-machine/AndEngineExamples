@@ -30,6 +30,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class PhysicsExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener {
@@ -83,10 +84,16 @@ public class PhysicsExample extends BaseExample implements
     final Shape left = new Rectangle(0, 0, 2, CAMERA_HEIGHT);
     final Shape right = new Rectangle(CAMERA_WIDTH - 2, 0, 2, CAMERA_HEIGHT);
 
-    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody);
-    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody);
+    final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0, 0.5f,
+        0.5f);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, ground, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, roof, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, left, BodyType.StaticBody,
+        wallFixtureDef);
+    PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
+        wallFixtureDef);
 
     scene.getBottomLayer().addEntity(ground);
     scene.getBottomLayer().addEntity(roof);
@@ -121,8 +128,8 @@ public class PhysicsExample extends BaseExample implements
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsWorld.setGravity(new Vector2(4 * pAccelerometerData.getY(),
-        4 * pAccelerometerData.getX()));
+    mPhysicsWorld.setGravity(new Vector2(10 * pAccelerometerData.getY(),
+        10 * pAccelerometerData.getX()));
   }
 
   private void addFace(final float pX, final float pY) {
@@ -134,15 +141,18 @@ public class PhysicsExample extends BaseExample implements
     final AnimatedSprite face;
     final Body body;
 
+    final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
+        0.5f);
+
     if (mFaceCount % 2 == 0) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
       body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
-          BodyType.DynamicBody);
+          BodyType.DynamicBody, objectFixtureDef);
     }
     else {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
       body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
-          BodyType.DynamicBody);
+          BodyType.DynamicBody, objectFixtureDef);
     }
 
     face.animate(200);
