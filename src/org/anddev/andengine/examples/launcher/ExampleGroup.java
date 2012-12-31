@@ -10,7 +10,7 @@ public enum ExampleGroup {
       Example.PATHMODIFIER, Example.ANIMATEDSPRITES),
   TOUCH(R.string.examplegroup_touch, Example.TOUCHDRAG, Example.MULTITOUCH,
       Example.ANALOGONSCREENCONTROL, Example.DIGITALONSCREENCONTROL,
-      Example.ANALOGONSCREENCONTROLS),
+      Example.ANALOGONSCREENCONTROLS, Example.COORDINATECONVERSION),
   PARTICLESYSTEMS(R.string.examplegroup_particlesystems,
       Example.PARTICLESYSTEMSIMPLE, Example.PARTICLESYSTEMCOOL,
       Example.PARTICLESYSTEMNEXUS),

@@ -79,6 +79,10 @@ public class AnalogOnScreenControlExample extends BaseExample {
         });
 
     analogOnScreenControl.getControlBase().setAlpha(0.5f);
+    analogOnScreenControl.getControlBase().setScaleCenter(0, 128);
+    analogOnScreenControl.getControlBase().setScale(2);
+    analogOnScreenControl.getControlKnob().setScale(2);
+    analogOnScreenControl.refreshControlKnobPosition();
 
     scene.setChildScene(analogOnScreenControl);
 

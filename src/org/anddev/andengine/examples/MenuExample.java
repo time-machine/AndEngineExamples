@@ -103,7 +103,8 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
 
   @Override
   public boolean onMenuItemClicked(final MenuScene pMenuScene,
-      final IMenuItem pMenuItem) {
+      final IMenuItem pMenuItem, final float pMenuItemLocalX,
+      final float pMenuItemLocalY) {
     switch (pMenuItem.getID()) {
     case MENU_RESET:
       // restart the animation

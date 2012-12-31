@@ -113,8 +113,9 @@ public class PhysicsRemoveExample extends BaseExample implements
   }
 
   @Override
-  public boolean onAreaTouched(final ITouchArea pTouchArea,
-      final TouchEvent pSceneTouchEvent) {
+  public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+      final ITouchArea pTouchArea, final float pTouchAreaLocalX,
+      final float pTouchAreaLocalY) {
     if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
       runOnUpdateThread(new Runnable() {
         @Override

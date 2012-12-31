@@ -56,8 +56,9 @@ public class UnloadTextureExample extends BaseExample {
     scene.registerTouchArea(clickToUnload);
     scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
       @Override
-      public boolean onAreaTouched(final ITouchArea pTouchArea,
-          final TouchEvent pSceneTouchEvent) {
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+          final ITouchArea pTouchArea, final float pTouchAreaLocalX,
+          final float pTouchAreaLocalY) {
         if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
           getEngine().getTextureManager().unloadTexture(mTexture);
         }
