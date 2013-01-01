@@ -79,6 +79,10 @@ public class DigitalOnScreenControlExample extends BaseExample {
         });
 
     digitalOnScreenControl.getControlBase().setAlpha(0.5f);
+    digitalOnScreenControl.getControlBase().setScaleCenter(0, 128);
+    digitalOnScreenControl.getControlBase().setScale(1.25f);
+    digitalOnScreenControl.getControlKnob().setScale(1.25f);
+    digitalOnScreenControl.refreshControlKnobPosition();
 
     scene.setChildScene(digitalOnScreenControl);
 

@@ -125,19 +125,13 @@ public class RacerGameActivity extends BaseGameActivity {
             mCar.setRotation(MathUtils.radToDeg(
                 (float)Math.atan2(-pValueX, pValueY)));
           }
-        }){
-      @Override
-      protected void onHandleControlBaseLeft() {
-        // nothing
-      }
-
-      @Override
-      protected void onHandleControlKnobReleased() {
-        // nothing
-      }
-    };
+        });
 
     analogOnScreenControl.getControlBase().setAlpha(0.5f);
+    analogOnScreenControl.getControlBase().setScaleCenter(0, 128);
+    analogOnScreenControl.getControlBase().setScale(1.25f);
+    analogOnScreenControl.getControlKnob().setScale(1.25f);
+    analogOnScreenControl.refreshControlKnobPosition();
 
     scene.setChildScene(analogOnScreenControl);
   }
@@ -145,13 +139,13 @@ public class RacerGameActivity extends BaseGameActivity {
   private void initCar(final Scene scene) {
     mCar = new TiledSprite(20, 20, 32, 32, mVehiclesTextureRegion);
     mCar.setCurrentTileIndex(0);
-    final FixtureDef carFixtureDef = new FixtureDef();
-    carFixtureDef.restitution = 0;
+
+    final FixtureDef carFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
+        0.5f);
+
     mCarBody = PhysicsFactory.createBoxBody(mPhysicsWorld, mCar,
         BodyType.DynamicBody, carFixtureDef);
     mCar.setUpdatePhysics(false);
-    mCarBody.setAngularDamping(10);
-    mCarBody.setLinearDamping(10);
 
     scene.getLayer(LAYER_CARS).addEntity(mCar);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(mCar, mCarBody,

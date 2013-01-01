@@ -57,7 +57,7 @@ public class CollisionDetectionExample extends BaseExample {
 
         if (MultiTouch.isSupportedDistinct(this)) {
           Toast.makeText(this, "MultiTouch detected --> Both controls will work" +
-              "properly!", Toast.LENGTH_LONG).show();
+              "properly!", Toast.LENGTH_SHORT).show();
         }
         else {
           mPlaceOnScreenControlsAtDifferentVerticalLocations = true;

@@ -45,6 +45,8 @@ public class CoordinateConversionExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "The arrow will always point to the left eye of the " +
+        "face!", Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     final Engine engine = new Engine(new EngineOptions(true,
         ScreenOrientation.LANDSCAPE,
