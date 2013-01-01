@@ -48,13 +48,14 @@ IAccelerometerListener, IOnSceneTouchListener {
   private int mFaceCount;
 
   private final Vector2 mTempVector = new Vector2();
+  private Camera mCamera;
 
   @Override
   public Scene onLoadScene() {
     mEngine.registerPostFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
-    scene.setBackground(new ColorBackground(0, 0, 0));
+    scene.setBackground(new ColorBackground());
     scene.setOnSceneTouchListener(this);
 
     mPhysicsWorld = new PhysicsWorld(
@@ -101,15 +102,16 @@ IAccelerometerListener, IOnSceneTouchListener {
 
   @Override
   public Engine onLoadEngine() {
-    Toast.makeText(this, "Touch the screen to add boxes.", Toast.LENGTH_LONG).show();
-    final Camera firstCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    final ChaseCamera secondCamera = new ChaseCamera(0, 0, CAMERA_WIDTH / 2,
-        CAMERA_HEIGHT / 2, null);
-    mChaseCamera = secondCamera;
+    Toast.makeText(this, "Touch the screen to add boxes.", Toast.LENGTH_LONG)
+        .show();
+
+    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    mChaseCamera = new ChaseCamera(0, 0, CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
+        null);
+
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
-        ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH * 2, CAMERA_HEIGHT), firstCamera,
-        secondCamera));
+        ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH * 2,
+            CAMERA_HEIGHT), mCamera, mChaseCamera));
   }
 
   @Override
