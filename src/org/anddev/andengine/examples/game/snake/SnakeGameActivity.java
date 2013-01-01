@@ -115,7 +115,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     mBackgroundTexture = new Texture(1024, 512, TextureOptions.DEFAULT);
     mBackgroundTextureRegion = TextureRegionFactory.createFromAsset(
-        mBackgroundTexture, this, "background_forest.png", 0, 0);
+        mBackgroundTexture, this, "snake_background.png", 0, 0);
 
     mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(

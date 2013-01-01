@@ -131,6 +131,9 @@
             android:name=".SpriteExample"
             android:configChanges="orientation" />
         <activity
+            android:name=".SpriteBackgroundExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".SpriteRemoveExample"
             android:configChanges="orientation" />
         <activity
