@@ -105,23 +105,23 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // load all the textures this game needs
     mTexture = new Texture(128, 128, TextureOptions.BILINEAR);
-    TextureRegionFactory.setAssetBasePath("gfx/");
+
     mHeadTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "snake_head.png", 0, 0, 3, 1);
+        this, "gfx/snake_head.png", 0, 0, 3, 1);
     mTailPartTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
-        this, "snake_tailpart.png", 96, 0);
+        this, "gfx/snake_tailpart.png", 96, 0);
     mFrogTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "frog.png", 0, 64, 3, 1);
+        this, "gfx/frog.png", 0, 64, 3, 1);
 
     mBackgroundTexture = new Texture(1024, 512, TextureOptions.DEFAULT);
     mBackgroundTextureRegion = TextureRegionFactory.createFromAsset(
-        mBackgroundTexture, this, "snake_background.png", 0, 0);
+        mBackgroundTexture, this, "gfx/snake_background.png", 0, 0);
 
     mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "onscreen_control_base.png", 0, 0);
+        mOnScreenControlTexture, this, "gfx/onscreen_control_base.png", 0, 0);
     mOnScreenControlKnobTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "onscreen_control_knob.png", 128, 0);
+        mOnScreenControlTexture, this, "gfx/onscreen_control_knob.png", 128, 0);
     mEngine.getTextureManager().loadTextures(mBackgroundTexture, mTexture,
         mOnScreenControlTexture);
 
