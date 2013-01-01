@@ -44,13 +44,12 @@ public class PathModifierExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    TextureRegionFactory.setAssetBasePath("gfx/");
     mTexture = new Texture(128, 128, TextureOptions.DEFAULT);
     mPlayerTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "player.png", 0, 0, 3, 4);
+        this, "gfx/player.png", 0, 0, 3, 4);
     mGrassBackground = new RepeatingSpriteBackground(CAMERA_WIDTH,
         CAMERA_HEIGHT, mEngine.getTextureManager(), new AssetTextureSource(
-            this, "background_grass.png"));
+            this, "gfx/background_grass.png"));
 
     getEngine().getTextureManager().loadTexture(mTexture);
   }

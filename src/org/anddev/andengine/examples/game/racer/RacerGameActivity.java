@@ -69,23 +69,21 @@ public class RacerGameActivity extends BaseGameActivity {
 
   @Override
   public void onLoadResources() {
-    TextureRegionFactory.setAssetBasePath("gfx/");
-
     mVehiclesTexture = new Texture(128, 16, TextureOptions.BILINEAR);
     mVehiclesTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mVehiclesTexture, this, "vehicles.png", 0, 0, 6, 1);
+        mVehiclesTexture, this, "gfx/vehicles.png", 0, 0, 6, 1);
 
     mRacetrackTexture = new Texture(128, 256, TextureOptions.REPEATING_BILINEAR);
     mRacetrackStraightTextureRegion = TextureRegionFactory.createFromAsset(
-        mRacetrackTexture, this, "racetrack_straight.png", 0, 0);
+        mRacetrackTexture, this, "gfx/racetrack_straight.png", 0, 0);
     mRacetrackCurveTextureRegion = TextureRegionFactory.createFromAsset(
-        mRacetrackTexture, this, "racetrack_curve.png", 0, 128);
+        mRacetrackTexture, this, "gfx/racetrack_curve.png", 0, 128);
 
     mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "onscreen_control_base.png", 0, 0);
+        mOnScreenControlTexture, this, "gfx/onscreen_control_base.png", 0, 0);
     mOnScreenControlKnobTextureRegion = TextureRegionFactory.createFromAsset(
-        mOnScreenControlTexture, this, "onscreen_control_knob.png", 128, 0);
+        mOnScreenControlTexture, this, "gfx/onscreen_control_knob.png", 128, 0);
 
     mEngine.getTextureManager().loadTextures(mVehiclesTexture, mRacetrackTexture,
         mOnScreenControlTexture);
