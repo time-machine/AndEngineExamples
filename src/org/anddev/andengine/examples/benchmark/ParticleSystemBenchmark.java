@@ -17,6 +17,7 @@ import org.anddev.andengine.entity.particle.modifier.RotationInitializer;
 import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.entity.particle.modifier.VelocityInitializer;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
@@ -51,7 +52,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
   @Override
   public Scene onLoadScene() {
     final Scene scene = new Scene(1, true, 4);
-    scene.setBackgroundColor(0.0f, 0.0f, 0.0f);
+    scene.setBackground(new ColorBackground(0, 0, 0));
 
     // lower left to lower right particle system
     {

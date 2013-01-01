@@ -10,6 +10,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -81,7 +82,7 @@ public class PhysicsJumpExample extends BaseExample implements
         2 * SensorManager.GRAVITY_EARTH), false);
 
     final Scene scene = new Scene(2);
-    scene.setBackgroundColor(0, 0, 0);
+    scene.setBackground(new ColorBackground(0, 0, 0));
     scene.setOnSceneTouchListener(this);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);

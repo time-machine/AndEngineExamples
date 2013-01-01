@@ -12,6 +12,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.input.touch.TouchEvent;
@@ -67,7 +68,7 @@ public class MusicExample extends BaseExample {
     getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
-    scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
+    scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
     final int x = (CAMERA_WIDTH - mNotesTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mNotesTextureRegion.getHeight()) / 2;

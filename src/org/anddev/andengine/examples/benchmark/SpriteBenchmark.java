@@ -9,6 +9,7 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.layer.ILayer;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -54,7 +55,7 @@ public class SpriteBenchmark extends BaseBenchmark {
   @Override
   public Scene onLoadScene() {
     final Scene scene = new Scene(1, true, SPRITE_COUNT);
-    scene.setBackgroundColor(0.09804f, 0.6274f, 0.8784f);
+    scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
     // as we are creating quite a lot of the same Sprites, we can let them share
     // a VertexBuffer to significantly increase performance

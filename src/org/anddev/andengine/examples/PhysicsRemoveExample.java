@@ -10,6 +10,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.Scene.ITouchArea;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -74,7 +75,7 @@ public class PhysicsRemoveExample extends BaseExample implements
     mEngine.registerPostFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
-    scene.setBackgroundColor(0, 0, 0);
+    scene.setBackground(new ColorBackground(0, 0, 0));
     scene.setOnSceneTouchListener(this);
 
     mPhysicsWorld = new PhysicsWorld(
