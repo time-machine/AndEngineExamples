@@ -6,7 +6,6 @@ import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.scene.background.SpriteBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -55,8 +54,8 @@ public class SpriteBackgroundExample extends BaseExample {
     getEngine().registerPreFrameHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
-    scene.setBackground(new SpriteBackground(mCamera, new Sprite(0, 0,
-        CAMERA_WIDTH, CAMERA_HEIGHT, mBackgroundGrassTextureRegion)));
+//    scene.setBackground(new SpriteBackground(mCamera, new Sprite(0, 0,
+//        CAMERA_WIDTH, CAMERA_HEIGHT, mBackgroundGrassTextureRegion)));
 
     // calculate the coordinates for the face, so its centered on the camera
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
