@@ -24,8 +24,8 @@ import org.anddev.andengine.util.Debug;
 import org.anddev.andengine.util.Path;
 
 public class TMXTiledMapExample extends BaseExample {
-  private static final int CAMERA_WIDTH = 800;
-  private static final int CAMERA_HEIGHT = 480;
+  private static final int CAMERA_WIDTH = 480;
+  private static final int CAMERA_HEIGHT = 320;
 
   private ChaseCamera mChaseCamera;
 
