@@ -63,6 +63,7 @@ public class SpriteBackgroundExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mPlayerTextureRegion.getTileHeight())
         / 2;
 
+    // create the sprite and add it to the scene
     final AnimatedSprite player = new AnimatedSprite(centerX, centerY, 48, 64,
         mPlayerTextureRegion);
 

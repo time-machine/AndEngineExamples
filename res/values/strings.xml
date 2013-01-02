@@ -12,7 +12,7 @@
     <string name="dialog_benchmarks_submit_please_message">Hi,\n\nmay be you already noticed that the <b>AndEngineExamples</b> contain some <b>Benchmarks</b>.\n\nThe reason for that is that I am building a public <b>Performance-Database</b> that everyone can access and use for i.e. a feasibility analysis.\n\nSo please submit Benchmarks from all your devices and from time to time when there is a new version of AndEngine, so I can analyze if the tweaks I added were for the good or for the bad ;)\n\nBest Regards,\nNicolas</string>
     <string name="dialog_modplayerexample_loading_to_external_title">Loading</string>
     <string name="dialog_modplayerexample_loading_to_external_message">Transferring \'lepeltheme.mod\' to SDCard...</string>
-    
+
     <!-- Example-Groups -->
     <string name="examplegroup_simple">Simple</string>
     <string name="examplegroup_modifier_and_animation">Modifier &amp; Animation</string>
@@ -33,7 +33,8 @@
     <string name="example_analogonscreencontrols">Dual Analog OnScreen-Control</string>
     <string name="example_animatedsprites">Drawing Animated Sprites</string>
     <string name="example_augmentedreality">Using AugmentedReality</string>
-    <string name="example_augmentedrealityhorizon">An AugmentedReality Horizon</string>    
+    <string name="example_augmentedrealityhorizon">An AugmentedReality Horizon</string>
+    <string name="example_autoparallaxbackground">Using an AutoParallaxBackground</string>
     <string name="example_changeabletext">Changeable Text</string>
     <string name="example_collisiondetection">Collision Detection</string>
     <string name="example_coordinateconversion">Coordinate Conversion</string>
@@ -70,7 +71,7 @@
     <string name="example_textmenu">Using TextMenus</string>
     <string name="example_textureoptions">Using TextureOptions</string>
     <string name="example_tickertext">Drawing a TickerText</string>
-    <string name="example_touchdrag">Touch &amp; Drag Sprites</string>    
+    <string name="example_touchdrag">Touch &amp; Drag Sprites</string>
     <string name="example_unloadtexture">Unloading Textures Dynamic</string>
     <string name="example_updatetexture">Updating Textures Dynamic</string>
     <string name="example_zoom">Using a ZoomCamera</string>
@@ -82,8 +83,9 @@
     <string name="example_benchmark_shapemodifier">ShapeModifier Benchmark</string>
     <string name="example_benchmark_sprite">Sprite Benchmark</string>
     <string name="example_benchmark_tickertext">TickerText Benchmark</string>
-  
+
     <!-- Games -->
     <string name="example_game_snake">Snake</string>
     <string name="example_game_racer">Racer</string>
+
 </resources>
