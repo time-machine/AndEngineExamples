@@ -20,7 +20,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.opengl.texture.source.AssetTextureSource;
 import org.anddev.andengine.util.Path;
 
-public class SpriteBackgroundExample extends BaseExample {
+public class RepeatingSpriteBackgroundExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
