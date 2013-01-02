@@ -55,11 +55,12 @@ public class SubMenuExample extends MenuExample {
   }
 
   @Override
-  protected MenuScene createMenuScene() {
-    final MenuScene mainMenuScene = super.createMenuScene();
+  protected void createMenuScene() {
+    super.createMenuScene();
 
     mSubMenuScene = new MenuScene(mCamera);
-    mSubMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT_OK, mMenuOkTextureRegion));
+    mSubMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT_OK,
+        mMenuOkTextureRegion));
     mSubMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT_BACK,
         mMenuBackTextureRegion));
     mSubMenuScene.setMenuAnimator(new SlideMenuAnimator());
@@ -67,7 +68,5 @@ public class SubMenuExample extends MenuExample {
 
     mSubMenuScene.setBackgroundEnabled(false);
     mSubMenuScene.setOnMenuItemClickListener(this);
-
-    return mainMenuScene;
   }
 }

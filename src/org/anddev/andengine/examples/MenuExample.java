@@ -66,7 +66,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
   @Override
   public Scene onLoadScene() {
     getEngine().registerPreFrameHandler(new FPSLogger());
-    mMenuScene = createMenuScene();
+    createMenuScene();
 
     // a simple scene with an animated face flying around
     mMainScene = new Scene(1);
@@ -123,16 +123,14 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
     }
   }
 
-  protected MenuScene createMenuScene() {
-    final MenuScene menuScene = new MenuScene(mCamera);
+  protected void createMenuScene() {
+    mMenuScene = new MenuScene(mCamera);
 
-    menuScene.addMenuItem(new SpriteMenuItem(MENU_RESET, mMenuResetTextureRegion));
-    menuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT, mMenuQuitTextureRegion));
-    menuScene.buildAnimations();
+    mMenuScene.addMenuItem(new SpriteMenuItem(MENU_RESET, mMenuResetTextureRegion));
+    mMenuScene.addMenuItem(new SpriteMenuItem(MENU_QUIT, mMenuQuitTextureRegion));
+    mMenuScene.buildAnimations();
 
-    menuScene.setBackgroundEnabled(false);
-    menuScene.setOnMenuItemClickListener(this);
-
-    return menuScene;
+    mMenuScene.setBackgroundEnabled(false);
+    mMenuScene.setOnMenuItemClickListener(this);
   }
 }
