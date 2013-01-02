@@ -69,17 +69,17 @@ public class MovingBallExample extends BaseExample {
     @Override
     protected void onManagedUpdate(final float pSecondsElapsed) {
       if (mX < 0) {
-        mVelocityX = DEMO_VELOCITY;
+        setVelocityX(DEMO_VELOCITY);
       }
       else if (mX + getWidth() > CAMERA_WIDTH) {
-        mVelocityX = -DEMO_VELOCITY;
+        setVelocityX(-DEMO_VELOCITY);
       }
 
       if (mY < 0) {
-        mVelocityY = DEMO_VELOCITY;
+        setVelocityY(DEMO_VELOCITY);
       }
       else if (mY + getHeight() > CAMERA_HEIGHT) {
-        mVelocityY = -DEMO_VELOCITY;
+        setVelocityY(-DEMO_VELOCITY);
       }
 
       super.onManagedUpdate(pSecondsElapsed);

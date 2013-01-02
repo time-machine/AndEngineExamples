@@ -154,7 +154,7 @@ IAccelerometerListener, IOnSceneTouchListener {
         true, true, false, false));
 
     if (mFaceCount == 0) {
-      mChaseCamera.setChaseEntity(face);
+      mChaseCamera.setChaseShape(face);
     }
 
     mFaceCount++;
