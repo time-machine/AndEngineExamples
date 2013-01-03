@@ -95,7 +95,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
   @Override
   public void onLoadResources() {
     // load the font we are going to use
-    FontFactory.setAssetBasePath("fonts/");
+    FontFactory.setAssetBasePath("font/");
     mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR);
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 32,
         true, Color.WHITE);

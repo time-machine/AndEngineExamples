@@ -53,7 +53,7 @@ public class CustomFontExample extends BaseExample {
     mPlokFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
     mUnrealTournamentFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
 
-    FontFactory.setAssetBasePath("fonts/");
+    FontFactory.setAssetBasePath("font/");
     mDroidFont = FontFactory.createFromAsset(mDroidFontTexture, this,
         "Droid.ttf", FONT_SIZE, true, Color.BLACK);
     mKingdomOfHeartsFont = FontFactory.createFromAsset(

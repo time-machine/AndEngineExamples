@@ -56,7 +56,7 @@ public class TextMenuExample extends BaseExample
     // load font/textures
     mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
 
-    FontFactory.setAssetBasePath("fonts/");
+    FontFactory.setAssetBasePath("fonts");
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 48,
         true, Color.WHITE);
     getEngine().getTextureManager().loadTexture(mFontTexture);
