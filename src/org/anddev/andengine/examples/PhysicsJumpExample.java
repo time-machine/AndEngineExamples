@@ -14,7 +14,6 @@ import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
-import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
@@ -79,7 +78,7 @@ public class PhysicsJumpExample extends BaseExample implements
   public Scene onLoadScene() {
     getEngine().registerPostFrameHandler(new FPSLogger());
 
-    mPhysicsWorld = new FixedStepPhysicsWorld(new Vector2(0,
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
         2 * SensorManager.GRAVITY_EARTH), false);
 
     final Scene scene = new Scene(2);
