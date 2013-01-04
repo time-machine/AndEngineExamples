@@ -53,27 +53,36 @@ public class TMXTiledMapExample extends BaseExample {
     mPlayerTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/player.png", 0, 0, 3, 4);
 
-    try {
-      final TMXLoader tmxLoader = new TMXLoader(this, mEngine.getTextureManager(),
-          new ITMXTilePropertiesListener() {
-            @Override
-            public void onTMXTileWithPropertiesCreated(
-                final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer,
-                final ArrayList<TMXTileProperty> pTMXTileProperties,
-                final int pTileRow, final int pTileColumn, final int pTileWidth,
-                final int pTileHeight) {
-              final int tmxTilePropertyCount = pTMXTileProperties.size();
-              for (int i = 0; i < tmxTilePropertyCount; i++) {
-                final TMXTileProperty tmxTileProperty =
-                    pTMXTileProperties.get(i);
-                if (tmxTileProperty.getName().equals("cactus") &&
-                    tmxTileProperty.getValue().equals("true")) {
-                  mCactusCount++;
-                }
-              }
+    mEngine.getTextureManager().loadTexture(mTexture);
+  }
 
+  @Override
+  public Scene onLoadScene() {
+    mEngine.registerPreFrameHandler(new FPSLogger());
+
+    final Scene scene = new Scene(2);
+
+    try {
+      final TMXLoader tmxLoader = new TMXLoader(this,
+          mEngine.getTextureManager(), new ITMXTilePropertiesListener() {
+        @Override
+        public void onTMXTileWithPropertiesCreated(
+            final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer,
+            final ArrayList<TMXTileProperty> pTMXTileProperties,
+            final int pTileRow, final int pTileColumn, final int pTileWidth,
+            final int pTileHeight) {
+          final int tmxTilePropertyCount = pTMXTileProperties.size();
+          for (int i = 0; i < tmxTilePropertyCount; i++) {
+            final TMXTileProperty tmxTileProperty = pTMXTileProperties.get(i);
+
+            if (tmxTileProperty.getName().equals("cactus") &&
+                tmxTileProperty.getValue().equals("true")) {
+              mCactusCount++;
             }
-          });
+          }
+        }
+      });
+
       mTmxTiledMap = tmxLoader.load(getAssets().open("tmx/desert.tmx"));
 
       Toast.makeText(this, "Cactus count in this TMXTiledMap: " + mCactusCount,
@@ -83,14 +92,6 @@ public class TMXTiledMapExample extends BaseExample {
       Debug.e(e);
     }
 
-    mEngine.getTextureManager().loadTexture(mTexture);
-  }
-
-  @Override
-  public Scene onLoadScene() {
-    mEngine.registerPreFrameHandler(new FPSLogger());
-
-    final Scene scene = new Scene(2);
     scene.getBottomLayer().addEntity(mTmxTiledMap.getTMXLayers().get(0));
 
     final int centerX = (CAMERA_WIDTH - mPlayerTextureRegion.getTileWidth())
