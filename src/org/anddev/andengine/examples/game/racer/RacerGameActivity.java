@@ -35,6 +35,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class RacerGameActivity extends BaseGameActivity {
   private static final int RACETRACK_WIDTH = 64;
+
   private static final int OBSTACLE_SIZE = 16;
   private static final int CAR_SIZE = 16;
 
@@ -97,7 +98,7 @@ public class RacerGameActivity extends BaseGameActivity {
         "gfx/box.png", 0, 0);
 
     mEngine.getTextureManager().loadTextures(mVehiclesTexture, mRacetrackTexture,
-        mOnScreenControlTexture);
+        mOnScreenControlTexture, mBoxTexture);
   }
 
   @Override
