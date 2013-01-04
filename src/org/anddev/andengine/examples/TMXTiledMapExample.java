@@ -1,18 +1,18 @@
 package org.anddev.andengine.examples;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.tiled.tmx.ITMXTilePropertiesListener;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader;
+import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader.ITMXTilePropertiesListener;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTileProperty;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
+import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadException;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.shape.IShape;
 import org.anddev.andengine.entity.shape.modifier.LoopModifier;
@@ -33,7 +33,7 @@ public class TMXTiledMapExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
 
-  private Camera mChaseCamera;
+  private BoundCamera mBoundChaseCamera;
 
   private Texture mTexture;
   private TiledTextureRegion mPlayerTextureRegion;
@@ -42,9 +42,10 @@ public class TMXTiledMapExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
-    mChaseCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    mBoundChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mChaseCamera));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT),
+        mBoundChaseCamera));
   }
 
   @Override
@@ -83,16 +84,19 @@ public class TMXTiledMapExample extends BaseExample {
         }
       });
 
-      mTmxTiledMap = tmxLoader.load(getAssets().open("tmx/desert.tmx"));
+      mTmxTiledMap = tmxLoader.loadFromAsset(this, "tmx/desert.tmx");
 
       Toast.makeText(this, "Cactus count in this TMXTiledMap: " + mCactusCount,
           Toast.LENGTH_LONG).show();
     }
-    catch (final IOException e) {
-      Debug.e(e);
+    catch (final TMXLoadException tmxe) {
+      Debug.e(tmxe);
     }
 
-    scene.getBottomLayer().addEntity(mTmxTiledMap.getTMXLayers().get(0));
+    final TMXLayer tmxLayer = mTmxTiledMap.getTMXLayers().get(0);
+    scene.getBottomLayer().addEntity(tmxLayer);
+    mBoundChaseCamera.setBounds(0, tmxLayer.getWidth(), 0, tmxLayer.getHeight());
+    mBoundChaseCamera.setBoundsEnabled(true);
 
     final int centerX = (CAMERA_WIDTH - mPlayerTextureRegion.getTileWidth())
         / 2;
@@ -102,10 +106,10 @@ public class TMXTiledMapExample extends BaseExample {
     // create the sprite and add it to the scene
     final AnimatedSprite player = new AnimatedSprite(centerX, centerY,
         mPlayerTextureRegion);
-    mChaseCamera.setChaseShape(player);
+    mBoundChaseCamera.setChaseShape(player);
 
-    final Path path = new Path(5).to(240, 160).to(240, 600).to(600, 600)
-        .to(600, 160).to(240, 160);
+    final Path path = new Path(5).to(0, 160).to(0, 400).to(400, 400)
+        .to(400, 160).to(0, 160);
 
     // add the proper animation when a waypoint of the path is passed
     player.addShapeModifier(new LoopModifier(new PathModifier(30, path, null,
