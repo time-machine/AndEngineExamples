@@ -4,6 +4,7 @@ import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.SingleSceneSplitScreenEngine;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.camera.hud.HUD;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.SplitScreenEngineOptions;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -12,6 +13,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.shape.Shape;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
+import org.anddev.andengine.entity.sprite.TiledSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
@@ -33,18 +35,21 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
-public class SplitScreenExample extends BaseExample implements
+public class BoundCameraExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 400;
   private static final int CAMERA_HEIGHT = 480;
 
   private Camera mCamera;
-  private Camera mChaseCamera;
+  private BoundCamera mBoundChaseCamera;
 
   private PhysicsWorld mPhysicsWorld;
 
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
+
+  private Texture mHUDTexture;
+  private TiledTextureRegion mToggleButtonTextureRegion;
 
   private int mFaceCount;
 
@@ -54,14 +59,13 @@ public class SplitScreenExample extends BaseExample implements
   public Engine onLoadEngine() {
     Toast.makeText(this, "Touch the screen to add boxes.", Toast.LENGTH_LONG)
         .show();
-
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
-        0, CAMERA_WIDTH, 0, CAMERA_HEIGHT);
+    mBoundChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH / 2,
+        CAMERA_HEIGHT / 2, 0, CAMERA_WIDTH, 0, CAMERA_HEIGHT);
 
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
         ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH * 2,
-            CAMERA_HEIGHT), mCamera, mChaseCamera));
+            CAMERA_HEIGHT), mCamera, mBoundChaseCamera));
   }
 
   @Override
@@ -69,7 +73,13 @@ public class SplitScreenExample extends BaseExample implements
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
-    getEngine().getTextureManager().loadTexture(mTexture);
+    mEngine.getTextureManager().loadTexture(mTexture);
+
+    mHUDTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mToggleButtonTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mHUDTexture, this, "gfx/toggle_button.png", 0, 0, 2, 1);
+    mEngine.getTextureManager().loadTexture(mHUDTexture);
+
     enableAccelerometerSensor(this);
   }
 
@@ -80,8 +90,8 @@ public class SplitScreenExample extends BaseExample implements
     final Scene scene = new Scene(2);
     scene.setOnSceneTouchListener(this);
 
-    mPhysicsWorld = new PhysicsWorld(
-        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
+        2 * SensorManager.GRAVITY_EARTH), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -106,6 +116,38 @@ public class SplitScreenExample extends BaseExample implements
 
     getEngine().registerPreFrameHandler(mPhysicsWorld);
 
+    final HUD hud = new HUD();
+    final TiledSprite toggleButton = new TiledSprite(
+        CAMERA_WIDTH / 2 - mToggleButtonTextureRegion.getTileWidth(),
+        CAMERA_HEIGHT / 2 - mToggleButtonTextureRegion.getTileHeight(),
+        mToggleButtonTextureRegion) {
+      @Override
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+          final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+          final boolean boundsEnabled = mBoundChaseCamera.isBoundsEnabled();
+          if (boundsEnabled) {
+            mBoundChaseCamera.setBoundsEnabled(false);
+            setCurrentTileIndex(1);
+            Toast.makeText(BoundCameraExample.this, "Bounds Disabled.",
+                Toast.LENGTH_SHORT).show();
+          }
+          else {
+            mBoundChaseCamera.setBoundsEnabled(true);
+            setCurrentTileIndex(0);
+            Toast.makeText(BoundCameraExample.this, "Bounds Enabled.",
+                Toast.LENGTH_SHORT).show();
+          }
+        }
+        return true;
+      }
+    };
+
+    hud.registerTouchArea(toggleButton);
+    hud.getBottomLayer().addEntity(toggleButton);
+
+    mBoundChaseCamera.setHUD(hud);
+
     return scene;
   }
 
@@ -122,10 +164,8 @@ public class SplitScreenExample extends BaseExample implements
           @Override
           public void run() {
             addFace(pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
-
           }
         });
-
         return true;
       }
     }
@@ -133,7 +173,8 @@ public class SplitScreenExample extends BaseExample implements
   }
 
   @Override
-  public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
+  public void onAccelerometerChanged(
+      final AccelerometerData pAccelerometerData) {
     mTempVector.set(10 * pAccelerometerData.getY(),
         10 * pAccelerometerData.getX());
     mPhysicsWorld.setGravity(mTempVector);
@@ -155,7 +196,7 @@ public class SplitScreenExample extends BaseExample implements
         true, true, false, false));
 
     if (mFaceCount == 0) {
-      mChaseCamera.setChaseShape(face);
+      mBoundChaseCamera.setChaseShape(face);
     }
 
     mFaceCount++;
