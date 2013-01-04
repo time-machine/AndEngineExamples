@@ -36,7 +36,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
         0.5f, 0.5f);
 
     for (int i = 0; i < 3; i++) {
-      final float anchorFaceX = centerX - spriteWidth * 0.5f + 180 * (i - 1);
+      final float anchorFaceX = centerX - spriteWidth * 0.5f + 220 * (i - 1);
       final float anchorFaceY = centerY - spriteHeight * 0.5f;
 
       final AnimatedSprite anchorFace = new AnimatedSprite(anchorFaceX,
@@ -45,7 +45,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
           anchorFace, BodyType.StaticBody, objectFixtureDef);
 
       final AnimatedSprite movingFace = new AnimatedSprite(anchorFaceX,
-          anchorFaceY + 100, mCircleFaceTextureRegion);
+          anchorFaceY + 90, mCircleFaceTextureRegion);
       final Body movingBody = PhysicsFactory.createCircleBody(mPhysicsWorld,
           movingFace, BodyType.DynamicBody, objectFixtureDef);
 
@@ -84,8 +84,8 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
       revoluteJointDef.initialize(anchorBody, movingBody,
           anchorBody.getWorldCenter());
       revoluteJointDef.enableMotor = true;
-      revoluteJointDef.motorSpeed = 5;
-      revoluteJointDef.maxMotorTorque = 50;
+      revoluteJointDef.motorSpeed = 10;
+      revoluteJointDef.maxMotorTorque = 200;
 
       mPhysicsWorld.createJoint(revoluteJointDef);
     }

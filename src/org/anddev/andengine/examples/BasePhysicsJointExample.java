@@ -23,6 +23,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 import org.anddev.andengine.util.Debug;
+import org.anddev.andengine.util.MathUtils;
 
 import android.hardware.SensorManager;
 import android.view.MotionEvent;
@@ -145,13 +146,15 @@ public class BasePhysicsJointExample extends BaseExample implements
         0.5f);
 
     if (mFaceCount % 2 == 0) {
-      face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
-      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
+      face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
+      face.setScale(MathUtils.random(0.5f, 1.25f));
+      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
           BodyType.DynamicBody, objectFixtureDef);
     }
     else {
-      face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
-      body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+      face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
+      face.setScale(MathUtils.random(0.5f, 1.25f));
+      body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
           BodyType.DynamicBody, objectFixtureDef);
     }
 
