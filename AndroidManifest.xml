@@ -143,6 +143,9 @@
             android:name=".SpriteRemoveExample"
             android:configChanges="orientation" />
         <activity
+            android:name=".StrokeFontExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".SubMenuExample"
             android:configChanges="orientation" />
         <activity

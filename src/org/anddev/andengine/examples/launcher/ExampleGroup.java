@@ -19,7 +19,7 @@ public enum ExampleGroup {
       Example.PHYSICS, Example.PHYSICSJUMP, Example.FIXEDSTEPPHYSICS,
       Example.PHYSICSREVOLUTEJOINT, Example.PHYSICSREMOVE),
   TEXT(R.string.examplegroup_text, Example.TEXT, Example.TICKERTEXT,
-      Example.CHANGEABLETEXT, Example.CUSTOMFONT),
+      Example.CHANGEABLETEXT, Example.CUSTOMFONT, Example.STROKEFONT),
   AUDIO(R.string.examplegroup_audio, Example.SOUND, Example.MUSIC,
       Example.MODPLAYER),
   ADVANCED(R.string.examplegroup_advanced, Example.SPLITSCREEN,
