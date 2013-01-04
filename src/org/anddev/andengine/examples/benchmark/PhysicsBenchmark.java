@@ -16,6 +16,7 @@ import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
+import org.anddev.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -70,7 +71,8 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     scene.setOnSceneTouchListener(this);
 
     mPhysicsWorld = new PhysicsWorld(new Vector2(0,
-        2 * SensorManager.GRAVITY_EARTH), false);
+        2 * SensorManager.GRAVITY_EARTH /
+            PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -110,7 +112,8 @@ public class PhysicsBenchmark extends BaseBenchmark implements
           @Override
           public void onTimePassed(final TimerHandler pTimerHandler) {
             mPhysicsWorld.setGravity(new Vector2(0,
-                -SensorManager.GRAVITY_EARTH));
+                -SensorManager.GRAVITY_EARTH /
+                    PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT));
           }
         }));
       }

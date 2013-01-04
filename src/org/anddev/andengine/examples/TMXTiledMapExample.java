@@ -3,7 +3,7 @@ package org.anddev.andengine.examples;
 import java.util.ArrayList;
 
 import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.camera.BoundCamera;
+import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -33,7 +33,7 @@ public class TMXTiledMapExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
 
-  private BoundCamera mBoundChaseCamera;
+  private Camera mChaseCamera;
 
   private Texture mTexture;
   private TiledTextureRegion mPlayerTextureRegion;
@@ -42,10 +42,9 @@ public class TMXTiledMapExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
-    mBoundChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    mChaseCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT),
-        mBoundChaseCamera));
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mChaseCamera));
   }
 
   @Override
@@ -94,9 +93,9 @@ public class TMXTiledMapExample extends BaseExample {
     }
 
     final TMXLayer tmxLayer = mTmxTiledMap.getTMXLayers().get(0);
+    tmxLayer.setScale(0.5f);
+    tmxLayer.setScaleCenter(0, 0);
     scene.getBottomLayer().addEntity(tmxLayer);
-    mBoundChaseCamera.setBounds(0, tmxLayer.getWidth(), 0, tmxLayer.getHeight());
-    mBoundChaseCamera.setBoundsEnabled(true);
 
     final int centerX = (CAMERA_WIDTH - mPlayerTextureRegion.getTileWidth())
         / 2;
@@ -106,10 +105,10 @@ public class TMXTiledMapExample extends BaseExample {
     // create the sprite and add it to the scene
     final AnimatedSprite player = new AnimatedSprite(centerX, centerY,
         mPlayerTextureRegion);
-    mBoundChaseCamera.setChaseShape(player);
+    mChaseCamera.setChaseShape(player);
 
-    final Path path = new Path(5).to(0, 160).to(0, 400).to(400, 400)
-        .to(400, 160).to(0, 160);
+    final Path path = new Path(5).to(240, 160).to(240, 600).to(600, 600)
+        .to(600, 160).to(240, 160);
 
     // add the proper animation when a waypoint of the path is passed
     player.addShapeModifier(new LoopModifier(new PathModifier(30, path, null,

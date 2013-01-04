@@ -78,7 +78,7 @@ public class PhysicsExample extends BaseExample implements
     scene.setOnSceneTouchListener(this);
 
     mPhysicsWorld = new PhysicsWorld(new Vector2(0,
-        2 * SensorManager.GRAVITY_EARTH), false);
+        SensorManager.GRAVITY_EARTH), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -129,8 +129,8 @@ public class PhysicsExample extends BaseExample implements
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mPhysicsWorld.setGravity(new Vector2(10 * pAccelerometerData.getY(),
-        10 * pAccelerometerData.getX()));
+    mPhysicsWorld.setGravity(new Vector2(pAccelerometerData.getY(),
+        pAccelerometerData.getX()));
   }
 
   private void addFace(final float pX, final float pY) {

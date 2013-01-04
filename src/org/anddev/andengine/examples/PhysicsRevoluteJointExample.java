@@ -5,6 +5,9 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
+import org.anddev.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
+
+import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -17,6 +20,8 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
   public Scene onLoadScene() {
     final Scene scene = super.onLoadScene();
     initJoints(scene);
+    Toast.makeText(this, "In this example, the revolute joints have their " +
+        "motor enabled.", Toast.LENGTH_LONG).show();
     return scene;
   }
 
@@ -27,13 +32,12 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
     final int spriteWidth = mBoxFaceTextureRegion.getWidth();
     final int spriteHeight = mBoxFaceTextureRegion.getHeight();
 
-    final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
-        0.5f);
+    final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(10,
+        0.5f, 0.5f);
 
-    for (int i = 0; i < 4; i++) {
-      final float anchorFaceX = centerX - spriteWidth * 0.5f -
-          (spriteWidth + 2) * (i - 2);
-      final float anchorFaceY = centerY - spriteHeight * 0.5f - spriteHeight;
+    for (int i = 0; i < 3; i++) {
+      final float anchorFaceX = centerX - spriteWidth * 0.5f + 180 * (i - 1);
+      final float anchorFaceY = centerY - spriteHeight * 0.5f;
 
       final AnimatedSprite anchorFace = new AnimatedSprite(anchorFaceX,
           anchorFaceY, mBoxFaceTextureRegion);
@@ -65,8 +69,11 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
           super.onUpdate(pSecondsElapsed);
           final Vector2 movingBodyWorldCenter = movingBody.getWorldCenter();
           connectionLine.setPosition(connectionLine.getX1(),
-              connectionLine.getY1(), movingBodyWorldCenter.x,
-              movingBodyWorldCenter.y);
+              connectionLine.getY1(),
+              movingBodyWorldCenter.x *
+                  PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
+              movingBodyWorldCenter.y *
+                  PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT);
         }
       });
 
@@ -76,6 +83,9 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
       final RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
       revoluteJointDef.initialize(anchorBody, movingBody,
           anchorBody.getWorldCenter());
+      revoluteJointDef.enableMotor = true;
+      revoluteJointDef.motorSpeed = 5;
+      revoluteJointDef.maxMotorTorque = 50;
 
       mPhysicsWorld.createJoint(revoluteJointDef);
     }

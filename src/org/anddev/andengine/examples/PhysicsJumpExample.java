@@ -79,7 +79,7 @@ public class PhysicsJumpExample extends BaseExample implements
     getEngine().registerPostFrameHandler(new FPSLogger());
 
     mPhysicsWorld = new PhysicsWorld(new Vector2(0,
-        2 * SensorManager.GRAVITY_EARTH), false);
+        SensorManager.GRAVITY_EARTH), false);
 
     final Scene scene = new Scene(2);
     scene.setBackground(new ColorBackground(0, 0, 0));
@@ -156,7 +156,7 @@ public class PhysicsJumpExample extends BaseExample implements
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
     mGravityX = pAccelerometerData.getY();
     mGravityY = pAccelerometerData.getX();
-    mTempVector.set(10 * mGravityX, 10 * mGravityY);
+    mTempVector.set(mGravityX, mGravityY);
     mPhysicsWorld.setGravity(mTempVector);
   }
 

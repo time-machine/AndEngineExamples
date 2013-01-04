@@ -80,8 +80,8 @@ public class SplitScreenExample extends BaseExample implements
     final Scene scene = new Scene(2);
     scene.setOnSceneTouchListener(this);
 
-    mPhysicsWorld = new PhysicsWorld(
-        new Vector2(0, 2 * SensorManager.GRAVITY_EARTH), false);
+    mPhysicsWorld = new PhysicsWorld(new Vector2(0,
+        SensorManager.GRAVITY_EARTH), false);
 
     final Shape ground = new Rectangle(0, CAMERA_HEIGHT - 2, CAMERA_WIDTH, 2);
     final Shape roof = new Rectangle(0, 0, CAMERA_WIDTH, 2);
@@ -134,8 +134,7 @@ public class SplitScreenExample extends BaseExample implements
 
   @Override
   public void onAccelerometerChanged(final AccelerometerData pAccelerometerData) {
-    mTempVector.set(10 * pAccelerometerData.getY(),
-        10 * pAccelerometerData.getX());
+    mTempVector.set(pAccelerometerData.getY(), pAccelerometerData.getX());
     mPhysicsWorld.setGravity(mTempVector);
   }
 
