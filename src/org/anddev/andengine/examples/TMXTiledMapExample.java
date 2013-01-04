@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.camera.ChaseCamera;
+import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -33,7 +33,7 @@ public class TMXTiledMapExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
   private static final int CAMERA_HEIGHT = 320;
 
-  private ChaseCamera mChaseCamera;
+  private Camera mChaseCamera;
 
   private Texture mTexture;
   private TiledTextureRegion mPlayerTextureRegion;
@@ -42,7 +42,7 @@ public class TMXTiledMapExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
-    mChaseCamera = new ChaseCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, null);
+    mChaseCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mChaseCamera));
   }

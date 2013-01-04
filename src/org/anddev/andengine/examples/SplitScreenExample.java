@@ -3,7 +3,6 @@ package org.anddev.andengine.examples;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.SingleSceneSplitScreenEngine;
 import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.camera.ChaseCamera;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.SplitScreenEngineOptions;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -38,7 +37,8 @@ IAccelerometerListener, IOnSceneTouchListener {
   private static final int CAMERA_WIDTH = 400;
   private static final int CAMERA_HEIGHT = 480;
 
-  private ChaseCamera mChaseCamera;
+  private Camera mCamera;
+  private Camera mChaseCamera;
 
   private Texture mTexture;
   private TiledTextureRegion mBoxFaceTextureRegion;
@@ -47,7 +47,6 @@ IAccelerometerListener, IOnSceneTouchListener {
   private int mFaceCount;
 
   private final Vector2 mTempVector = new Vector2();
-  private Camera mCamera;
 
   @Override
   public Scene onLoadScene() {
@@ -104,8 +103,7 @@ IAccelerometerListener, IOnSceneTouchListener {
         .show();
 
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    mChaseCamera = new ChaseCamera(0, 0, CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
-        null);
+    mChaseCamera = new Camera(0, 0, CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2);
 
     return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
         ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH * 2,
