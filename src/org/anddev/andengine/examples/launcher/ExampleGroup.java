@@ -7,7 +7,7 @@ public enum ExampleGroup {
       Example.SPRITE, Example.SPRITEREMOVE),
   MODIFIER_AND_ANIMATION(R.string.examplegroup_modifier_and_animation,
       Example.MOVINGBALL, Example.SHAPEMODIFIER, Example.SHAPEMODIFIERIRREGULAR,
-      Example.PATHMODIFIER, Example.ANIMATEDSPRITES),
+      Example.PATHMODIFIER, Example.ANIMATEDSPRITES, Example.EASEFUNCTION),
   TOUCH(R.string.examplegroup_touch, Example.TOUCHDRAG, Example.MULTITOUCH,
       Example.ANALOGONSCREENCONTROL, Example.DIGITALONSCREENCONTROL,
       Example.ANALOGONSCREENCONTROLS, Example.COORDINATECONVERSION),

@@ -11,6 +11,7 @@ import org.anddev.andengine.examples.CollisionDetectionExample;
 import org.anddev.andengine.examples.CoordinateConversionExample;
 import org.anddev.andengine.examples.CustomFontExample;
 import org.anddev.andengine.examples.DigitalOnScreenControlExample;
+import org.anddev.andengine.examples.EaseFunctionExample;
 import org.anddev.andengine.examples.FixedStepPhysicsExample;
 import org.anddev.andengine.examples.ImageFormatsExample;
 import org.anddev.andengine.examples.LineExample;
@@ -80,6 +81,7 @@ enum Example {
   CUSTOMFONT(CustomFontExample.class, R.string.example_customfont),
   DIGITALONSCREENCONTROL(DigitalOnScreenControlExample.class,
       R.string.example_digitalonscreencontrol),
+  EASEFUNCTION(EaseFunctionExample.class, R.string.example_easefunction),
   FIXEDSTEPPHYSICS(FixedStepPhysicsExample.class,
       R.string.example_fixedstepphysics),
   IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),

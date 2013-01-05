@@ -65,6 +65,9 @@
             android:name=".DigitalOnScreenControlExample"
             android:configChanges="orientation" />
         <activity
+            android:name=".EaseFunctionExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".FixedStepPhysicsExample"
             android:configChanges="orientation" />
         <activity
