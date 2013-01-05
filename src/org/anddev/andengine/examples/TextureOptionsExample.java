@@ -31,7 +31,7 @@ public class TextureOptionsExample extends BaseExample {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
     final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 

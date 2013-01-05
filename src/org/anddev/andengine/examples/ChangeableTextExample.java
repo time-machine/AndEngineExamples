@@ -46,7 +46,7 @@ public class ChangeableTextExample extends BaseExample {
   @Override
   public Scene onLoadScene() {
     final FPSCounter fpsCounter = new FPSCounter();
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
@@ -59,7 +59,7 @@ public class ChangeableTextExample extends BaseExample {
     scene.getTopLayer().addEntity(elapsedText);
     scene.getTopLayer().addEntity(fpsText);
 
-    scene.registerPreFrameHandler(new TimerHandler(1 / 20, new ITimerCallback() {
+    scene.registerUpdateHandler(new TimerHandler(1 / 20, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
         pTimerHandler.reset();

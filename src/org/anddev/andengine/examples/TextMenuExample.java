@@ -71,7 +71,7 @@ public class TextMenuExample extends BaseExample
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     mMenuScene = createMenuScene();
 

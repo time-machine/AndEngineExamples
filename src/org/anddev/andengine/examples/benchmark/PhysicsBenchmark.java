@@ -103,12 +103,12 @@ public class PhysicsBenchmark extends BaseBenchmark implements
       }
     }
 
-    scene.registerPreFrameHandler(new TimerHandler(2, new ITimerCallback() {
+    scene.registerUpdateHandler(new TimerHandler(2, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
-        scene.unregisterPreFrameHandler(pTimerHandler);
-        scene.registerPreFrameHandler(mPhysicsWorld);
-        scene.registerPreFrameHandler(new TimerHandler(10, new ITimerCallback() {
+        scene.unregisterUpdateHandler(pTimerHandler);
+        scene.registerUpdateHandler(mPhysicsWorld);
+        scene.registerUpdateHandler(new TimerHandler(10, new ITimerCallback() {
           @Override
           public void onTimePassed(final TimerHandler pTimerHandler) {
             mPhysicsWorld.setGravity(new Vector2(0,

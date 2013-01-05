@@ -103,7 +103,7 @@ public class RacerGameActivity extends BaseGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    mEngine.registerPostFrameHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(4);
     scene.setBackground(new ColorBackground(0, 0, 0));
@@ -117,7 +117,7 @@ public class RacerGameActivity extends BaseGameActivity {
     initObstacles(scene);
     initOnScreenControls(scene);
 
-    scene.registerPreFrameHandler(mPhysicsWorld);
+    scene.registerUpdateHandler(mPhysicsWorld);
 
     return scene;
   }

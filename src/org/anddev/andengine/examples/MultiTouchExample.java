@@ -95,7 +95,7 @@ public class MultiTouchExample extends BaseGameActivity {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setOnAreaTouchTraversalFrontToBack();

@@ -103,7 +103,7 @@ public class CoordinateConversionExample extends BaseExample {
 
   @Override
   public Scene onLoadScene() {
-    mEngine.registerPreFrameHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));

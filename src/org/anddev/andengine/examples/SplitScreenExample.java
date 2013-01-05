@@ -4,8 +4,8 @@ import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.SingleSceneSplitScreenEngine;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
-import org.anddev.andengine.engine.options.SplitScreenEngineOptions;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
@@ -59,9 +59,9 @@ public class SplitScreenExample extends BaseExample implements
     mChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2,
         0, CAMERA_WIDTH, 0, CAMERA_HEIGHT);
 
-    return new SingleSceneSplitScreenEngine(new SplitScreenEngineOptions(true,
+    return new SingleSceneSplitScreenEngine(new EngineOptions(true,
         ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH * 2,
-            CAMERA_HEIGHT), mCamera, mChaseCamera));
+            CAMERA_HEIGHT), mCamera), mChaseCamera);
   }
 
   @Override
@@ -75,7 +75,7 @@ public class SplitScreenExample extends BaseExample implements
 
   @Override
   public Scene onLoadScene() {
-    mEngine.registerPostFrameHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
     scene.setOnSceneTouchListener(this);
@@ -104,7 +104,7 @@ public class SplitScreenExample extends BaseExample implements
     scene.getBottomLayer().addEntity(left);
     scene.getBottomLayer().addEntity(right);
 
-    getEngine().registerPreFrameHandler(mPhysicsWorld);
+    getEngine().registerUpdateHandler(mPhysicsWorld);
 
     return scene;
   }

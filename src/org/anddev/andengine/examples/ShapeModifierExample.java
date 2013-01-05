@@ -40,8 +40,15 @@ public class ShapeModifierExample extends BaseExample {
   private TiledTextureRegion mFaceTextureRegion;
 
   @Override
+  public Engine onLoadEngine() {
+    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
+  }
+
+  @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
@@ -121,12 +128,5 @@ public class ShapeModifierExample extends BaseExample {
 
   @Override
   public void onLoadComplete() {
-  }
-
-  @Override
-  public Engine onLoadEngine() {
-    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
   }
 }

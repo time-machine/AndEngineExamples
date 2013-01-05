@@ -76,7 +76,7 @@ public class PhysicsJumpExample extends BaseExample implements
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPostFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     mPhysicsWorld = new PhysicsWorld(new Vector2(0,
         SensorManager.GRAVITY_EARTH), false);
@@ -106,7 +106,7 @@ public class PhysicsJumpExample extends BaseExample implements
     scene.getBottomLayer().addEntity(left);
     scene.getBottomLayer().addEntity(right);
 
-    scene.registerPreFrameHandler(mPhysicsWorld);
+    scene.registerUpdateHandler(mPhysicsWorld);
 
     scene.setOnAreaTouchListener(this);
 

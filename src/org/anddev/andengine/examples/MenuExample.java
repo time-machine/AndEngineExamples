@@ -65,7 +65,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
     createMenuScene();
 
     // a simple scene with an animated face flying around

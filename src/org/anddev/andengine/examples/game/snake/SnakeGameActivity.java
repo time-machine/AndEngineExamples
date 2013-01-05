@@ -140,7 +140,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(4);
 
@@ -201,7 +201,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     scene.setChildScene(mDigitalOnScreenControl);
 
     // make the snake move every 0.5 seconds
-    scene.registerPreFrameHandler(new TimerHandler(0.5f, new ITimerCallback() {
+    scene.registerUpdateHandler(new TimerHandler(0.5f, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
         pTimerHandler.reset();
@@ -229,10 +229,10 @@ public class SnakeGameActivity extends BaseGameActivity implements
     scene.getLayer(LAYER_SCORE).addEntity(titleText);
 
     // the handler that removes the title-text and starts the game
-    scene.registerPreFrameHandler(new TimerHandler(3, new ITimerCallback() {
+    scene.registerUpdateHandler(new TimerHandler(3, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
-        scene.unregisterPreFrameHandler(pTimerHandler);
+        scene.unregisterUpdateHandler(pTimerHandler);
         scene.getLayer(LAYER_SCORE).removeEntity(titleText);
         mGameRunning = true;
       }

@@ -66,7 +66,7 @@ public class AutoParallaxBackgroundExample extends BaseExample {
 
   @Override
   public Scene onLoadScene() {
-    mEngine.registerPreFrameHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
     final AutoParallaxBackground autoParallaxBackground =

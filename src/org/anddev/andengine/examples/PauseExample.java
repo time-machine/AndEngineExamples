@@ -32,7 +32,7 @@ public class PauseExample extends BaseExample {
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerPreFrameHandler(new FPSLogger());
+    getEngine().registerUpdateHandler(new FPSLogger());
 
     mPauseScene = new CameraScene(1, mCamera);
 

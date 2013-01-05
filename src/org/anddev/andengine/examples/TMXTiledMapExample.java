@@ -59,7 +59,7 @@ public class TMXTiledMapExample extends BaseExample {
 
   @Override
   public Scene onLoadScene() {
-    mEngine.registerPreFrameHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(2);
 
