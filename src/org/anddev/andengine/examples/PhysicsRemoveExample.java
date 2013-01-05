@@ -125,6 +125,7 @@ public class PhysicsRemoveExample extends BaseExample implements
           removeFace(face);
         }
       });
+      return true;
     }
     return false;
   }
@@ -172,6 +173,7 @@ public class PhysicsRemoveExample extends BaseExample implements
     face.animate(200, true);
     face.setUpdatePhysics(false);
 
+    scene.registerTouchArea(face);
     scene.getTopLayer().addEntity(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));

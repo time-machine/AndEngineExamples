@@ -129,8 +129,8 @@ public class PhysicsJumpExample extends BaseExample implements
           jumpFace(face);
         }
       });
+      return true;
     }
-
     return false;
   }
 
