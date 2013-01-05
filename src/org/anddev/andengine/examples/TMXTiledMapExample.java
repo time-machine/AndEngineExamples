@@ -4,15 +4,18 @@ import java.util.ArrayList;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.BoundCamera;
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader.ITMXTilePropertiesListener;
+import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTileProperty;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadException;
+import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.shape.IShape;
 import org.anddev.andengine.entity.shape.modifier.LoopModifier;
@@ -26,12 +29,13 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.util.Debug;
 import org.anddev.andengine.util.Path;
+import org.anddev.andengine.util.constants.Constants;
 
 import android.widget.Toast;
 
 public class TMXTiledMapExample extends BaseExample {
-  private static final int CAMERA_WIDTH = 800;
-  private static final int CAMERA_HEIGHT = 480;
+  private static final int CAMERA_WIDTH = 480;
+  private static final int CAMERA_HEIGHT = 320;
 
   private BoundCamera mBoundChaseCamera;
 
@@ -42,6 +46,8 @@ public class TMXTiledMapExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "The tile the player is walking on will be " +
+        "hightlighted.", Toast.LENGTH_LONG).show();
     mBoundChaseCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT),
@@ -70,9 +76,8 @@ public class TMXTiledMapExample extends BaseExample {
         @Override
         public void onTMXTileWithPropertiesCreated(
             final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer,
-            final ArrayList<TMXTileProperty> pTMXTileProperties,
-            final int pTileRow, final int pTileColumn, final int pTileWidth,
-            final int pTileHeight) {
+            final TMXTile pTMXTile,
+            final ArrayList<TMXTileProperty> pTMXTileProperties) {
           final int tmxTilePropertyCount = pTMXTileProperties.size();
 
           // we are going to count the tiles that have the property
@@ -93,12 +98,14 @@ public class TMXTiledMapExample extends BaseExample {
       Toast.makeText(this, "Cactus count in this TMXTiledMap: " + mCactusCount,
           Toast.LENGTH_LONG).show();
     }
-    catch (final TMXLoadException tmxe) {
-      Debug.e(tmxe);
+    catch (final TMXLoadException tmxle) {
+      Debug.e(tmxle);
     }
 
     final TMXLayer tmxLayer = mTmxTiledMap.getTMXLayers().get(0);
     scene.getBottomLayer().addEntity(tmxLayer);
+
+    // make the camera not exceed the bounds of the TMXLayer
     mBoundChaseCamera.setBounds(0, tmxLayer.getWidth(), 0,
         tmxLayer.getHeight());
     mBoundChaseCamera.setBoundsEnabled(true);
@@ -138,6 +145,35 @@ public class TMXTiledMapExample extends BaseExample {
             }
           }
         })));
+
+    // now we are going to create a rectangle that will always hightlight the
+    // tile below the feeet of the player
+    final Rectangle currentTileRectangle = new Rectangle(0, 0,
+        mTmxTiledMap.getTileWidth(), mTmxTiledMap.getTileHeight());
+    currentTileRectangle.setColor(1, 0, 0, 0.25f);
+    scene.getTopLayer().addEntity(currentTileRectangle);
+
+    scene.registerUpdateHandler(new IUpdateHandler() {
+      @Override
+      public void reset() {
+      }
+
+      @Override
+      public void onUpdate(final float pSecondsElapsed) {
+        // get the scene-coordinates of the player feet
+        final float[] playerFootCoordinates =
+            player.convertLocalToSceneCoordinates(12, 31);
+
+        // get the tile the feet of the player are currently walking on
+        final TMXTile tmxTile = tmxLayer.getTMXTileAt(
+            playerFootCoordinates[Constants.VERTEX_INDEX_X],
+            playerFootCoordinates[Constants.VERTEX_INDEX_Y]);
+        if (tmxTile != null ) {
+          currentTileRectangle.setPosition(tmxTile.getTileX(),
+              tmxTile.getTileY());
+        }
+      }
+    });
 
     scene.getTopLayer().addEntity(player);
 
