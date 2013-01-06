@@ -8,6 +8,7 @@ import org.anddev.andengine.examples.AutoParallaxBackgroundExample;
 import org.anddev.andengine.examples.BoundCameraExample;
 import org.anddev.andengine.examples.ChangeableTextExample;
 import org.anddev.andengine.examples.CollisionDetectionExample;
+import org.anddev.andengine.examples.ColorKeyTextureSourceDecoratorExample;
 import org.anddev.andengine.examples.CoordinateConversionExample;
 import org.anddev.andengine.examples.CustomFontExample;
 import org.anddev.andengine.examples.DigitalOnScreenControlExample;
@@ -76,6 +77,8 @@ enum Example {
   CHANGEABLETEXT(ChangeableTextExample.class, R.string.example_changeabletext),
   COLLISIONDETECTION(CollisionDetectionExample.class,
       R.string.example_collisiondetection),
+  COLORKEYTEXTURESOURCEDECORATOR(ColorKeyTextureSourceDecoratorExample.class,
+          R.string.example_colorkeytexturesourcedecorator),
   COORDINATECONVERSION(CoordinateConversionExample.class,
       R.string.example_coordinateconversion),
   CUSTOMFONT(CustomFontExample.class, R.string.example_customfont),

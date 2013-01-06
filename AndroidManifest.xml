@@ -56,6 +56,9 @@
             android:name=".CollisionDetectionExample"
             android:configChanges="orientation" />
         <activity
+            android:name=".ColorKeyTextureSourceDecoratorExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".CoordinateConversionExample"
             android:configChanges="orientation" />
         <activity
