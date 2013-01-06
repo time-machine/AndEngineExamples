@@ -185,7 +185,8 @@ public class PhysicsExample extends BaseExample implements
   }
 
   /**
-   * Creates a {@link Body} based {@link PolygonShape} in the form of a triangle:
+   * Creates a {@link Body} based on a {@link PolygonShape} in the form of a
+   * triangle:
    * <pre>
    *  /\
    * /__\
@@ -217,7 +218,8 @@ public class PhysicsExample extends BaseExample implements
   }
 
   /**
-   * Creates a {@link Body} based {@link PolygonShape} in the form of a hexagon:
+   * Creates a {@link Body} based on a {@link PolygonShape} in the form of a
+   * hexagon:
    * <pre>
    *  /\
    * /  \

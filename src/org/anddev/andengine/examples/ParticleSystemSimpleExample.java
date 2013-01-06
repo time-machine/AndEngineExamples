@@ -1,7 +1,6 @@
 package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.SmoothEngine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
@@ -27,6 +26,13 @@ public class ParticleSystemSimpleExample extends BaseExample {
   private Camera mCamera;
   private Texture mTexture;
   private TextureRegion mFaceTextureRegion;
+
+  @Override
+  public Engine onLoadEngine() {
+    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
+        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
+  }
 
   @Override
   public Scene onLoadScene() {
@@ -60,12 +66,5 @@ public class ParticleSystemSimpleExample extends BaseExample {
 
   @Override
   public void onLoadComplete() {
-  }
-
-  @Override
-  public Engine onLoadEngine() {
-    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new SmoothEngine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
   }
 }
