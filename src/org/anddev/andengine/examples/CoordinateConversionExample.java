@@ -90,7 +90,7 @@ public class CoordinateConversionExample extends BaseExample {
 
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "boxface.png", 0, 0);
+        "face_box.png", 0, 0);
 
     mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(

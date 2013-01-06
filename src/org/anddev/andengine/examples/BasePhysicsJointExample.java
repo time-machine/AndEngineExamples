@@ -62,9 +62,9 @@ public class BasePhysicsJointExample extends BaseExample implements
     mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "boxface_tiled.png", 0, 0, 2, 1);
+        this, "face_box_tiled.png", 0, 0, 2, 1);
     mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
+        mTexture, this, "face_circle_tiled.png", 0, 32, 2, 1);
     mEngine.getTextureManager().loadTexture(mTexture);
     enableAccelerometerSensor(this);
   }

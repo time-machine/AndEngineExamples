@@ -1,5 +1,7 @@
 package org.anddev.andengine.examples;
 
+import static org.anddev.andengine.extension.physics.box2d.util.constants.PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT;
+
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
@@ -32,6 +34,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 public class PhysicsExample extends BaseExample implements
     IAccelerometerListener, IOnSceneTouchListener {
@@ -42,6 +45,8 @@ public class PhysicsExample extends BaseExample implements
 
   private TiledTextureRegion mBoxFaceTextureRegion;
   private TiledTextureRegion mCircleFaceTextureRegion;
+  private TiledTextureRegion mTriangleFaceTextureRegion;
+  private TiledTextureRegion mHexagonFaceTextureRegion;
 
   private PhysicsWorld mPhysicsWorld;
 
@@ -58,12 +63,17 @@ public class PhysicsExample extends BaseExample implements
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 128, TextureOptions.BILINEAR);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "boxface_tiled.png", 0, 0, 2, 1);
+        mTexture, this, "face_box_tiled.png", 0, 0, 2, 1);
     mCircleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "circleface_tiled.png", 0, 32, 2, 1);
+        mTexture, this, "face_circle_tiled.png", 0, 32, 2, 1);
+    mTriangleFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "face_triangle_tiled.png", 0, 64, 2, 1);
+    mHexagonFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
+        mTexture, this, "face_hexagon_tiled.png", 0, 96, 2, 1);
+
     mEngine.getTextureManager().loadTexture(mTexture);
 
     enableAccelerometerSensor(this);
@@ -145,14 +155,24 @@ public class PhysicsExample extends BaseExample implements
     final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
         0.5f);
 
-    if (mFaceCount % 2 == 0) {
+    if (mFaceCount % 4 == 0) {
       face = new AnimatedSprite(pX, pY, mBoxFaceTextureRegion);
       body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
           BodyType.DynamicBody, objectFixtureDef);
     }
-    else {
+    else if (mFaceCount % 4 == 1) {
       face = new AnimatedSprite(pX, pY, mCircleFaceTextureRegion);
       body = PhysicsFactory.createCircleBody(mPhysicsWorld, face,
+          BodyType.DynamicBody, objectFixtureDef);
+    }
+    else if (mFaceCount % 4 == 2) {
+      face = new AnimatedSprite(pX, pY, mTriangleFaceTextureRegion);
+      body = createTriangleBody(mPhysicsWorld, face, BodyType.DynamicBody,
+          objectFixtureDef);
+    }
+    else {
+      face = new AnimatedSprite(pX, pY, mHexagonFaceTextureRegion);
+      body = createHexagonBody(mPhysicsWorld, face,
           BodyType.DynamicBody, objectFixtureDef);
     }
 
@@ -162,5 +182,85 @@ public class PhysicsExample extends BaseExample implements
     scene.getTopLayer().addEntity(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
+  }
+
+  /**
+   * Creates a {@link Body} based {@link PolygonShape} in the form of a triangle:
+   * <pre>
+   *  /\
+   * /__\
+   * </pre>
+   */
+  public static Body createTriangleBody(final PhysicsWorld pPhysicsWorld,
+      final Shape pShape, final BodyType pBodyType, final FixtureDef pFixtureDef) {
+    // remember that the vertices are relative to the center-coordinates of the
+    // Shape
+    final float halfWidth = pShape.getWidthScaled() * 0.5f /
+        PIXEL_TO_METER_RATIO_DEFAULT;
+    final float halfHeight = pShape.getHeightScaled() * 0.5f /
+        PIXEL_TO_METER_RATIO_DEFAULT;
+
+    final float top = -halfHeight;
+    final float bottom = halfHeight;
+    final float left = -halfWidth;
+    final float centerX = 0;
+    final float right = halfWidth;
+
+    final Vector2[] vertices = {
+        new Vector2(centerX, top),
+        new Vector2(right, bottom),
+        new Vector2(left, bottom)
+    };
+
+    return PhysicsFactory.createPolygonBody(pPhysicsWorld, pShape, vertices,
+        pBodyType, pFixtureDef);
+  }
+
+  /**
+   * Creates a {@link Body} based {@link PolygonShape} in the form of a hexagon:
+   * <pre>
+   *  /\
+   * /  \
+   * |  |
+   * |  |
+   * \  /
+   *  \/
+   * </pre>
+   */
+  public static Body createHexagonBody(final PhysicsWorld pPhysicsWorld,
+      final Shape pShape, final BodyType pBodyType, final FixtureDef pFixtureDef) {
+    // remember that the vertices are relative to the center-coordinates of the
+    // Shape
+    final float halfWidth = pShape.getWidthScaled() * 0.5f /
+        PIXEL_TO_METER_RATIO_DEFAULT;
+    final float halfHeight = pShape.getHeightScaled() * 0.5f /
+        PIXEL_TO_METER_RATIO_DEFAULT;
+
+    // the top and bottom vertex of the hexagon are on the bottom and top of the
+    // hexagon-sprite
+    final float top = -halfHeight;
+    final float bottom = halfHeight;
+
+    final float centerX = 0;
+
+    // the left and right vertices of the hexagon are not on the edge of the
+    // hexagon-sprite, so we need to inset them a little
+    final float left = -halfWidth + 2.5f / PIXEL_TO_METER_RATIO_DEFAULT;
+    final float right = halfWidth - 2.5f / PIXEL_TO_METER_RATIO_DEFAULT;
+    final float higher = top + 8.25f / PIXEL_TO_METER_RATIO_DEFAULT;
+    final float lower = bottom - 8.25f / PIXEL_TO_METER_RATIO_DEFAULT;
+
+
+    final Vector2[] vertices = {
+        new Vector2(centerX, top),
+        new Vector2(right, higher),
+        new Vector2(right, lower),
+        new Vector2(centerX, bottom),
+        new Vector2(left, lower),
+        new Vector2(left, higher)
+    };
+
+    return PhysicsFactory.createPolygonBody(pPhysicsWorld, pShape, vertices,
+        pBodyType, pFixtureDef);
   }
 }

@@ -38,7 +38,7 @@ public class TouchDragExample extends BaseExample {
   public void onLoadResources() {
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface.png", 0, 0);
+        "gfx/face_box.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 

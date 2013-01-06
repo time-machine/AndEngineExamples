@@ -69,7 +69,7 @@ public class LoadTextureExample extends BaseExample {
   private void loadNewTexture() {
     mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     final TextureRegion faceTextureRegion = TextureRegionFactory.createFromAsset(
-        mTexture, this, "gfx/boxface.png", 0, 0);
+        mTexture, this, "gfx/face_box.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
 
     final float x = (CAMERA_WIDTH - faceTextureRegion.getWidth()) * MathUtils.RANDOM.nextFloat();

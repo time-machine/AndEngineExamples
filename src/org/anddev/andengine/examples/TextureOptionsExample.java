@@ -68,15 +68,15 @@ public class TextureOptionsExample extends BaseExample {
 
     mTexture = new Texture(32, 32, TextureOptions.DEFAULT);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "boxface.png", 0, 0);
+        "face_box.png", 0, 0);
 
     mTextureBilinear = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegionBilinear = TextureRegionFactory.createFromAsset(
-        mTextureBilinear, this, "boxface.png", 0, 0);
+        mTextureBilinear, this, "face_box.png", 0, 0);
 
     mTextureRepeating = new Texture(32, 32, TextureOptions.REPEATING);
     mFaceTextureRegionRepeating = TextureRegionFactory.createFromAsset(
-        mTextureRepeating, this, "boxface.png", 0, 0);
+        mTextureRepeating, this, "face_box.png", 0, 0);
 
     // the following statement causes the Texture to be printed horizontally
     // 10x on any Sprite that uses it. so we will later increase the width of

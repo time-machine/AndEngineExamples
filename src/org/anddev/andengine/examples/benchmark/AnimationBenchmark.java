@@ -51,7 +51,7 @@ public class AnimationBenchmark extends BaseBenchmark {
     mBananaTextureRegion = TextureRegionFactory.createTiledFromAsset(
         mTexture, this, "banana_tiled.png", 0, 180, 4, 2);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "boxface_tiled.png", 132, 180, 2, 1);
+        mTexture, this, "face_box_tiled.png", 132, 180, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 

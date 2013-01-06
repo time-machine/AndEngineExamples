@@ -52,7 +52,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
   public void onLoadResources() {
     mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface_menu.png", 0, 0);
+        "gfx/face_box_menu.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
 
     mMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR);

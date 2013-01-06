@@ -42,7 +42,7 @@ public class UpdateTextureExample extends BaseExample {
   public void onLoadResources() {
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(
-        mTexture, this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
+        mTexture, this, "gfx/face_box_tiled.png", 0, 0, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 
@@ -84,7 +84,7 @@ public class UpdateTextureExample extends BaseExample {
     mTexture.clearTextureSources();
     mToggleBox = !mToggleBox;
     TextureRegionFactory.createTiledFromAsset(mTexture, this,
-        mToggleBox ? "gfx/boxface_tiled.png" : "gfx/circleface_tiled.png",
+        mToggleBox ? "gfx/face_box_tiled.png" : "gfx/face_circle_tiled.png",
         0, 0, 2, 1);
   }
 }

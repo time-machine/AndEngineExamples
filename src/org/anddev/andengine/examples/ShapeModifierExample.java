@@ -122,7 +122,7 @@ public class ShapeModifierExample extends BaseExample {
   public void onLoadResources() {
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
+        this, "gfx/face_box_tiled.png", 0, 0, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 

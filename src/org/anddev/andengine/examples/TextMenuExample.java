@@ -65,7 +65,7 @@ public class TextMenuExample extends BaseExample
     // load sprite-textures
     mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/boxface_menu.png", 0, 0);
+        "gfx/face_box_menu.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
   }
 

@@ -72,7 +72,7 @@ public class BoundCameraExample extends BaseExample implements
   public void onLoadResources() {
     mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
-        this, "gfx/boxface_tiled.png", 0, 0, 2, 1);
+        this, "gfx/face_box_tiled.png", 0, 0, 2, 1);
     mEngine.getTextureManager().loadTexture(mTexture);
 
     mHUDTexture = new Texture(256, 128, TextureOptions.BILINEAR);
