@@ -29,7 +29,8 @@ public class ModPlayerExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
-  private static final String SAMPLE_MOD_FILENAME = "mfx/lepeltheme.mod";
+  private static final String SAMPLE_MOD_DIRECTORY = "mfx/";
+  private static final String SAMPLE_MOD_FILENAME = "lepeltheme.mod";
 
   private Texture mTexture;
   private TextureRegion mILove8BitTextureRegion;
@@ -52,7 +53,8 @@ public class ModPlayerExample extends BaseExample {
     mILove8BitTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
         this, "i_love_8_bit.png", 0, 0);
 
-    if (FileUtils.isFileExistingOnExternalStorage(this, SAMPLE_MOD_FILENAME)) {
+    if (FileUtils.isFileExistingOnExternalStorage(this, SAMPLE_MOD_DIRECTORY +
+        SAMPLE_MOD_FILENAME)) {
       startPlayingMod();
     }
     else {
@@ -62,9 +64,10 @@ public class ModPlayerExample extends BaseExample {
             @Override
             public Void call() throws Exception {
               FileUtils.ensureDirectoriesExistOnExternalStorage(
-                  ModPlayerExample.this, "mfx");
+                  ModPlayerExample.this, SAMPLE_MOD_DIRECTORY);
               FileUtils.copyToExternalStorage(ModPlayerExample.this,
-                  SAMPLE_MOD_FILENAME, SAMPLE_MOD_FILENAME);
+                  SAMPLE_MOD_DIRECTORY + SAMPLE_MOD_FILENAME,
+                  SAMPLE_MOD_DIRECTORY + SAMPLE_MOD_FILENAME);
               return null;
             }
           }, new Callback<Void>() {
