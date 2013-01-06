@@ -6,7 +6,6 @@ import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -51,19 +50,21 @@ public class TouchDragExample extends BaseExample {
 
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
-    final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
-    face.setScale(4);
-    scene.getTopLayer().addEntity(face);
 
-    scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
+    final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion) {
       @Override
-      public boolean onSceneTouchEvent(final Scene pScene,
-          final TouchEvent pSceneTouchEvent) {
-        face.setPosition(pSceneTouchEvent.getX() - face.getWidth() / 2,
-            pSceneTouchEvent.getY() - face.getHeight() / 2);
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
+          final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+        setPosition(pSceneTouchEvent.getX() - getWidth() / 2,
+            pSceneTouchEvent.getY() - getHeight() / 2);
         return true;
       }
-    });
+    };
+
+    face.setScale(4);
+    scene.getTopLayer().addEntity(face);
+    scene.registerTouchArea(face);
+    scene.setTouchAreaBindingEnabled(true);
 
     return scene;
   }

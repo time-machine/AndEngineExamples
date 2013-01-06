@@ -59,10 +59,10 @@ public class ChangeableTextExample extends BaseExample {
     scene.getTopLayer().addEntity(elapsedText);
     scene.getTopLayer().addEntity(fpsText);
 
-    scene.registerUpdateHandler(new TimerHandler(1 / 20, new ITimerCallback() {
+    scene.registerUpdateHandler(new TimerHandler(1 / 20, true,
+        new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
-        pTimerHandler.reset();
         elapsedText.setText("Seconds elapsed:" +
             getEngine().getSecondsElapsedTotal());
         fpsText.setText("FPS:" + fpsCounter.getFPS());
