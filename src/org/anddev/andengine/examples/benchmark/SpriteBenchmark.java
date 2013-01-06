@@ -46,7 +46,7 @@ public class SpriteBenchmark extends BaseBenchmark {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
@@ -67,8 +67,8 @@ public class SpriteBenchmark extends BaseBenchmark {
     final ILayer topLayer = scene.getTopLayer();
 
     for (int i = 0; i < SPRITE_COUNT; i++) {
-      final Sprite face = new Sprite(
-          mRandom.nextFloat() * (CAMERA_WIDTH - 32),
+      Sprite face;
+      face = new Sprite(mRandom.nextFloat() * (CAMERA_WIDTH - 32),
           mRandom.nextFloat() * (CAMERA_HEIGHT - 32), mFaceTextureRegion,
           sharedVertexBuffer);
       topLayer.addEntity(face);

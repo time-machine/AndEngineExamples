@@ -54,7 +54,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 64, TextureOptions.BILINEAR);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "face_box_tiled.png", 0, 0, 2, 1);

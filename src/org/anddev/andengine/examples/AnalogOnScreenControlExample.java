@@ -41,7 +41,7 @@ public class AnalogOnScreenControlExample extends BaseExample {
   public void onLoadResources() {
     TextureRegionFactory.setAssetBasePath("gfx/");
 
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "face_box.png", 0, 0);
 

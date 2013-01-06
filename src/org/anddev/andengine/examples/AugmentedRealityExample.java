@@ -45,7 +45,7 @@ public class AugmentedRealityExample extends BaseAugmentedRealityGameActivity {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/box_face.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);

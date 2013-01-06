@@ -54,7 +54,7 @@ public class ShapeModifierBenchmark extends BaseBenchmark {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box_tiled.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
