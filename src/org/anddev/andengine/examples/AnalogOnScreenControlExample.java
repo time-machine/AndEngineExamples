@@ -3,19 +3,23 @@ package org.anddev.andengine.examples;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
+import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
+import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
+
+import android.widget.Toast;
 
 public class AnalogOnScreenControlExample extends BaseExample {
   private static final int CAMERA_WIDTH = 480;
@@ -32,6 +36,8 @@ public class AnalogOnScreenControlExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "Also try tapping this AnalogOnScreenControl!",
+        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
@@ -70,12 +76,20 @@ public class AnalogOnScreenControlExample extends BaseExample {
     final AnalogOnScreenControl analogOnScreenControl = new AnalogOnScreenControl(
         0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
         mCamera, mOnScreenControlBaseTextureRegion,
-        mOnScreenControlKnobTextureRegion, 0.1f, new OnScreenControlListener() {
+        mOnScreenControlKnobTextureRegion, 0.1f, 200,
+        new IAnalogOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
               final float pValueX, final float pValueY) {
             face.setVelocity(pValueX * 100, pValueY * 100);
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            face.addShapeModifier(new SequenceModifier(new ScaleModifier(0.25f,
+                1, 1.5f), new ScaleModifier(0.25f, 1.5f, 1)));
           }
         });
 

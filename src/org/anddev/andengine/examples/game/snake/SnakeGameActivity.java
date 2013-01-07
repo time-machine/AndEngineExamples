@@ -9,7 +9,7 @@ import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
+import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.IOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.DigitalOnScreenControl;
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
@@ -172,10 +172,10 @@ public class SnakeGameActivity extends BaseGameActivity implements
     scene.getLayer(LAYER_FOOD).addEntity(mFrog);
 
     // the On-Screen controls to control the direction of the snake
-    mDigitalOnScreenControl = new DigitalOnScreenControl(
-        0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
-        mCamera, mOnScreenControlBaseTextureRegion,
-        mOnScreenControlKnobTextureRegion, 0.1f, new OnScreenControlListener() {
+    mDigitalOnScreenControl = new DigitalOnScreenControl(0,
+        CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(), mCamera,
+        mOnScreenControlBaseTextureRegion, mOnScreenControlKnobTextureRegion,
+        0.1f, new IOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,

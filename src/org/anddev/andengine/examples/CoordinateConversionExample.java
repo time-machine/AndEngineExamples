@@ -6,8 +6,8 @@ import static org.anddev.andengine.util.constants.Constants.VERTEX_INDEX_Y;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
+import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -152,12 +152,18 @@ public class CoordinateConversionExample extends BaseExample {
         new AnalogOnScreenControl(x1, y1, mCamera,
             mOnScreenControlBaseTextureRegion,
             mOnScreenControlKnobTextureRegion, 0.1f,
-            new OnScreenControlListener() {
+            new IAnalogOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
               final float pValueX, final float pValueY) {
             face.setVelocity(pValueX * 100, pValueY * 100);
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            // nothing
           }
         });
 
@@ -173,7 +179,7 @@ public class CoordinateConversionExample extends BaseExample {
         new AnalogOnScreenControl(x2, y2, mCamera,
             mOnScreenControlBaseTextureRegion,
             mOnScreenControlKnobTextureRegion, 0.1f,
-            new OnScreenControlListener() {
+            new IAnalogOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
@@ -185,6 +191,12 @@ public class CoordinateConversionExample extends BaseExample {
               face.setRotation(MathUtils.radToDeg((float)Math.atan2(pValueX,
                   -pValueY)));
             }
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            // nothing
           }
         });
 

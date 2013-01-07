@@ -3,8 +3,8 @@ package org.anddev.andengine.examples.game.racer;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
+import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -130,7 +130,7 @@ public class RacerGameActivity extends BaseGameActivity {
     final AnalogOnScreenControl analogOnScreenControl = new AnalogOnScreenControl(0,
         CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(), mCamera,
         mOnScreenControlBaseTextureRegion, mOnScreenControlKnobTextureRegion,
-        0.1f, new OnScreenControlListener() {
+        0.1f, new IAnalogOnScreenControlListener() {
           private final Vector2 mVelocityTemp = new Vector2();
 
           @Override
@@ -146,6 +146,12 @@ public class RacerGameActivity extends BaseGameActivity {
             carBody.setTransform(carBody.getWorldCenter(), rotationInRad);
 
             mCar.setRotation(MathUtils.radToDeg(rotationInRad));
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            // nothing
           }
         });
 

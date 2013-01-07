@@ -3,7 +3,7 @@ package org.anddev.andengine.examples;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
+import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.IOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.DigitalOnScreenControl;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
@@ -70,7 +70,7 @@ public class DigitalOnScreenControlExample extends BaseExample {
     final DigitalOnScreenControl digitalOnScreenControl = new DigitalOnScreenControl(
         0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
         mCamera, mOnScreenControlBaseTextureRegion,
-        mOnScreenControlKnobTextureRegion, 0.1f, new OnScreenControlListener() {
+        mOnScreenControlKnobTextureRegion, 0.1f, new IOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,

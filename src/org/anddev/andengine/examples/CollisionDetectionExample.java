@@ -3,8 +3,8 @@ package org.anddev.andengine.examples;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
+import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl.OnScreenControlListener;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
@@ -126,12 +126,18 @@ public class CollisionDetectionExample extends BaseExample {
     final AnalogOnScreenControl velocityOnScreenControl =
         new AnalogOnScreenControl(x1, y1, mCamera,
             mOnScreenControlBaseTextureRegion, mOnScreenControlKnobTextureRegion,
-            0.1f, new OnScreenControlListener() {
+            0.1f, new IAnalogOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
               final float pValueX, final float pValueY) {
             face.setVelocity(pValueX * 100, pValueY * 100);
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            // nothing
           }
         });
 
@@ -145,7 +151,7 @@ public class CollisionDetectionExample extends BaseExample {
     final AnalogOnScreenControl rotationOnScreenControl =
         new AnalogOnScreenControl(x2, y2, mCamera,
             mOnScreenControlBaseTextureRegion, mOnScreenControlKnobTextureRegion,
-            0.1f, new OnScreenControlListener() {
+            0.1f, new IAnalogOnScreenControlListener() {
           @Override
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
@@ -157,6 +163,12 @@ public class CollisionDetectionExample extends BaseExample {
               face.setRotation(MathUtils.radToDeg(
                   (float)Math.atan2(pValueX, -pValueY)));
             }
+          }
+
+          @Override
+          public void onControlClick(
+              final AnalogOnScreenControl pAnalogOnScreenControl) {
+            // nothing
           }
         });
 
