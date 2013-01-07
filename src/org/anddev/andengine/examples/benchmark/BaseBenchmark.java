@@ -15,6 +15,7 @@ import org.anddev.andengine.util.Callback;
 import org.anddev.andengine.util.Debug;
 import org.anddev.andengine.util.StreamUtils;
 import org.anddev.andengine.util.SystemUtils;
+import org.anddev.andengine.util.SystemUtils.SystemUtilsException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -177,11 +178,37 @@ public abstract class BaseBenchmark extends BaseGameActivity {
             "device_displaymetrics_ydpi", String.valueOf(
                 displayMetrics.ydpi)));
         try {
-          final float bogoMips = SystemUtils.getBogoMips();
+          final float bogoMips = SystemUtils.getCPUBogoMips();
           nameValuePairs.add(new BasicNameValuePair("device_cpuinfo_bogomips",
               String.valueOf(bogoMips)));
         }
         catch (final IllegalStateException e) {
+          Debug.e(e);
+        }
+
+        try {
+          final float memoryTotal = SystemUtils.getMemoryTotal();
+          final float memoryFree = SystemUtils.getMemoryFree();
+          nameValuePairs.add(new BasicNameValuePair("device_memoryinfo_total",
+              String.valueOf(memoryTotal)));
+          nameValuePairs.add(new BasicNameValuePair("device_memoryinfo_free",
+              String.valueOf(memoryFree)));
+        }
+        catch (final IllegalStateException e) {
+          Debug.e(e);
+        }
+
+        try {
+          final float cpuFrequencyCurrent =
+              SystemUtils.getCPUFrequencyCurrent();
+          final float cpuFrequencyMax = SystemUtils.getCPUFrequencyMax();
+          nameValuePairs.add(new BasicNameValuePair(
+              "device_cpuinfo_frequency_current",
+              String.valueOf(cpuFrequencyCurrent)));
+          nameValuePairs.add(new BasicNameValuePair(
+              "device_cpuinfo_frequency_max", String.valueOf(cpuFrequencyMax)));
+        }
+        catch (final SystemUtilsException e) {
           Debug.e(e);
         }
 

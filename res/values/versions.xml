@@ -37,6 +37,9 @@
         <item>33</item>
         <item>34</item>
         <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
     </array>
 
     <string-array name="new_in_version_changes">
@@ -75,6 +78,9 @@
         <item> - Added BoundCamera Example\n - Improved Racer Game with some boxes to collide with</item>
         <item> - Fixed TMXTiledMap Example</item>
         <item> - Added EaseFunction Example</item>
+        <item> - Adaption due to changes in AndEngine</item>
+        <item> - Benchmarks now also submit CPU-speed (MHz)</item>
+        <item> - Benchmarks now also submit info about Memory</item>
     </string-array>
 
 </resources>
