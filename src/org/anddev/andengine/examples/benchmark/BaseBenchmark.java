@@ -14,6 +14,7 @@ import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Callback;
 import org.anddev.andengine.util.Debug;
 import org.anddev.andengine.util.StreamUtils;
+import org.anddev.andengine.util.SystemUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -32,6 +33,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 public abstract class BaseBenchmark extends BaseGameActivity {
@@ -159,6 +161,29 @@ public abstract class BaseBenchmark extends BaseGameActivity {
             (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         nameValuePairs.add(new BasicNameValuePair("device_imei",
             telephonyManager.getDeviceId()));
+
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        nameValuePairs.add(new BasicNameValuePair(
+            "device_displaymetrics_widthpixels", String.valueOf(
+                displayMetrics.widthPixels)));
+        nameValuePairs.add(new BasicNameValuePair(
+            "device_displaymetrics_heightpixels", String.valueOf(
+                displayMetrics.heightPixels)));
+        nameValuePairs.add(new BasicNameValuePair(
+            "device_displaymetrics_xdpi", String.valueOf(
+                displayMetrics.xdpi)));
+        nameValuePairs.add(new BasicNameValuePair(
+            "device_displaymetrics_ydpi", String.valueOf(
+                displayMetrics.ydpi)));
+        try {
+          final float bogoMips = SystemUtils.getBogoMips();
+          nameValuePairs.add(new BasicNameValuePair("device_cpuinfo_bogomips",
+              String.valueOf(bogoMips)));
+        }
+        catch (final IllegalStateException e) {
+          Debug.e(e);
+        }
 
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
