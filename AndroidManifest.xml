@@ -71,9 +71,6 @@
             android:name=".EaseFunctionExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".FixedStepPhysicsExample"
-            android:configChanges="orientation" />
-        <activity
             android:name=".ImageFormatsExample"
             android:configChanges="orientation" />
         <activity
@@ -116,7 +113,13 @@
             android:name=".PauseExample"
             android:configChanges="orientation" />
         <activity
+            android:name=".PhysicsCollisionFilteringExample"
+            android:configChanges="orientation" />
+        <activity
             android:name=".PhysicsExample"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".PhysicsFixedStepExample"
             android:configChanges="orientation" />
         <activity
             android:name=".PhysicsJumpExample"

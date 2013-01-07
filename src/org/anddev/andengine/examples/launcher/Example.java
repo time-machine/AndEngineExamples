@@ -13,7 +13,6 @@ import org.anddev.andengine.examples.CoordinateConversionExample;
 import org.anddev.andengine.examples.CustomFontExample;
 import org.anddev.andengine.examples.DigitalOnScreenControlExample;
 import org.anddev.andengine.examples.EaseFunctionExample;
-import org.anddev.andengine.examples.FixedStepPhysicsExample;
 import org.anddev.andengine.examples.ImageFormatsExample;
 import org.anddev.andengine.examples.LineExample;
 import org.anddev.andengine.examples.LoadTextureExample;
@@ -28,7 +27,9 @@ import org.anddev.andengine.examples.ParticleSystemNexusExample;
 import org.anddev.andengine.examples.ParticleSystemSimpleExample;
 import org.anddev.andengine.examples.PathModifierExample;
 import org.anddev.andengine.examples.PauseExample;
+import org.anddev.andengine.examples.PhysicsCollisionFilteringExample;
 import org.anddev.andengine.examples.PhysicsExample;
+import org.anddev.andengine.examples.PhysicsFixedStepExample;
 import org.anddev.andengine.examples.PhysicsJumpExample;
 import org.anddev.andengine.examples.PhysicsRemoveExample;
 import org.anddev.andengine.examples.PhysicsRevoluteJointExample;
@@ -85,8 +86,6 @@ enum Example {
   DIGITALONSCREENCONTROL(DigitalOnScreenControlExample.class,
       R.string.example_digitalonscreencontrol),
   EASEFUNCTION(EaseFunctionExample.class, R.string.example_easefunction),
-  FIXEDSTEPPHYSICS(FixedStepPhysicsExample.class,
-      R.string.example_fixedstepphysics),
   IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),
   LINE(LineExample.class, R.string.example_line),
   LOADTEXTURE(LoadTextureExample.class, R.string.example_loadtexture),
@@ -104,7 +103,11 @@ enum Example {
       R.string.example_particlesystemcool),
   PARTICLESYSTEMSIMPLE(ParticleSystemSimpleExample.class,
       R.string.example_particlesystemsimple),
+  PHYSICSCOLLISIONFILTERING(PhysicsCollisionFilteringExample.class,
+      R.string.example_physicscollisionfiltering),
   PHYSICS(PhysicsExample.class, R.string.example_physics),
+  PHYSICSFIXEDSTEP(PhysicsFixedStepExample.class,
+      R.string.example_physicsfixedstep),
   PHYSICSJUMP(PhysicsJumpExample.class, R.string.example_physicsjump),
   PHYSICSREVOLUTEJOINT(PhysicsRevoluteJointExample.class,
       R.string.example_physicsrevolutejoint),
