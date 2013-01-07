@@ -17,7 +17,7 @@ import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadExcepti
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.LoopModifier;
+import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
 import org.anddev.andengine.entity.shape.modifier.PathModifier;
 import org.anddev.andengine.entity.shape.modifier.PathModifier.IPathModifierListener;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
@@ -123,7 +123,7 @@ public class TMXTiledMapExample extends BaseExample {
         .to(600, 160).to(0, 160);
 
     // add the proper animation when a waypoint of the path is passed
-    player.addShapeModifier(new LoopModifier(new PathModifier(30, path, null,
+    player.addShapeModifier(new LoopShapeModifier(new PathModifier(30, path, null,
         new IPathModifierListener() {
           @Override
           public void onWaypointPassed(final PathModifier pPathModifier,

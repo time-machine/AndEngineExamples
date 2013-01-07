@@ -11,7 +11,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -88,7 +88,7 @@ public class AnalogOnScreenControlExample extends BaseExample {
           @Override
           public void onControlClick(
               final AnalogOnScreenControl pAnalogOnScreenControl) {
-            face.addShapeModifier(new SequenceModifier(new ScaleModifier(0.25f,
+            face.addShapeModifier(new SequenceShapeModifier(new ScaleModifier(0.25f,
                 1, 1.5f), new ScaleModifier(0.25f, 1.5f, 1)));
           }
         });

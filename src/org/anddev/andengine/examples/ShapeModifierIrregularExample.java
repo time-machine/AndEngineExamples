@@ -8,19 +8,19 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.IShapeModifier;
 import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
-import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
+import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationModifier;
 import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
+import org.anddev.andengine.util.modifier.IModifier;
 
 import android.widget.Toast;
 
@@ -69,10 +69,10 @@ public class ShapeModifierIrregularExample extends BaseExample {
         mFaceTextureRegion);
     face2.animate(100);
 
-    final SequenceModifier shapeModifier = new SequenceModifier(
+    final SequenceShapeModifier shapeModifier = new SequenceShapeModifier(
         new IShapeModifierListener() {
           @Override
-          public void onModifierFinished(final IShapeModifier pShapeModifier,
+          public void onModifierFinished(final IModifier<IShape> pShapeModifier,
               final IShape pShape) {
             runOnUiThread(new Runnable() {
               @Override
@@ -85,11 +85,11 @@ public class ShapeModifierIrregularExample extends BaseExample {
         },
         new ScaleModifier(2, 1, 0.75f, 1, 2),
         new ScaleModifier(2, 0.75f, 2, 2, 1.25f),
-        new ParallelModifier(
+        new ParallelShapeModifier(
             new ScaleModifier(3, 2, 5, 1.25f, 5),
             new RotationByModifier(3, 180)
         ),
-        new ParallelModifier(
+        new ParallelShapeModifier(
             new ScaleModifier(3, 5, 1),
             new RotationModifier(3, 180, 0)
         )

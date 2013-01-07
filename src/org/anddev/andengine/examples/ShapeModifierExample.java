@@ -13,21 +13,22 @@ import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.shape.IShape;
 import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
 import org.anddev.andengine.entity.shape.modifier.DelayModifier;
-import org.anddev.andengine.entity.shape.modifier.IShapeModifier;
 import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
-import org.anddev.andengine.entity.shape.modifier.LoopModifier;
-import org.anddev.andengine.entity.shape.modifier.LoopModifier.ILoopModifierListener;
-import org.anddev.andengine.entity.shape.modifier.ParallelModifier;
+import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
+import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier.ILoopShapeModifierListener;
+import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
 import org.anddev.andengine.entity.shape.modifier.RotationModifier;
 import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceModifier;
+import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
+import org.anddev.andengine.util.modifier.IModifier;
+import org.anddev.andengine.util.modifier.LoopModifier;
 
 import android.widget.Toast;
 
@@ -64,10 +65,10 @@ public class ShapeModifierExample extends BaseExample {
         mFaceTextureRegion);
     face.animate(100);
 
-    final IShapeModifier shapeModifier = new LoopModifier(
+    final LoopShapeModifier shapeModifier = new LoopShapeModifier(
         new IShapeModifierListener() {
           @Override
-          public void onModifierFinished(final IShapeModifier pShapeModifier,
+          public void onModifierFinished(final IModifier<IShape> pShapeModifier,
               final IShape pShape) {
             runOnUiThread(new Runnable() {
               @Override
@@ -79,9 +80,10 @@ public class ShapeModifierExample extends BaseExample {
           }
         },
         1,
-        new ILoopModifierListener() {
+        new ILoopShapeModifierListener() {
           @Override
-          public void onLoopFinished(final LoopModifier pLoopModifier,
+          public void onLoopFinished(
+              final LoopModifier<IShape> pLoopShapeModifier,
               final int pLoopsRemaining) {
             runOnUiThread(new Runnable() {
               @Override
@@ -92,17 +94,17 @@ public class ShapeModifierExample extends BaseExample {
             });
           }
         },
-        new SequenceModifier(
+        new SequenceShapeModifier(
             new RotationModifier(1, 0, 90),
             new AlphaModifier(2, 1, 0),
             new AlphaModifier(1, 0, 1),
             new ScaleModifier(2, 1, 0.5f),
             new DelayModifier(0.5f),
-            new ParallelModifier(
+            new ParallelShapeModifier(
                 new ScaleModifier(3, 0.5f, 5),
                 new RotationByModifier(3, 90)
             ),
-            new ParallelModifier(
+            new ParallelShapeModifier(
                 new ScaleModifier(3, 5, 1),
                 new RotationModifier(3, 180, 0)
             )
