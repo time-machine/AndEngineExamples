@@ -54,8 +54,12 @@ public class PhysicsRemoveExample extends BaseExample implements
     Toast.makeText(this, "Touch the screen to add objects. Touch an object to remove it",
         Toast.LENGTH_LONG).show();
     final Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-    return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-        new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera));
+    final EngineOptions engineOptions = new EngineOptions(true,
+        ScreenOrientation.LANDSCAPE, new RatioResolutionPolicy(CAMERA_WIDTH,
+            CAMERA_HEIGHT), camera);
+    engineOptions.getTouchOptions().setRunOnUpdateThread(true);
+
+    return new Engine(engineOptions);
   }
 
   @Override
@@ -118,13 +122,7 @@ public class PhysicsRemoveExample extends BaseExample implements
       final ITouchArea pTouchArea, final float pTouchAreaLocalX,
       final float pTouchAreaLocalY) {
     if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-      runOnUpdateThread(new Runnable() {
-        @Override
-        public void run() {
-          final AnimatedSprite face = (AnimatedSprite)pTouchArea;
-          removeFace(face);
-        }
-      });
+      removeFace((AnimatedSprite)pTouchArea);
       return true;
     }
     return false;
@@ -182,9 +180,12 @@ public class PhysicsRemoveExample extends BaseExample implements
   private void removeFace(final AnimatedSprite face) {
     final Scene scene = mEngine.getScene();
 
-    final Body faceBody = mPhysicsWorld.getPhysicsConnectorManager()
-        .findBodyByShape(face);
-    mPhysicsWorld.destroyBody(faceBody);
+    final PhysicsConnector facePhysicsConnector = mPhysicsWorld
+        .getPhysicsConnectorManager().findPhysicsConnectorByShape(face);
+
+    mPhysicsWorld.unregisterPhysicsConnector(facePhysicsConnector);
+    mPhysicsWorld.destroyBody(facePhysicsConnector.getBody());
+
     scene.unregisterTouchArea(face);
     scene.getTopLayer().removeEntity(face);
   }
