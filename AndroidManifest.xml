@@ -176,7 +176,7 @@
             android:name=".TouchDragExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".UnloadTextureExample"
+            android:name=".UnloadResourcesExample"
             android:configChanges="orientation" />
         <activity
             android:name=".UpdateTextureExample"

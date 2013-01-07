@@ -31,7 +31,7 @@ public enum ExampleGroup {
   OTHER(R.string.examplegroup_others, Example.PAUSE, Example.MENU,
       Example.SUBMENU, Example.TEXTMENU, Example.ZOOM, Example.IMAGEFORMATS,
       Example.TEXTUREOPTIONS, Example.COLORKEYTEXTURESOURCEDECORATOR,
-      Example.LOADTEXTURE, Example.UPDATETEXTURE, Example.UNLOADTEXTURE),
+      Example.LOADTEXTURE, Example.UPDATETEXTURE, Example.UNLOADRESOURCES),
   GAME(R.string.examplegroup_games, Example.GAME_SNAKE, Example.GAME_RACER),
   BENCHMARK(R.string.examplegroup_benchmarks, Example.BENCHMARK_SPRITE,
       Example.BENCHMARK_SHAPEMODIFIER, Example.BENCHMARK_ANIMATION,

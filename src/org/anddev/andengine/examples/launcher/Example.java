@@ -49,7 +49,7 @@ import org.anddev.andengine.examples.TextMenuExample;
 import org.anddev.andengine.examples.TextureOptionsExample;
 import org.anddev.andengine.examples.TickerTextExample;
 import org.anddev.andengine.examples.TouchDragExample;
-import org.anddev.andengine.examples.UnloadTextureExample;
+import org.anddev.andengine.examples.UnloadResourcesExample;
 import org.anddev.andengine.examples.UpdateTextureExample;
 import org.anddev.andengine.examples.ZoomExample;
 import org.anddev.andengine.examples.benchmark.AnimationBenchmark;
@@ -127,7 +127,8 @@ enum Example {
   TMXTILEDMAP(TMXTiledMapExample.class, R.string.example_tmxtiledmap),
   TICKERTEXT(TickerTextExample.class, R.string.example_tickertext),
   TOUCHDRAG(TouchDragExample.class, R.string.example_touchdrag),
-  UNLOADTEXTURE(UnloadTextureExample.class, R.string.example_unloadtexture),
+  UNLOADRESOURCES(UnloadResourcesExample.class,
+      R.string.example_unloadresources),
   UPDATETEXTURE(UpdateTextureExample.class, R.string.example_updatetexture),
   ZOOM(ZoomExample.class, R.string.example_zoom),
 

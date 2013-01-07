@@ -6,20 +6,17 @@ import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.scene.Scene.IOnAreaTouchListener;
-import org.anddev.andengine.entity.scene.Scene.ITouchArea;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.input.touch.TouchEvent;
+import org.anddev.andengine.opengl.buffer.BufferObjectManager;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
-import android.view.MotionEvent;
-
-public class UnloadTextureExample extends BaseExample {
+public class UnloadResourcesExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT= 480;
 
@@ -51,21 +48,31 @@ public class UnloadTextureExample extends BaseExample {
 
     final int x = (CAMERA_WIDTH - mClickToUnloadTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mClickToUnloadTextureRegion.getHeight()) / 2;
-    final Sprite clickToUnload = new Sprite(x, y, mClickToUnloadTextureRegion);
-    scene.getTopLayer().addEntity(clickToUnload);
-
-    scene.registerTouchArea(clickToUnload);
-    scene.setOnAreaTouchListener(new IOnAreaTouchListener() {
+    final Sprite clickToUnload = new Sprite(x, y, mClickToUnloadTextureRegion) {
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
-          final ITouchArea pTouchArea, final float pTouchAreaLocalX,
-          final float pTouchAreaLocalY) {
-        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
-          getEngine().getTextureManager().unloadTexture(mTexture);
-        }
+          final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+        // completely remove all resources associated with this sprite
+        BufferObjectManager.getActiveInstance().unloadBufferObject(
+            getVertexBuffer());
+        BufferObjectManager.getActiveInstance().unloadBufferObject(
+            mClickToUnloadTextureRegion.getTextureBuffer());
+        mEngine.getTextureManager().unloadTexture(mTexture);
+
+        // and remove the sprite from the scene
+        final Sprite thisRef = this;
+        runOnUiThread(new Runnable() {
+          @Override
+          public void run() {
+            scene.getTopLayer().removeEntity(thisRef);
+          }
+        });
         return true;
       }
-    });
+    };
+
+    scene.getTopLayer().addEntity(clickToUnload);
+    scene.registerTouchArea(clickToUnload);
 
     return scene;
   }
