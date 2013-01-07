@@ -26,6 +26,8 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
+import android.widget.Toast;
+
 public class ParticleSystemSimpleExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
@@ -36,6 +38,8 @@ public class ParticleSystemSimpleExample extends BaseExample {
 
   @Override
   public Engine onLoadEngine() {
+    Toast.makeText(this, "Touch the screen to move the particlesystem.",
+        Toast.LENGTH_LONG).show();
     mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
     return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
         new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera));
