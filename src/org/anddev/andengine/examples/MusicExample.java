@@ -99,10 +99,4 @@ public class MusicExample extends BaseExample {
   @Override
   public void onLoadComplete() {
   }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    mMusic.stop();
-  }
 }
