@@ -52,6 +52,7 @@ import org.anddev.andengine.examples.TickerTextExample;
 import org.anddev.andengine.examples.TouchDragExample;
 import org.anddev.andengine.examples.UnloadResourcesExample;
 import org.anddev.andengine.examples.UpdateTextureExample;
+import org.anddev.andengine.examples.XMLLayoutExample;
 import org.anddev.andengine.examples.ZoomExample;
 import org.anddev.andengine.examples.benchmark.AnimationBenchmark;
 import org.anddev.andengine.examples.benchmark.ParticleSystemBenchmark;
@@ -133,6 +134,7 @@ enum Example {
   UNLOADRESOURCES(UnloadResourcesExample.class,
       R.string.example_unloadresources),
   UPDATETEXTURE(UpdateTextureExample.class, R.string.example_updatetexture),
+  XMLLAYOUT(XMLLayoutExample.class, R.string.example_xmllayout),
   ZOOM(ZoomExample.class, R.string.example_zoom),
 
   BENCHMARK_ANIMATION(AnimationBenchmark.class,

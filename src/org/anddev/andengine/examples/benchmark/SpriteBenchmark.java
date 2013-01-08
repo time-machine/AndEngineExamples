@@ -61,7 +61,7 @@ public class SpriteBenchmark extends BaseBenchmark {
     // a VertexBuffer to significantly increase performance
     final RectangleVertexBuffer sharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_STATIC_DRAW);
-    sharedVertexBuffer.onUpdate(0, 0, mFaceTextureRegion.getWidth(),
+    sharedVertexBuffer.update(0, 0, mFaceTextureRegion.getWidth(),
         mFaceTextureRegion.getHeight());
 
     final ILayer topLayer = scene.getTopLayer();
@@ -71,6 +71,7 @@ public class SpriteBenchmark extends BaseBenchmark {
       face = new Sprite(mRandom.nextFloat() * (CAMERA_WIDTH - 32),
           mRandom.nextFloat() * (CAMERA_HEIGHT - 32), mFaceTextureRegion,
           sharedVertexBuffer);
+      face.setIgnoreUpdate(true);
       topLayer.addEntity(face);
     }
 

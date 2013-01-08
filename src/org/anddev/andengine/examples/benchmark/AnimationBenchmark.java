@@ -64,24 +64,24 @@ public class AnimationBenchmark extends BaseBenchmark {
     // a VertexBuffer to significantly increase performance
     final RectangleVertexBuffer faceSharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
-    faceSharedVertexBuffer.onUpdate(0, 0, mFaceTextureRegion.getTileWidth(),
+    faceSharedVertexBuffer.update(0, 0, mFaceTextureRegion.getTileWidth(),
         mFaceTextureRegion.getTileHeight());
 
     final RectangleVertexBuffer helicopterSharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
-    helicopterSharedVertexBuffer.onUpdate(0, 0,
+    helicopterSharedVertexBuffer.update(0, 0,
         mHelicopterTextureRegion.getTileWidth(),
         mHelicopterTextureRegion.getTileHeight());
 
     final RectangleVertexBuffer snapdragonSharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
-    snapdragonSharedVertexBuffer.onUpdate(0, 0,
+    snapdragonSharedVertexBuffer.update(0, 0,
         mSnapdragonTextureRegion.getTileWidth(),
         mSnapdragonTextureRegion.getTileHeight());
 
     final RectangleVertexBuffer bananaSharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
-    bananaSharedVertexBuffer.onUpdate(0, 0, mBananaTextureRegion.getTileWidth(),
+    bananaSharedVertexBuffer.update(0, 0, mBananaTextureRegion.getTileWidth(),
         mBananaTextureRegion.getTileHeight());
 
     for (int i = 0; i < SPRITE_COUNT; i++) {

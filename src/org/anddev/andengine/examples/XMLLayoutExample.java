@@ -25,10 +25,11 @@ import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
+import org.anddev.andengine.ui.activity.LayoutGameActivity;
 
 import android.widget.Toast;
 
-public class ParticleSystemSimpleExample extends BaseExample {
+public class XMLLayoutExample extends LayoutGameActivity {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -48,16 +49,17 @@ public class ParticleSystemSimpleExample extends BaseExample {
   @Override
   public void onLoadResources() {
     mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-    mParticleTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/particle_point.png", 0, 0);
-    getEngine().getTextureManager().loadTexture(mTexture);
+    mParticleTextureRegion = TextureRegionFactory.createFromAsset(mTexture,
+        this, "gfx/particle_point.png", 0, 0);
+    mEngine.getTextureManager().loadTexture(mTexture);
   }
 
   @Override
   public Scene onLoadScene() {
-    getEngine().registerUpdateHandler(new FPSLogger());
+    mEngine.registerUpdateHandler(new FPSLogger());
 
     final Scene scene = new Scene(1);
+
     final CircleOutlineParticleEmitter particleEmitter =
         new CircleOutlineParticleEmitter(CAMERA_WIDTH * 0.5f,
             CAMERA_HEIGHT * 0.5f + 20, 80);
@@ -79,9 +81,9 @@ public class ParticleSystemSimpleExample extends BaseExample {
     particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
     particleSystem.addParticleInitializer(new VelocityInitializer(-2, 2, -20,
         -10));
-    particleSystem.addParticleInitializer(new RotationInitializer(0.0f, 360.0f));
+    particleSystem.addParticleInitializer(new RotationInitializer(0, 360));
 
-    particleSystem.addParticleModifier(new ScaleModifier(1.0f, 2.0f, 0, 5));
+    particleSystem.addParticleModifier(new ScaleModifier(1, 2, 0, 5));
     particleSystem.addParticleModifier(new ColorModifier(1, 1, 0, 0.5f, 0, 0, 0,
         3));
     particleSystem.addParticleModifier(new ColorModifier(1, 1, 0.5f, 1, 0, 1, 4,
@@ -97,5 +99,15 @@ public class ParticleSystemSimpleExample extends BaseExample {
 
   @Override
   public void onLoadComplete() {
+  }
+
+  @Override
+  protected int getLayoutID() {
+    return R.layout.xmllayoutexample;
+  }
+
+  @Override
+  protected int getRenderSurfaceViewID() {
+    return R.id.xmllayoutexample_rendersurfaceview;
   }
 }
