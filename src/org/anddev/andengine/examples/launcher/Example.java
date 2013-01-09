@@ -36,6 +36,7 @@ import org.anddev.andengine.examples.PhysicsRevoluteJointExample;
 import org.anddev.andengine.examples.R;
 import org.anddev.andengine.examples.RectangleExample;
 import org.anddev.andengine.examples.RepeatingSpriteBackgroundExample;
+import org.anddev.andengine.examples.Rotation3DExample;
 import org.anddev.andengine.examples.ShapeModifierExample;
 import org.anddev.andengine.examples.ShapeModifierIrregularExample;
 import org.anddev.andengine.examples.SoundExample;
@@ -116,6 +117,7 @@ enum Example {
   RECTANGLE(RectangleExample.class, R.string.example_rectangle),
   REPEATINGSPRITEBACKGROUND(RepeatingSpriteBackgroundExample.class,
       R.string.example_repeatingspritebackground),
+  ROTATION3D(Rotation3DExample.class, R.string.example_rotation3d),
   SHAPEMODIFIER(ShapeModifierExample.class, R.string.example_shapemodifier),
   SHAPEMODIFIERIRREGULAR(ShapeModifierIrregularExample.class,
       R.string.example_shapemodifierirregular),
