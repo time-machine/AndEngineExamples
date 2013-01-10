@@ -14,6 +14,7 @@ import org.anddev.andengine.examples.CustomFontExample;
 import org.anddev.andengine.examples.DigitalOnScreenControlExample;
 import org.anddev.andengine.examples.EaseFunctionExample;
 import org.anddev.andengine.examples.ImageFormatsExample;
+import org.anddev.andengine.examples.LevelLoaderExample;
 import org.anddev.andengine.examples.LineExample;
 import org.anddev.andengine.examples.LoadTextureExample;
 import org.anddev.andengine.examples.MenuExample;
@@ -89,6 +90,7 @@ enum Example {
       R.string.example_digitalonscreencontrol),
   EASEFUNCTION(EaseFunctionExample.class, R.string.example_easefunction),
   IMAGEFORMATS(ImageFormatsExample.class, R.string.example_imageformats),
+  LEVELLOADER(LevelLoaderExample.class, R.string.example_levelloader),
   LINE(LineExample.class, R.string.example_line),
   LOADTEXTURE(LoadTextureExample.class, R.string.example_loadtexture),
   MENU(MenuExample.class, R.string.example_menu),
