@@ -38,7 +38,7 @@ public class ColorKeyTextureSourceDecoratorExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
     // the actual AssetTextureSource
     final AssetTextureSource baseTextureSource = new AssetTextureSource(this,

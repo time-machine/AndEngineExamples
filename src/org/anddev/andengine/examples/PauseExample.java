@@ -56,7 +56,7 @@ public class PauseExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mPauseTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/paused.png", 0, 0);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,

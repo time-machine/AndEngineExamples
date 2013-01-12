@@ -70,7 +70,7 @@ public class TMXTiledMapExample extends BaseExample {
 
     try {
       final TMXLoader tmxLoader = new TMXLoader(this,
-          mEngine.getTextureManager(), TextureOptions.BILINEAR,
+          mEngine.getTextureManager(), TextureOptions.BILINEAR_PREMULTIPLYALPHA,
           new ITMXTilePropertiesListener() {
         @Override
         public void onTMXTileWithPropertiesCreated(

@@ -44,7 +44,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mParticleTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/particle_fire.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);

@@ -67,7 +67,7 @@ public class PhysicsExample extends BaseExample implements
   @Override
   public void onLoadResources() {
     // textures
-    mTexture = new Texture(64, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.setAssetBasePath("gfx/");
 
     // texture regions

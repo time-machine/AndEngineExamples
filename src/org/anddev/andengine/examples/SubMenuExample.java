@@ -22,7 +22,7 @@ public class SubMenuExample extends MenuExample {
   @Override
   public void onLoadResources() {
     super.onLoadResources();
-    mSubMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mSubMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mMenuOkTextureRegion = TextureRegionFactory.createFromAsset(
         mSubMenuTexture, this, "gfx/menu_ok.png", 0, 0);
     mMenuBackTextureRegion = TextureRegionFactory.createFromAsset(

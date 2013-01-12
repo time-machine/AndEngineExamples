@@ -36,7 +36,7 @@ public class ChangeableTextExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
+    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFont = new Font(mFontTexture, Typeface.create(Typeface.DEFAULT,
         Typeface.BOLD), 48, true, Color.BLACK);
     getEngine().getTextureManager().loadTexture(mFontTexture);

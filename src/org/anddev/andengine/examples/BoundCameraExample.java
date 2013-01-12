@@ -70,12 +70,12 @@ public class BoundCameraExample extends BaseExample implements
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/face_box_tiled.png", 0, 0, 2, 1);
     mEngine.getTextureManager().loadTexture(mTexture);
 
-    mHUDTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mHUDTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mToggleButtonTextureRegion = TextureRegionFactory.createTiledFromAsset(
         mHUDTexture, this, "gfx/toggle_button.png", 0, 0, 2, 1);
     mEngine.getTextureManager().loadTexture(mHUDTexture);

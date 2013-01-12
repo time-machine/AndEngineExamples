@@ -46,7 +46,7 @@ public class SpriteBenchmark extends BaseBenchmark {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);

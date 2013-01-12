@@ -65,7 +65,7 @@ public class LevelLoaderExample extends BaseExample {
   @Override
   public void onLoadResources() {
     // textures
-    mTexture = new Texture(64, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.setAssetBasePath("gfx/");
 
     // texture regions

@@ -77,7 +77,7 @@ public class RacerGameActivity extends BaseGameActivity {
 
   @Override
   public void onLoadResources() {
-    mVehiclesTexture = new Texture(128, 16, TextureOptions.BILINEAR);
+    mVehiclesTexture = new Texture(128, 16, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mVehiclesTextureRegion = TextureRegionFactory.createTiledFromAsset(
         mVehiclesTexture, this, "gfx/vehicles.png", 0, 0, 6, 1);
 
@@ -87,13 +87,13 @@ public class RacerGameActivity extends BaseGameActivity {
     mRacetrackCurveTextureRegion = TextureRegionFactory.createFromAsset(
         mRacetrackTexture, this, "gfx/racetrack_curve.png", 0, 128);
 
-    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
         mOnScreenControlTexture, this, "gfx/onscreen_control_base.png", 0, 0);
     mOnScreenControlKnobTextureRegion = TextureRegionFactory.createFromAsset(
         mOnScreenControlTexture, this, "gfx/onscreen_control_knob.png", 128, 0);
 
-    mBoxTexture = new Texture(32, 32, TextureOptions.BILINEAR);
+    mBoxTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mBoxTextureRegion = TextureRegionFactory.createFromAsset(mBoxTexture, this,
         "gfx/box.png", 0, 0);
 

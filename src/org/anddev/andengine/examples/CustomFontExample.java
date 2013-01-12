@@ -47,11 +47,11 @@ public class CustomFontExample extends BaseExample {
   @Override
   public void onLoadResources() {
     // the custom fonts
-    mDroidFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
-    mKingdomOfHeartsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
-    mNeverwinterNightsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
-    mPlokFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
-    mUnrealTournamentFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
+    mDroidFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+    mKingdomOfHeartsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+    mNeverwinterNightsFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+    mPlokFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+    mUnrealTournamentFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
     FontFactory.setAssetBasePath("font/");
     mDroidFont = FontFactory.createFromAsset(mDroidFontTexture, this,

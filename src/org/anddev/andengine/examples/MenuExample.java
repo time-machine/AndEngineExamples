@@ -50,12 +50,12 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box_menu.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
 
-    mMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mMenuTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mMenuResetTextureRegion = TextureRegionFactory.createFromAsset(
         mMenuTexture, this, "gfx/menu_reset.png", 0, 0);
     mMenuQuitTextureRegion = TextureRegionFactory.createFromAsset(mMenuTexture,

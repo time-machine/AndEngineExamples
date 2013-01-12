@@ -67,7 +67,7 @@ public class LoadTextureExample extends BaseExample {
   }
 
   private void loadNewTexture() {
-    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     final TextureRegion faceTextureRegion = TextureRegionFactory.createFromAsset(
         mTexture, this, "gfx/face_box.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);

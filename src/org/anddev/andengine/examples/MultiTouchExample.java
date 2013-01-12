@@ -71,7 +71,7 @@ public class MultiTouchExample extends BaseGameActivity {
 
   @Override
   public void onLoadResources() {
-    mCardDeckTexture = new Texture(1024, 512, TextureOptions.BILINEAR);
+    mCardDeckTexture = new Texture(1024, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.createFromAsset(mCardDeckTexture, this,
         "gfx/carddeck_tiled.png", 0, 0);
     mCardToTextureRegionMap = new HashMap<Card, TextureRegion>();

@@ -70,7 +70,7 @@ public class TextureOptionsExample extends BaseExample {
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "face_box.png", 0, 0);
 
-    mTextureBilinear = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTextureBilinear = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegionBilinear = TextureRegionFactory.createFromAsset(
         mTextureBilinear, this, "face_box.png", 0, 0);
 

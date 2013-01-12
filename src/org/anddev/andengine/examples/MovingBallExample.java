@@ -33,7 +33,7 @@ public class MovingBallExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/face_circle_tiled.png", 0, 0, 2, 1);
     getEngine().getTextureManager().loadTexture(mTexture);

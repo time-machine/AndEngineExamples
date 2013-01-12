@@ -42,7 +42,7 @@ public class ImageFormatsExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(128, 128, TextureOptions.BILINEAR,
+    mTexture = new Texture(128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA,
         new ITextureStateListener.TextureStateAdapter() {
       @Override
       public void onTextureSourceLoadExeption(final Texture pTexture,

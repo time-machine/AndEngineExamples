@@ -96,7 +96,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
   public void onLoadResources() {
     // load the font we are going to use
     FontFactory.setAssetBasePath("font/");
-    mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR);
+    mFontTexture = new Texture(512, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 32,
         true, Color.WHITE);
 
@@ -104,7 +104,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mEngine.getFontManager().loadFont(mFont);
 
     // load all the textures this game needs
-    mTexture = new Texture(128, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
     mHeadTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "gfx/snake_head.png", 0, 0, 3, 1);
@@ -117,7 +117,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mBackgroundTextureRegion = TextureRegionFactory.createFromAsset(
         mBackgroundTexture, this, "gfx/snake_background.png", 0, 0);
 
-    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
         mOnScreenControlTexture, this, "gfx/onscreen_control_base.png", 0, 0);
     mOnScreenControlKnobTextureRegion = TextureRegionFactory.createFromAsset(

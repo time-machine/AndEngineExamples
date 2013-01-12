@@ -45,7 +45,7 @@ public class MusicExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(128, 128, TextureOptions.BILINEAR);
+    mTexture = new Texture(128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mNotesTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "notes.png", 0, 0);

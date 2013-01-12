@@ -78,11 +78,11 @@ public class AnalogOnScreenControlsExample extends BaseExample {
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(32, 32, TextureOptions.BILINEAR);
+    mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box.png", 0, 0);
 
-    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR);
+    mOnScreenControlTexture = new Texture(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mOnScreenControlBaseTextureRegion = TextureRegionFactory.createFromAsset(
         mOnScreenControlTexture, this, "gfx/onscreen_control_base.png",
         0, 0);

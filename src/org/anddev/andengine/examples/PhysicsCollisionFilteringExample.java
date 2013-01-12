@@ -83,7 +83,7 @@ public class PhysicsCollisionFilteringExample extends BaseExample implements
   @Override
   public void onLoadResources() {
     // textures
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.setAssetBasePath("gfx/");
 
     // texture regions

@@ -64,7 +64,7 @@ public class PhysicsJumpExample extends BaseExample implements
 
   @Override
   public void onLoadResources() {
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     TextureRegionFactory.setAssetBasePath("gfx/");
     mBoxFaceTextureRegion = TextureRegionFactory.createTiledFromAsset(mTexture,
         this, "face_box_tiled.png", 0, 0, 2, 1);

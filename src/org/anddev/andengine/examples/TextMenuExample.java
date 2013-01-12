@@ -54,7 +54,7 @@ public class TextMenuExample extends BaseExample
   @Override
   public void onLoadResources() {
     // load font/textures
-    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR);
+    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
     FontFactory.setAssetBasePath("fonts");
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 48,
@@ -63,7 +63,7 @@ public class TextMenuExample extends BaseExample
     getEngine().getFontManager().loadFont(mFont);
 
     // load sprite-textures
-    mTexture = new Texture(64, 64, TextureOptions.BILINEAR);
+    mTexture = new Texture(64, 64, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
         "gfx/face_box_menu.png", 0, 0);
     getEngine().getTextureManager().loadTexture(mTexture);
