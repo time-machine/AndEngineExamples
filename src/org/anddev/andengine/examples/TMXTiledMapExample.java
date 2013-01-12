@@ -77,17 +77,10 @@ public class TMXTiledMapExample extends BaseExample {
             final TMXTiledMap pTMXTiledMap, final TMXLayer pTMXLayer,
             final TMXTile pTMXTile,
             final TMXProperties<TMXTileProperty> pTMXTileProperties) {
-          final int tmxTilePropertyCount = pTMXTileProperties.size();
-
           // we are going to count the tiles that have the property
           // "cactus=true" set
-          for (int i = 0; i < tmxTilePropertyCount; i++) {
-            final TMXTileProperty tmxTileProperty = pTMXTileProperties.get(i);
-
-            if (tmxTileProperty.getName().equals("cactus") &&
-                tmxTileProperty.getValue().equals("true")) {
-              mCactusCount++;
-            }
+          if (pTMXTileProperties.containsTMXProperty("cactus", "true")) {
+            mCactusCount++;
           }
         }
       });
