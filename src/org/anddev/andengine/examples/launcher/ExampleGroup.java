@@ -35,6 +35,7 @@ public enum ExampleGroup {
       Example.TEXTUREOPTIONS, Example.COLORKEYTEXTURESOURCEDECORATOR,
       Example.LOADTEXTURE, Example.UPDATETEXTURE, Example.UNLOADRESOURCES,
       Example.XMLLAYOUT, Example.LEVELLOADER),
+  APP(R.string.examplegroup_app, Example.APP_CITYRADAR),
   GAME(R.string.examplegroup_games, Example.GAME_SNAKE, Example.GAME_RACER),
   BENCHMARK(R.string.examplegroup_benchmarks, Example.BENCHMARK_SPRITE,
       Example.BENCHMARK_SHAPEMODIFIER, Example.BENCHMARK_ANIMATION,
