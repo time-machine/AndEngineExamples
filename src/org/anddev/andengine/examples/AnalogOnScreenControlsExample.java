@@ -1,5 +1,7 @@
 package org.anddev.andengine.examples;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
@@ -126,7 +128,8 @@ public class AnalogOnScreenControlsExample extends BaseExample {
             // nothing
           }
         });
-
+    velocityOnScreenControl.getControlBase().setBlendFunction(GL10.GL_SRC_ALPHA,
+        GL10.GL_ONE_MINUS_SRC_ALPHA);
     velocityOnScreenControl.getControlBase().setAlpha(0.5f);
 
     scene.setChildScene(velocityOnScreenControl);
@@ -157,7 +160,8 @@ public class AnalogOnScreenControlsExample extends BaseExample {
             // nothing
           }
         });
-
+    rotationOnScreenControl.getControlBase().setBlendFunction(GL10.GL_SRC_ALPHA,
+        GL10.GL_ONE_MINUS_SRC_ALPHA);
     rotationOnScreenControl.getControlBase().setAlpha(0.5f);
 
     velocityOnScreenControl.setChildScene(rotationOnScreenControl);

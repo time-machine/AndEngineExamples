@@ -196,6 +196,8 @@ public class SnakeGameActivity extends BaseGameActivity implements
         });
 
     // make the controls semi-transparent
+    mDigitalOnScreenControl.getControlBase().setBlendFunction(GL10.GL_SRC_ALPHA,
+        GL10.GL_ONE_MINUS_SRC_ALPHA);
     mDigitalOnScreenControl.getControlBase().setAlpha(0.5f);
 
     scene.setChildScene(mDigitalOnScreenControl);

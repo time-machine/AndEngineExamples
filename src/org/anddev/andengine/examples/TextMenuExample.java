@@ -1,5 +1,7 @@
 package org.anddev.andengine.examples;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
@@ -54,9 +56,10 @@ public class TextMenuExample extends BaseExample
   @Override
   public void onLoadResources() {
     // load font/textures
-    mFontTexture = new Texture(256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+    mFontTexture = new Texture(256, 256,
+        TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
-    FontFactory.setAssetBasePath("fonts");
+    FontFactory.setAssetBasePath("font/");
     mFont = FontFactory.createFromAsset(mFontTexture, this, "Plok.ttf", 48,
         true, Color.WHITE);
     getEngine().getTextureManager().loadTexture(mFontTexture);
@@ -133,10 +136,18 @@ public class TextMenuExample extends BaseExample
   protected MenuScene createMenuScene() {
     final MenuScene menuScene = new MenuScene(mCamera);
 
-    menuScene.addMenuItem(new ColoredTextMenuItem(MENU_RESET, mFont, "RESET",
-        1, 0, 0, 0, 0, 0));
-    menuScene.addMenuItem(new ColoredTextMenuItem(MENU_QUIT, mFont, "QUIT",
-        1, 0, 0, 0, 0, 0));
+    final ColoredTextMenuItem resetMenuItem = new ColoredTextMenuItem(
+        MENU_RESET, mFont, "RESET", 1, 0, 0, 0, 0, 0);
+    resetMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+        GL10.GL_ONE_MINUS_SRC_ALPHA);
+    menuScene.addMenuItem(resetMenuItem);
+
+    final ColoredTextMenuItem quitMenuItem = new ColoredTextMenuItem(
+        MENU_QUIT, mFont, "QUIT", 1, 0, 0, 0, 0, 0);
+    quitMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+        GL10.GL_ONE_MINUS_SRC_ALPHA);
+    menuScene.addMenuItem(quitMenuItem);
+
     menuScene.buildAnimations();
 
     menuScene.setBackgroundEnabled(false);

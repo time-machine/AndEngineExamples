@@ -64,6 +64,7 @@ public class ShapeModifierExample extends BaseExample {
     final AnimatedSprite face = new AnimatedSprite(centerX - 100, centerY,
         mFaceTextureRegion);
     face.animate(100);
+    face.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
     final LoopShapeModifier shapeModifier = new LoopShapeModifier(
         new IShapeModifierListener() {

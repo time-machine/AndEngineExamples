@@ -1,5 +1,6 @@
 package org.anddev.andengine.examples.benchmark;
 
+import javax.microedition.khronos.opengles.GL10;
 import javax.microedition.khronos.opengles.GL11;
 
 import org.anddev.andengine.engine.Engine;
@@ -67,10 +68,10 @@ public class SpriteBenchmark extends BaseBenchmark {
     final ILayer topLayer = scene.getTopLayer();
 
     for (int i = 0; i < SPRITE_COUNT; i++) {
-      Sprite face;
-      face = new Sprite(mRandom.nextFloat() * (CAMERA_WIDTH - 32),
+      final Sprite face = new Sprite(mRandom.nextFloat() * (CAMERA_WIDTH - 32),
           mRandom.nextFloat() * (CAMERA_HEIGHT - 32), mFaceTextureRegion,
           sharedVertexBuffer);
+      face.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
       face.setIgnoreUpdate(true);
       topLayer.addEntity(face);
     }
