@@ -22,7 +22,6 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.util.Debug;
 
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class MusicExample extends BaseExample {
@@ -81,7 +80,7 @@ public class MusicExample extends BaseExample {
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
           final ITouchArea pTouchArea, final float pTouchAreaLocalX,
           final float pTouchAreaLocalY) {
-        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
           if (mMusic.isPlaying()) {
             mMusic.pause();
           }

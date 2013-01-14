@@ -325,6 +325,11 @@ public class CityRadarActivity extends BaseGameActivity implements
     }
   }
 
+  /**
+   * Note: Formulas taken from <a href="http://www.movable-type.co.uk/scripts/latlong.html">here</a>.
+   * @author cjlim
+   *
+   */
   private static class GeoMath {
     private static final double RADIUS_EARTH_METERS = 6371000;
     /**

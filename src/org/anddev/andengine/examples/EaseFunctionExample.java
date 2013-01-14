@@ -56,7 +56,6 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.view.MotionEvent;
 
 public class EaseFunctionExample extends BaseExample {
   private static int CAMERA_WIDTH = 720;
@@ -178,7 +177,7 @@ public class EaseFunctionExample extends BaseExample {
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
           final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
           next();
         }
         return true;
@@ -189,7 +188,7 @@ public class EaseFunctionExample extends BaseExample {
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
           final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
           previous();
         }
         return true;

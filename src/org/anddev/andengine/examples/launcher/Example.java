@@ -34,6 +34,7 @@ import org.anddev.andengine.examples.PhysicsFixedStepExample;
 import org.anddev.andengine.examples.PhysicsJumpExample;
 import org.anddev.andengine.examples.PhysicsRemoveExample;
 import org.anddev.andengine.examples.PhysicsRevoluteJointExample;
+import org.anddev.andengine.examples.PinchZoomExample;
 import org.anddev.andengine.examples.R;
 import org.anddev.andengine.examples.RectangleExample;
 import org.anddev.andengine.examples.RepeatingSpriteBackgroundExample;
@@ -117,6 +118,7 @@ enum Example {
   PHYSICSREVOLUTEJOINT(PhysicsRevoluteJointExample.class,
       R.string.example_physicsrevolutejoint),
   PHYSICSREMOVE(PhysicsRemoveExample.class, R.string.example_physicsremove),
+  PINCHZOOM(PinchZoomExample.class, R.string.example_pinchzoom),
   RECTANGLE(RectangleExample.class, R.string.example_rectangle),
   REPEATINGSPRITEBACKGROUND(RepeatingSpriteBackgroundExample.class,
       R.string.example_repeatingspritebackground),

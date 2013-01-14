@@ -24,7 +24,6 @@ import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
 import android.hardware.SensorManager;
-import android.view.MotionEvent;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -126,7 +125,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
     if (mPhysicsWorld != null) {
-      if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
         addFace(pScene, pSceneTouchEvent.getX(), pSceneTouchEvent.getY());
         return true;
       }

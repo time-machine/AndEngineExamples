@@ -17,7 +17,6 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.util.MathUtils;
 
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class LoadTextureExample extends BaseExample {
@@ -52,7 +51,7 @@ public class LoadTextureExample extends BaseExample {
       @Override
       public boolean onSceneTouchEvent(final Scene pScene,
           final TouchEvent pSceneTouchEvent) {
-        if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+        if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
           loadNewTexture();
         }
         return true;

@@ -26,7 +26,6 @@ import org.anddev.andengine.sensor.accelerometer.AccelerometerData;
 import org.anddev.andengine.sensor.accelerometer.IAccelerometerListener;
 
 import android.hardware.SensorManager;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
@@ -121,7 +120,7 @@ public class PhysicsJumpExample extends BaseExample implements
   public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
       final ITouchArea pTouchArea, final float pTouchAreaLocalX,
       final float pTouchAreaLocalY) {
-    if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+    if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
       mPhysicsWorld.postRunnable(new Runnable() {
         @Override
         public void run() {
@@ -138,7 +137,7 @@ public class PhysicsJumpExample extends BaseExample implements
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
     if (mPhysicsWorld != null) {
-      if (pSceneTouchEvent.getAction() == MotionEvent.ACTION_DOWN) {
+      if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
         runOnUpdateThread(new Runnable() {
           @Override
           public void run() {

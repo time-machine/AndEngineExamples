@@ -22,7 +22,6 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 public class MultiTouchExample extends BaseGameActivity {
@@ -114,16 +113,27 @@ public class MultiTouchExample extends BaseGameActivity {
       final int pY) {
     final Sprite sprite = new Sprite(pX, pY,
         mCardToTextureRegionMap.get(pCard)) {
+      boolean mGrabbed = false;
+
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
           final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
         switch (pSceneTouchEvent.getAction()) {
-        case MotionEvent.ACTION_DOWN:
+        case TouchEvent.ACTION_DOWN:
           setScale(1.25f);
+          mGrabbed = true;
           break;
-        case MotionEvent.ACTION_MOVE:
-          setPosition(pSceneTouchEvent.getX() - Card.CARD_WIDTH / 2,
-              pSceneTouchEvent.getY() - Card.CARD_HEIGHT / 2);
+        case TouchEvent.ACTION_MOVE:
+          if (mGrabbed) {
+            setPosition(pSceneTouchEvent.getX() - Card.CARD_WIDTH / 2,
+                pSceneTouchEvent.getY() - Card.CARD_HEIGHT / 2);
+          }
+          break;
+        case TouchEvent.ACTION_UP:
+          if (mGrabbed) {
+            mGrabbed = false;
+            setScale(1);
+          }
           break;
         }
         return true;
