@@ -198,6 +198,7 @@ public class CityRadarActivity extends BaseGameActivity implements
         radarSprite.getHeight());
     radarSprite.addShapeModifier(new LoopShapeModifier(new RotationModifier(3,
         0, 360, EaseLinear.getInstance())));
+    pLayer.addEntity(radarSprite);
 
     // title
     final Text titleText = new Text(0, 0, mFont, "-- CityRadar --");
