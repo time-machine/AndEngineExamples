@@ -62,7 +62,7 @@ public class SpriteBenchmark extends BaseBenchmark {
     // a VertexBuffer to significantly increase performance
     final RectangleVertexBuffer sharedVertexBuffer =
         new RectangleVertexBuffer(GL11.GL_STATIC_DRAW);
-    sharedVertexBuffer.update(0, 0, mFaceTextureRegion.getWidth(),
+    sharedVertexBuffer.update(mFaceTextureRegion.getWidth(),
         mFaceTextureRegion.getHeight());
 
     final ILayer topLayer = scene.getTopLayer();
