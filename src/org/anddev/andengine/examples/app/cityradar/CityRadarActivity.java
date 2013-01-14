@@ -283,7 +283,7 @@ public class CityRadarActivity extends BaseGameActivity implements
       final double cityLatitudeRad = MathUtils.degToRad(
           (float)city.getLatitude());
       final double cityLongitudeRad = MathUtils.degToRad(
-          (float)city.getLongtitude());
+          (float)city.getLongitude());
 
       city.setDistanceToUser(GeoMath.calculateDistance(userLatitudeRad,
           userLongitudeRad, cityLatitudeRad, cityLongitudeRad));
@@ -310,13 +310,17 @@ public class CityRadarActivity extends BaseGameActivity implements
       final float y = (float)(CAMERA_HEIGHT / 2 + city.getDistanceToUser() *
           scaleRatio * Math.sin(bearingInRad));
 
-      citySprite.setPosition(x - citySprite.getWidth() / 2,
-          y - citySprite.getHeight() / 2);
+      // not sure why citySprite is null sometime, put this condition to prevent
+      // the error
+      if (citySprite != null) {
+        citySprite.setPosition(x - citySprite.getWidth() / 2,
+            y - citySprite.getHeight() / 2);
 
-      final float textX = x - cityNameText.getWidth() / 2;
-      final float textY = y + citySprite.getHeight() / 2;
+        final float textX = x - cityNameText.getWidth() / 2;
+        final float textY = y + citySprite.getHeight() / 2;
 
-      cityNameText.setPosition(textX, textY);
+        cityNameText.setPosition(textX, textY);
+      }
     }
   }
 

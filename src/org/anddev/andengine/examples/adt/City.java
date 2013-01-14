@@ -3,15 +3,15 @@ package org.anddev.andengine.examples.adt;
 public class City {
   private final String mName;
   private final double mLatitude;
-  private final double mLongtitude;
+  private final double mLongitude;
   private double mDistanceToUser;
   private double mBearingToUser;
 
   public City(final String pName, final double pLatitude,
-      final double pLongtitude) {
+      final double pLongitude) {
     mName = pName;
     mLatitude = pLatitude;
-    mLongtitude = pLongtitude;
+    mLongitude = pLongitude;
   }
 
   public final String getName() {
@@ -22,8 +22,8 @@ public class City {
     return mLatitude;
   }
 
-  public final double getLongtitude() {
-    return mLongtitude;
+  public final double getLongitude() {
+    return mLongitude;
   }
 
   public double getDistanceToUser() {
