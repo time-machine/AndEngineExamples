@@ -75,6 +75,9 @@ public class CityRadarActivity extends BaseGameActivity implements
   private final HashMap<City, Text> mCityToCityNameTextMap = new HashMap<City,
       Text>();
 
+  // flag to check is sprites finished initialize
+  private boolean mFinishedInitSprites = false;
+
   public CityRadarActivity() {
     mCities.add(new City("London", 51.509, -0.118));
     mCities.add(new City("New York", 40.713, -74.006));
@@ -146,6 +149,8 @@ public class CityRadarActivity extends BaseGameActivity implements
   }
 
   private void initCitySprites(final ILayer pLayer) {
+    mFinishedInitSprites = false;
+
     final int cityCount = mCities.size();
 
     for (int i = 0; i < cityCount; i++) {
@@ -172,6 +177,8 @@ public class CityRadarActivity extends BaseGameActivity implements
       pLayer.addEntity(citySprite);
       pLayer.addEntity(cityNameText);
     }
+
+    mFinishedInitSprites = true;
   }
 
   private void initBackground(final ILayer pLayer) {
@@ -245,7 +252,10 @@ public class CityRadarActivity extends BaseGameActivity implements
     if (USE_ACTUAL_LOCATION) {
       mUserLocation = pLocation;
     }
-    refreshCitySprites();
+
+    if (mFinishedInitSprites) {
+      refreshCitySprites();
+    }
   }
 
   @Override
@@ -311,17 +321,13 @@ public class CityRadarActivity extends BaseGameActivity implements
       final float y = (float)(CAMERA_HEIGHT / 2 + city.getDistanceToUser() *
           scaleRatio * Math.sin(bearingInRad));
 
-      // not sure why citySprite is null sometime, put this condition to prevent
-      // the error
-      if (citySprite != null) {
-        citySprite.setPosition(x - citySprite.getWidth() / 2,
-            y - citySprite.getHeight() / 2);
+      citySprite.setPosition(x - citySprite.getWidth() / 2,
+          y - citySprite.getHeight() / 2);
 
-        final float textX = x - cityNameText.getWidth() / 2;
-        final float textY = y + citySprite.getHeight() / 2;
+      final float textX = x - cityNameText.getWidth() / 2;
+      final float textY = y + citySprite.getHeight() / 2;
 
-        cityNameText.setPosition(textX, textY);
-      }
+      cityNameText.setPosition(textX, textY);
     }
   }
 
