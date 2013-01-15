@@ -201,7 +201,7 @@ public class MultiplayerExample extends BaseExample {
   public void addFace(final Scene pScene, final float pX, final float pY) {
     // create the face and add it to the scene
     final Sprite face = new Sprite(pX, pY, mFaceTextureRegion);
-    pScene.getTopLayer().addEntity(face);
+    pScene.getLastChild().addChild(face);
   }
 
   private void log(final String pMessage) {

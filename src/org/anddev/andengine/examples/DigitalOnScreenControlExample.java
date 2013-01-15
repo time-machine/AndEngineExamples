@@ -67,7 +67,7 @@ public class DigitalOnScreenControlExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
-    scene.getTopLayer().addEntity(face);
+    scene.getLastChild().addChild(face);
 
     final DigitalOnScreenControl digitalOnScreenControl = new DigitalOnScreenControl(
         0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),

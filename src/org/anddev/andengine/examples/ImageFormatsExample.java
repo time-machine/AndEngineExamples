@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -78,12 +78,12 @@ public class ImageFormatsExample extends BaseExample {
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
     // create the icons and add them to the scene
-    final ILayer topLayer = scene.getTopLayer();
+    final IEntity lastChild = scene.getLastChild();
 
-    topLayer.addEntity(new Sprite(160 - 24, 106 - 24, mPngTextureRegion));
-    topLayer.addEntity(new Sprite(160 - 24, 213 - 24, mJpgTextureRegion));
-    topLayer.addEntity(new Sprite(320 - 24, 106 - 24, mGifTextureRegion));
-    topLayer.addEntity(new Sprite(320 - 24, 213 - 24, mBmpTextureRegion));
+    lastChild.addChild(new Sprite(160 - 24, 106 - 24, mPngTextureRegion));
+    lastChild.addChild(new Sprite(160 - 24, 213 - 24, mJpgTextureRegion));
+    lastChild.addChild(new Sprite(320 - 24, 106 - 24, mGifTextureRegion));
+    lastChild.addChild(new Sprite(320 - 24, 213 - 24, mBmpTextureRegion));
 
     return scene;
   }

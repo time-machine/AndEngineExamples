@@ -6,6 +6,7 @@ import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader.ITMXTilePropertiesListener;
@@ -14,12 +15,12 @@ import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTileProperty;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadException;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
+import org.anddev.andengine.entity.modifier.PathModifier;
+import org.anddev.andengine.entity.modifier.PathModifier.IPathModifierListener;
+import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.PathModifier;
-import org.anddev.andengine.entity.shape.modifier.PathModifier.IPathModifierListener;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -27,7 +28,6 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.util.Debug;
-import org.anddev.andengine.util.Path;
 import org.anddev.andengine.util.constants.Constants;
 
 import android.widget.Toast;
@@ -95,9 +95,9 @@ public class TMXTiledMapExample extends BaseExample {
     }
 
     final TMXLayer tmxLayer = mTmxTiledMap.getTMXLayers().get(0);
-    scene.getBottomLayer().addEntity(tmxLayer);
+    scene.getFirstChild().addChild(tmxLayer);
 
-    // make the camera not exceed the bounds of the TMXLayer
+    // make the camera not exceed the bounds of the TMXEntity
     mBoundChaseCamera.setBounds(0, tmxLayer.getWidth(), 0,
         tmxLayer.getHeight());
     mBoundChaseCamera.setBoundsEnabled(true);
@@ -110,17 +110,17 @@ public class TMXTiledMapExample extends BaseExample {
     // create the sprite and add it to the scene
     final AnimatedSprite player = new AnimatedSprite(centerX, centerY,
         mPlayerTextureRegion);
-    mBoundChaseCamera.setChaseShape(player);
+    mBoundChaseCamera.setChaseEntity(player);
 
     final Path path = new Path(5).to(0, 160).to(0, 500).to(600, 500)
         .to(600, 160).to(0, 160);
 
     // add the proper animation when a waypoint of the path is passed
-    player.addShapeModifier(new LoopShapeModifier(new PathModifier(30, path, null,
+    player.addEntityModifier(new LoopEntityModifier(new PathModifier(30, path, null,
         new IPathModifierListener() {
           @Override
           public void onWaypointPassed(final PathModifier pPathModifier,
-              final IShape pShape, final int pWaypointIndex) {
+              final IEntity pEntity, final int pWaypointIndex) {
             switch (pWaypointIndex) {
             case 0:
               player.animate(new long[]{200, 200, 200}, 6, 8, true);
@@ -138,12 +138,12 @@ public class TMXTiledMapExample extends BaseExample {
           }
         })));
 
-    // now we are going to create a rectangle that will always hightlight the
-    // tile below the feeet of the player
+    // now we are going to create a rectangle that will always highlight the
+    // tile below the feet of the player
     final Rectangle currentTileRectangle = new Rectangle(0, 0,
         mTmxTiledMap.getTileWidth(), mTmxTiledMap.getTileHeight());
     currentTileRectangle.setColor(1, 0, 0, 0.25f);
-    scene.getTopLayer().addEntity(currentTileRectangle);
+    scene.getLastChild().addChild(currentTileRectangle);
 
     scene.registerUpdateHandler(new IUpdateHandler() {
       @Override
@@ -167,7 +167,7 @@ public class TMXTiledMapExample extends BaseExample {
       }
     });
 
-    scene.getTopLayer().addEntity(player);
+    scene.getLastChild().addChild(player);
 
     return scene;
   }

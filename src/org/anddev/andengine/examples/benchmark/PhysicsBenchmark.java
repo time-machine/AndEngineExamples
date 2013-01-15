@@ -64,8 +64,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(2, true, 4,
-        (COUNT_VERTICAL - 1) * (COUNT_HORIZONTAL - 1));
+    final Scene scene = new Scene(2);
     scene.setBackground(new ColorBackground(0, 0, 0));
     scene.setOnSceneTouchListener(this);
 
@@ -89,10 +88,10 @@ public class PhysicsBenchmark extends BaseBenchmark implements
     PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
         wallFixtureDef);
 
-    scene.getBottomLayer().addEntity(ground);
-    scene.getBottomLayer().addEntity(roof);
-    scene.getBottomLayer().addEntity(left);
-    scene.getBottomLayer().addEntity(right);
+    scene.getFirstChild().addChild(ground);
+    scene.getFirstChild().addChild(roof);
+    scene.getFirstChild().addChild(left);
+    scene.getFirstChild().addChild(right);
 
     for (int x = 1; x < COUNT_HORIZONTAL; x++) {
       for (int y = 1; y < COUNT_VERTICAL; y++) {
@@ -165,7 +164,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
     face.setUpdatePhysics(false);
 
-    pScene.getTopLayer().addEntity(face);
+    pScene.getLastChild().addChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
   }

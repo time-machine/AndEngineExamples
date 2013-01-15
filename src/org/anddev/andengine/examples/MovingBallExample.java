@@ -51,7 +51,7 @@ public class MovingBallExample extends BaseExample {
     final Ball ball = new Ball(centerX, centerY, mFaceTextureRegion);
     ball.setVelocity(DEMO_VELOCITY, DEMO_VELOCITY);
 
-    scene.getTopLayer().addEntity(ball);
+    scene.getLastChild().addChild(ball);
 
     return scene;
   }

@@ -5,12 +5,13 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
+import org.anddev.andengine.entity.modifier.PathModifier;
+import org.anddev.andengine.entity.modifier.PathModifier.IPathModifierListener;
+import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.RepeatingSpriteBackground;
-import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.PathModifier;
-import org.anddev.andengine.entity.shape.modifier.PathModifier.IPathModifierListener;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -18,7 +19,6 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.opengl.texture.source.AssetTextureSource;
-import org.anddev.andengine.util.Path;
 import org.anddev.andengine.util.modifier.ease.EaseSineInOut;
 
 import android.widget.Toast;
@@ -70,11 +70,11 @@ public class PathModifierExample extends BaseExample {
         .to(10, 10);
 
     // add the proper animation when a waypoint of the path is passed
-    player.addShapeModifier(new LoopShapeModifier(new PathModifier(30, path,
+    player.addEntityModifier(new LoopEntityModifier(new PathModifier(30, path,
         null, new IPathModifierListener() {
           @Override
           public void onWaypointPassed(final PathModifier pPathModifier,
-              final IShape pShape, final int pWaypointIndex) {
+              final IEntity pEntity, final int pWaypointIndex) {
             switch (pWaypointIndex) {
             case 0:
               player.animate(new long[]{200, 200, 200}, 6, 8, true);
@@ -92,7 +92,7 @@ public class PathModifierExample extends BaseExample {
           }
         }, EaseSineInOut.getInstance())));
 
-    scene.getTopLayer().addEntity(player);
+    scene.getLastChild().addChild(player);
 
     return scene;
   }

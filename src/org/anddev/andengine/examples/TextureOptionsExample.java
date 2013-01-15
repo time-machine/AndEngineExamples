@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.sprite.Sprite;
@@ -54,10 +54,10 @@ public class TextureOptionsExample extends BaseExample {
         mFaceTextureRegionRepeating.getHeight() * 2,
         mFaceTextureRegionRepeating);
 
-    final ILayer topLayer = scene.getTopLayer();
-    topLayer.addEntity(face);
-    topLayer.addEntity(faceBillinear);
-    topLayer.addEntity(faceRepeating);
+    final IEntity lastChild = scene.getLastChild();
+    lastChild.addChild(face);
+    lastChild.addChild(faceBillinear);
+    lastChild.addChild(faceRepeating);
 
     return scene;
   }

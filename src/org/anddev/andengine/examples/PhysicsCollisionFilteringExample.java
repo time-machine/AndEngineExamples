@@ -120,10 +120,10 @@ public class PhysicsCollisionFilteringExample extends BaseExample implements
     PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
         WALL_FIXTURE_DEF);
 
-    scene.getBottomLayer().addEntity(ground);
-    scene.getBottomLayer().addEntity(roof);
-    scene.getBottomLayer().addEntity(left);
-    scene.getBottomLayer().addEntity(right);
+    scene.getFirstChild().addChild(ground);
+    scene.getFirstChild().addChild(roof);
+    scene.getFirstChild().addChild(left);
+    scene.getFirstChild().addChild(right);
 
     scene.registerUpdateHandler(mPhysicsWorld);
 
@@ -180,7 +180,7 @@ public class PhysicsCollisionFilteringExample extends BaseExample implements
     face.animate(200);
     face.setUpdatePhysics(false);
 
-    scene.getTopLayer().addEntity(face);
+    scene.getLastChild().addChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
   }

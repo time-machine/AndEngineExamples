@@ -13,12 +13,12 @@ import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.input.touch.controller.MultiTouch;
@@ -119,9 +119,9 @@ public class CoordinateConversionExample extends BaseExample {
     arrowLineWingLeft.setColor(1, 0, 0);
     arrowLineWingRight.setColor(1, 0, 0);
 
-    scene.getTopLayer().addEntity(arrowLineMain);
-    scene.getTopLayer().addEntity(arrowLineWingLeft);
-    scene.getTopLayer().addEntity(arrowLineWingRight);
+    scene.getLastChild().addChild(arrowLineMain);
+    scene.getLastChild().addChild(arrowLineWingLeft);
+    scene.getLastChild().addChild(arrowLineWingRight);
 
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
@@ -141,10 +141,10 @@ public class CoordinateConversionExample extends BaseExample {
       }
     };
 
-    face.addShapeModifier(new LoopShapeModifier(new SequenceShapeModifier(
+    face.addEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
         new ScaleModifier(3, 1, 1.75f), new ScaleModifier(3, 1.75f, 1))));
 
-    scene.getBottomLayer().addEntity(face);
+    scene.getFirstChild().addChild(face);
 
     // velocity control (left)
     final int x1 = 0;

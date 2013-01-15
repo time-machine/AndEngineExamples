@@ -16,9 +16,9 @@ import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.entity.text.Text;
@@ -146,7 +146,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // no background color needed as we have a fullscreen background sprite
     scene.setBackgroundEnabled(false);
-    scene.getLayer(LAYER_BACKGROUND).addEntity(new Sprite(0, 0,
+    scene.getChild(LAYER_BACKGROUND).addChild(new Sprite(0, 0,
         mBackgroundTextureRegion));
 
     // the ScoreText showing how many points the player scored
@@ -154,7 +154,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
         "Score: XXXX".length());
     mScoreText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
     mScoreText.setAlpha(0.5f);
-    scene.getLayer(LAYER_SCORE).addEntity(mScoreText);
+    scene.getChild(LAYER_SCORE).addChild(mScoreText);
 
     // the snake
     mSnake = new Snake(Direction.RIGHT, 0, CELLS_VERTICAL / 2,
@@ -163,13 +163,13 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // snake starts with one tail
     mSnake.grow();
-    scene.getLayer(LAYER_SNAKE).addEntity(mSnake);
+    scene.getChild(LAYER_SNAKE).addChild(mSnake);
 
     // a frog to approach and eat
     mFrog= new Frog(0, 0, mFrogTextureRegion);
     mFrog.animate(1000);
     setFrogToRandomCell();
-    scene.getLayer(LAYER_FOOD).addEntity(mFrog);
+    scene.getLayer(LAYER_FOOD).addChild(mFrog);
 
     // the On-Screen controls to control the direction of the snake
     mDigitalOnScreenControl = new DigitalOnScreenControl(0,
@@ -226,15 +226,15 @@ public class SnakeGameActivity extends BaseGameActivity implements
     titleText.setPosition((CAMERA_WIDTH - titleText.getWidth()) * 0.5f,
         (CAMERA_HEIGHT - titleText.getHeight()) * 0.5f);
     titleText.setScale(0);
-    titleText.addShapeModifier(new ScaleModifier(2, 0, 1));
-    scene.getLayer(LAYER_SCORE).addEntity(titleText);
+    titleText.addEntityModifier(new ScaleModifier(2, 0, 1));
+    scene.getChild(LAYER_SCORE).addChild(titleText);
 
     // the handler that removes the title-text and starts the game
     scene.registerUpdateHandler(new TimerHandler(3, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
         scene.unregisterUpdateHandler(pTimerHandler);
-        scene.getLayer(LAYER_SCORE).removeEntity(titleText);
+        scene.getChild(LAYER_SCORE).removeChild(titleText);
         mGameRunning = true;
       }
     }));
@@ -243,8 +243,8 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mGameOverText = new Text(0, 0, mFont, "Game\nOver", HorizontalAlign.CENTER);
     mGameOverText.setPosition((CAMERA_WIDTH - mGameOverText.getWidth()) * 0.5f,
         (CAMERA_HEIGHT - mGameOverText.getHeight()) * 0.5f);
-    mGameOverText.addShapeModifier(new ScaleModifier(3, 0.1f, 2));
-    mGameOverText.addShapeModifier(new RotationModifier(3, 0, 720));
+    mGameOverText.addEntityModifier(new ScaleModifier(3, 0.1f, 2));
+    mGameOverText.addEntityModifier(new RotationModifier(3, 0, 720));
 
     return scene;
   }
@@ -267,7 +267,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
   protected void onGameOver() {
     mGameOverSound.play();
-    mEngine.getScene().getLayer(LAYER_SCORE).addEntity(mGameOverText);
+    mEngine.getScene().getLayer(LAYER_SCORE).addChild(mGameOverText);
     mGameRunning = false;
   }
 

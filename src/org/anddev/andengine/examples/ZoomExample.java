@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.SmoothCamera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
@@ -56,12 +56,12 @@ public class ZoomExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
     // create some faces and add them to the scene
-    final ILayer topLayer = scene.getTopLayer();
-    topLayer.addEntity(new Sprite(centerX - 25, centerY - 25,
+    final IEntity lastChild = scene.getLastChild();
+    lastChild.addChild(new Sprite(centerX - 25, centerY - 25,
         mFaceTextureRegion));
-    topLayer.addEntity(new Sprite(centerX + 25, centerY - 25,
+    lastChild.addChild(new Sprite(centerX + 25, centerY - 25,
         mFaceTextureRegion));
-    topLayer.addEntity(new Sprite(centerX, centerY + 25, mFaceTextureRegion));
+    lastChild.addChild(new Sprite(centerX, centerY + 25, mFaceTextureRegion));
 
     scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
       @Override

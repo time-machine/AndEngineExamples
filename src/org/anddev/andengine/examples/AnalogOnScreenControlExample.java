@@ -10,10 +10,10 @@ import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -73,7 +73,7 @@ public class AnalogOnScreenControlExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
-    scene.getTopLayer().addEntity(face);
+    scene.getLastChild().addChild(face);
 
     final AnalogOnScreenControl analogOnScreenControl = new AnalogOnScreenControl(
         0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),
@@ -90,8 +90,9 @@ public class AnalogOnScreenControlExample extends BaseExample {
           @Override
           public void onControlClick(
               final AnalogOnScreenControl pAnalogOnScreenControl) {
-            face.addShapeModifier(new SequenceShapeModifier(new ScaleModifier(0.25f,
-                1, 1.5f), new ScaleModifier(0.25f, 1.5f, 1)));
+            face.addEntityModifier(new SequenceEntityModifier(
+                new ScaleModifier(0.25f, 1, 1.5f),
+                new ScaleModifier(0.25f, 1.5f, 1)));
           }
         });
 

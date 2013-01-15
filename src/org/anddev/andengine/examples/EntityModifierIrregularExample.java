@@ -5,15 +5,15 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
+import org.anddev.andengine.entity.modifier.ParallelEntityModifier;
+import org.anddev.andengine.entity.modifier.RotationByModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
-import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -24,7 +24,7 @@ import org.anddev.andengine.util.modifier.IModifier;
 
 import android.widget.Toast;
 
-public class ShapeModifierIrregularExample extends BaseExample {
+public class EntityModifierIrregularExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -69,15 +69,15 @@ public class ShapeModifierIrregularExample extends BaseExample {
         mFaceTextureRegion);
     face2.animate(100);
 
-    final SequenceShapeModifier shapeModifier = new SequenceShapeModifier(
-        new IShapeModifierListener() {
+    final SequenceEntityModifier shapeModifier = new SequenceEntityModifier(
+        new IEntityModifierListener() {
           @Override
-          public void onModifierFinished(final IModifier<IShape> pShapeModifier,
-              final IShape pShape) {
+          public void onModifierFinished(
+              final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
             runOnUiThread(new Runnable() {
               @Override
               public void run() {
-                Toast.makeText(ShapeModifierIrregularExample.this,
+                Toast.makeText(EntityModifierIrregularExample.this,
                     "Sequence ended.", Toast.LENGTH_LONG).show();
               }
             });
@@ -85,21 +85,21 @@ public class ShapeModifierIrregularExample extends BaseExample {
         },
         new ScaleModifier(2, 1, 0.75f, 1, 2),
         new ScaleModifier(2, 0.75f, 2, 2, 1.25f),
-        new ParallelShapeModifier(
+        new ParallelEntityModifier(
             new ScaleModifier(3, 2, 5, 1.25f, 5),
             new RotationByModifier(3, 180)
         ),
-        new ParallelShapeModifier(
+        new ParallelEntityModifier(
             new ScaleModifier(3, 5, 1),
             new RotationModifier(3, 180, 0)
         )
     );
 
-    face1.addShapeModifier(shapeModifier);
-    face2.addShapeModifier(shapeModifier.clone());
+    face1.addEntityModifier(shapeModifier);
+    face2.addEntityModifier(shapeModifier.clone());
 
-    scene.getTopLayer().addEntity(face1);
-    scene.getTopLayer().addEntity(face2);
+    scene.getLastChild().addChild(face1);
+    scene.getLastChild().addChild(face2);
 
     // create some not-modified sprites, that act as fixed references to the
     // modified ones
@@ -108,8 +108,8 @@ public class ShapeModifierIrregularExample extends BaseExample {
     final AnimatedSprite face2Reference = new AnimatedSprite(centerX + 100,
         centerY, mFaceTextureRegion);
 
-    scene.getTopLayer().addEntity(face1Reference);
-    scene.getTopLayer().addEntity(face2Reference);
+    scene.getLastChild().addChild(face1Reference);
+    scene.getLastChild().addChild(face2Reference);
 
     return scene;
   }

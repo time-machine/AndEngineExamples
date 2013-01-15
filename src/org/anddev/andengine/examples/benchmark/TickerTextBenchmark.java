@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.text.Text;
@@ -46,9 +46,9 @@ public class TickerTextBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1, true, TEXT_COUNT);
+    final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
-    final ILayer topLayer = scene.getTopLayer();
+    final IEntity lastChild = scene.getLastChild();
 
     for (int i = 0; i < TEXT_COUNT; i++) {
       final Text text = new TickerText(mRandom.nextInt(30),
@@ -56,7 +56,7 @@ public class TickerTextBenchmark extends BaseBenchmark {
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
           HorizontalAlign.CENTER, 5 + 5 * mRandom.nextFloat());
       text.setColor(mRandom.nextFloat(), mRandom.nextFloat(), mRandom.nextFloat());
-      topLayer.addEntity(text);
+      lastChild.addChild(text);
     }
 
     return scene;

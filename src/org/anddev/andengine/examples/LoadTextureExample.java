@@ -74,6 +74,6 @@ public class LoadTextureExample extends BaseExample {
     final float x = (CAMERA_WIDTH - faceTextureRegion.getWidth()) * MathUtils.RANDOM.nextFloat();
     final float y = (CAMERA_HEIGHT - faceTextureRegion.getHeight()) * MathUtils.RANDOM.nextFloat();
     final Sprite clickToUnload = new Sprite(x, y, faceTextureRegion);
-    getEngine().getScene().getTopLayer().addEntity(clickToUnload);
+    getEngine().getScene().getLastChild().addChild(clickToUnload);
   }
 }

@@ -41,9 +41,9 @@ public class TextExample extends BaseExample {
         "And right aligned!\nLorem ipsum dolor sit amat...",
         HorizontalAlign.RIGHT);
 
-    scene.getTopLayer().addEntity(textCenter);
-    scene.getTopLayer().addEntity(textLeft);
-    scene.getTopLayer().addEntity(textRight);
+    scene.getLastChild().addChild(textCenter);
+    scene.getLastChild().addChild(textLeft);
+    scene.getLastChild().addChild(textRight);
 
     return scene;
   }

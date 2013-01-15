@@ -72,7 +72,7 @@ public class MusicExample extends BaseExample {
     final int x = (CAMERA_WIDTH - mNotesTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mNotesTextureRegion.getHeight()) / 2;
     final Sprite notes = new Sprite(x, y, mNotesTextureRegion);
-    scene.getTopLayer().addEntity(notes);
+    scene.getLastChild().addChild(notes);
 
     scene.registerTouchArea(notes);
     scene.setOnAreaTouchListener(new IOnAreaTouchListener() {

@@ -57,7 +57,7 @@ public class SpriteRemoveExample extends BaseExample
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
     mFaceToRemove = new Sprite(centerX, centerY, mFaceTextureRegion);
-    scene.getTopLayer().addEntity(mFaceToRemove);
+    scene.getLastChild().addChild(mFaceToRemove);
 
     scene.setOnSceneTouchListener(this);
 
@@ -71,14 +71,14 @@ public class SpriteRemoveExample extends BaseExample
   @Override
   public boolean onSceneTouchEvent(final Scene pScene,
       final TouchEvent pSceneTouchEvent) {
-    // removing entities from a layer should be done after the layer (scene)
-    // has been updated, because doing it while updating/drawing can cause an
-    // exception with a suddenly missing entity
+    // removing entities can only be done safely on the UpdateThread.
+    // doing it while updating/drawing can cause an exception with a suddenly
+    // missing entity
     runOnUpdateThread(new Runnable() {
       @Override
       public void run() {
         // now it is save to remove the entity
-        pScene.getTopLayer().removeEntity(mFaceToRemove);
+        pScene.getLastChild().removeChild(mFaceToRemove);
       }
     });
 

@@ -5,7 +5,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -14,6 +14,7 @@ import org.anddev.andengine.opengl.texture.TextureOptions;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.texture.source.AssetTextureSource;
+import org.anddev.andengine.opengl.texture.source.decorator.BaseShapeTextureSourceDecorator.TextureSourceDecoratorShape;
 import org.anddev.andengine.opengl.texture.source.decorator.ColorKeyTextureSourceDecorator;
 
 import android.graphics.Color;
@@ -54,7 +55,8 @@ public class ColorKeyTextureSourceDecoratorExample extends BaseExample {
     final int colorKeyGreen = Color.rgb(0,  179, 0); // green segment
     final ColorKeyTextureSourceDecorator colorKeyTextureSource =
         new ColorKeyTextureSourceDecorator(new ColorKeyTextureSourceDecorator(
-            baseTextureSource, colorKeyRed), colorKeyGreen);
+            baseTextureSource, TextureSourceDecoratorShape.RECTANGLE,
+            colorKeyRed), TextureSourceDecoratorShape.RECTANGLE, colorKeyGreen);
 
     mChromaticCircleColorKeyTextureRegion = TextureRegionFactory
         .createFromSource(mTexture, colorKeyTextureSource, 128, 0);
@@ -79,9 +81,9 @@ public class ColorKeyTextureSourceDecoratorExample extends BaseExample {
     final Sprite chromaticCircleColorKeyed = new Sprite(centerX + 80, centerY,
         mChromaticCircleColorKeyTextureRegion);
 
-    final ILayer topLayer = scene.getTopLayer();
-    topLayer.addEntity(chromaticCircle);
-    topLayer.addEntity(chromaticCircleColorKeyed);
+    final IEntity lastChild = scene.getLastChild();
+    lastChild.addChild(chromaticCircle);
+    lastChild.addChild(chromaticCircleColorKeyed);
 
     return scene;
   }

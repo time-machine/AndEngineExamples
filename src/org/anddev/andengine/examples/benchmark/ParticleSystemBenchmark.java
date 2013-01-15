@@ -52,7 +52,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1, true, 4);
+    final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0, 0, 0));
 
     // lower left to lower right particle system
@@ -73,7 +73,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
           1.0f, 0.0f, 1.0f, 2.5f, 5.5f));
       particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f, 6.5f));
 
-      scene.getTopLayer().addEntity(particleSystem);
+      scene.getLastChild().addChild(particleSystem);
     }
 
     // lower right to lower left particle system
@@ -94,7 +94,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
           1.0f, 0.0f, 1.0f, 2.5f, 5.5f));
       particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f, 6.5f));
 
-      scene.getTopLayer().addEntity(particleSystem);
+      scene.getLastChild().addChild(particleSystem);
     }
 
     // upper left to upper right particle system
@@ -115,7 +115,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
           1.0f, 1.0f, 1.0f, 2.5f, 5.5f));
       particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f, 6.5f));
 
-      scene.getTopLayer().addEntity(particleSystem);
+      scene.getLastChild().addChild(particleSystem);
     }
 
     // upper right to upper left particle system
@@ -136,7 +136,7 @@ public class ParticleSystemBenchmark extends BaseBenchmark {
           1.0f, 0.0f, 1.0f, 2.5f, 5.5f));
       particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f, 6.5f));
 
-      scene.getTopLayer().addEntity(particleSystem);
+      scene.getLastChild().addChild(particleSystem);
     }
 
     return scene;

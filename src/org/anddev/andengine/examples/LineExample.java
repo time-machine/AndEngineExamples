@@ -45,7 +45,7 @@ public class LineExample extends BaseExample {
 
       final Line line = new Line(x1, y1, x2, y2, lineWidth);
       line.setColor(random.nextFloat(), random.nextFloat(), random.nextFloat());
-      scene.getTopLayer().addEntity(line);
+      scene.getLastChild().addChild(line);
     }
 
     return scene;

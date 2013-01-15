@@ -147,10 +147,10 @@
             android:name=".Rotation3DExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".ShapeModifierExample"
+            android:name=".EntityModifierExample"
             android:configChanges="orientation" />
         <activity
-            android:name=".ShapeModifierIrregularExample"
+            android:name=".EntityModifierIrregularExample"
             android:configChanges="orientation" />
         <activity
             android:name=".SoundExample"
@@ -210,7 +210,7 @@
             android:name=".benchmark.PhysicsBenchmark"
             android:configChanges="orientation" />
         <activity
-            android:name=".benchmark.ShapeModifierBenchmark"
+            android:name=".benchmark.EntityModifierBenchmark"
             android:configChanges="orientation" />
         <activity
             android:name=".benchmark.SpriteBenchmark"

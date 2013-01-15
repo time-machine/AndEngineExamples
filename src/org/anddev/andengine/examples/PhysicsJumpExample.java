@@ -100,10 +100,10 @@ public class PhysicsJumpExample extends BaseExample implements
     PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
         wallFixtureDef);
 
-    scene.getBottomLayer().addEntity(ground);
-    scene.getBottomLayer().addEntity(roof);
-    scene.getBottomLayer().addEntity(left);
-    scene.getBottomLayer().addEntity(right);
+    scene.getFirstChild().addChild(ground);
+    scene.getFirstChild().addChild(roof);
+    scene.getFirstChild().addChild(left);
+    scene.getFirstChild().addChild(right);
 
     scene.registerUpdateHandler(mPhysicsWorld);
 
@@ -186,7 +186,7 @@ public class PhysicsJumpExample extends BaseExample implements
     face.animate(new long[] { 200, 200 }, 0, 1, true);
     face.setUpdatePhysics(false);
     scene.registerTouchArea(face);
-    scene.getTopLayer().addEntity(face);
+    scene.getLastChild().addChild(face);
   }
 
   private void jumpFace(final AnimatedSprite face) {

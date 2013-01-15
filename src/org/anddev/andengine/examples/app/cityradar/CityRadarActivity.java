@@ -11,11 +11,11 @@ import org.anddev.andengine.engine.camera.hud.HUD;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
-import org.anddev.andengine.entity.layer.ILayer;
+import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.examples.adt.City;
@@ -140,15 +140,15 @@ public class CityRadarActivity extends BaseGameActivity implements
     mCamera.setHUD(hud);
 
     // background
-    initBackground(hud.getBottomLayer());
+    initBackground(hud.getFirstChild());
 
     // cities
-    initCitySprites(scene.getLayer(LAYER_CITIES));
+    initCitySprites(scene.getChild(LAYER_CITIES));
 
     return scene;
   }
 
-  private void initCitySprites(final ILayer pLayer) {
+  private void initCitySprites(final IEntity pEntity) {
     mFinishedInitSprites = false;
 
     final int cityCount = mCities.size();
@@ -174,26 +174,26 @@ public class CityRadarActivity extends BaseGameActivity implements
       mCityToCityNameTextMap.put(city, cityNameText);
       mCityToCitySpriteMap.put(city, citySprite);
 
-      pLayer.addEntity(citySprite);
-      pLayer.addEntity(cityNameText);
+      pEntity.addChild(citySprite);
+      pEntity.addChild(cityNameText);
     }
 
     mFinishedInitSprites = true;
   }
 
-  private void initBackground(final ILayer pLayer) {
+  private void initBackground(final IEntity pEntity) {
     // vertical grid lines
     for (int i = GRID_SIZE / 2; i < CAMERA_WIDTH; i += GRID_SIZE) {
       final Line line = new Line(i, 0, i, CAMERA_HEIGHT);
       line.setColor(0, 0.5f, 0, 1);
-      pLayer.addEntity(line);
+      pEntity.addChild(line);
     }
 
     // horizontal grid lines
     for (int i = GRID_SIZE / 2; i < CAMERA_HEIGHT; i += GRID_SIZE) {
       final Line line = new Line(0, i, CAMERA_WIDTH, i);
       line.setColor(0, 0.5f, 0, 1);
-      pLayer.addEntity(line);
+      pEntity.addChild(line);
     }
 
     final Sprite radarSprite = new Sprite(
@@ -203,9 +203,9 @@ public class CityRadarActivity extends BaseGameActivity implements
     radarSprite.setColor(0, 1, 0, 1);
     radarSprite.setRotationCenter(radarSprite.getWidth(),
         radarSprite.getHeight());
-    radarSprite.addShapeModifier(new LoopShapeModifier(new RotationModifier(3,
+    radarSprite.addEntityModifier(new LoopEntityModifier(new RotationModifier(3,
         0, 360, EaseLinear.getInstance())));
-    pLayer.addEntity(radarSprite);
+    pEntity.addChild(radarSprite);
 
     // title
     final Text titleText = new Text(0, 0, mFont, "-- CityRadar --");
@@ -213,7 +213,7 @@ public class CityRadarActivity extends BaseGameActivity implements
         titleText.getHeight() + 35);
     titleText.setScale(2);
     titleText.setScaleCenterY(0);
-    pLayer.addEntity(titleText);
+    pEntity.addChild(titleText);
   }
 
   @Override

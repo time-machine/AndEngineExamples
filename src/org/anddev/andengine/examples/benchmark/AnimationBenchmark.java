@@ -57,7 +57,7 @@ public class AnimationBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1, true, 4 * SPRITE_COUNT);
+    final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
     // as we are creating quite a lot of the same Sprites, we can let them share
@@ -89,7 +89,7 @@ public class AnimationBenchmark extends BaseBenchmark {
           mRandom.nextFloat() * (CAMERA_HEIGHT - 32),
           mFaceTextureRegion.clone(), faceSharedVertexBuffer);
       face.animate(50 + mRandom.nextInt(100));
-      scene.getTopLayer().addEntity(face);
+      scene.getLastChild().addChild(face);
 
       // continuously flying helicopter
       final AnimatedSprite helicopter = new AnimatedSprite(
@@ -99,7 +99,7 @@ public class AnimationBenchmark extends BaseBenchmark {
       helicopter.animate(
           new long[] { 50 + mRandom.nextInt(100), 50 + mRandom.nextInt(100) },
           1, 2, true);
-      scene.getTopLayer().addEntity(helicopter);
+      scene.getLastChild().addChild(helicopter);
 
       // snapdragon
       final AnimatedSprite snapdragon = new AnimatedSprite(
@@ -107,7 +107,7 @@ public class AnimationBenchmark extends BaseBenchmark {
           mRandom.nextFloat() * (CAMERA_HEIGHT - 60),
           mSnapdragonTextureRegion.clone(), snapdragonSharedVertexBuffer);
       snapdragon.animate(50 + mRandom.nextInt(100));
-      scene.getTopLayer().addEntity(snapdragon);
+      scene.getLastChild().addChild(snapdragon);
 
       // funny banana
       final AnimatedSprite banana = new AnimatedSprite(
@@ -115,7 +115,7 @@ public class AnimationBenchmark extends BaseBenchmark {
           mRandom.nextFloat() * (CAMERA_HEIGHT - 32),
           mBananaTextureRegion.clone(), bananaSharedVertexBuffer);
       banana.animate(50 + mRandom.nextInt(100));
-      scene.getTopLayer().addEntity(banana);
+      scene.getLastChild().addChild(banana);
     }
 
     return scene;

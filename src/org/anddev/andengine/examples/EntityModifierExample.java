@@ -7,20 +7,20 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.IEntity;
+import org.anddev.andengine.entity.modifier.AlphaModifier;
+import org.anddev.andengine.entity.modifier.DelayModifier;
+import org.anddev.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier;
+import org.anddev.andengine.entity.modifier.LoopEntityModifier.ILoopEntityModifierListener;
+import org.anddev.andengine.entity.modifier.ParallelEntityModifier;
+import org.anddev.andengine.entity.modifier.RotationByModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
-import org.anddev.andengine.entity.shape.modifier.DelayModifier;
-import org.anddev.andengine.entity.shape.modifier.IShapeModifier.IShapeModifierListener;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.LoopShapeModifier.ILoopShapeModifierListener;
-import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -32,7 +32,7 @@ import org.anddev.andengine.util.modifier.LoopModifier;
 
 import android.widget.Toast;
 
-public class ShapeModifierExample extends BaseExample {
+public class EntityModifierExample extends BaseExample {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -66,57 +66,57 @@ public class ShapeModifierExample extends BaseExample {
     face.animate(100);
     face.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-    final LoopShapeModifier shapeModifier = new LoopShapeModifier(
-        new IShapeModifierListener() {
+    final LoopEntityModifier entityModifier = new LoopEntityModifier(
+        new IEntityModifierListener() {
           @Override
-          public void onModifierFinished(final IModifier<IShape> pShapeModifier,
-              final IShape pShape) {
+          public void onModifierFinished(
+              final IModifier<IEntity> pEntityModifier, final IEntity pEntity) {
             runOnUiThread(new Runnable() {
               @Override
               public void run() {
-                Toast.makeText(ShapeModifierExample.this, "Sequence ended.",
+                Toast.makeText(EntityModifierExample.this, "Sequence ended.",
                     Toast.LENGTH_LONG).show();
               }
             });
           }
         },
         1,
-        new ILoopShapeModifierListener() {
+        new ILoopEntityModifierListener() {
           @Override
           public void onLoopFinished(
-              final LoopModifier<IShape> pLoopShapeModifier,
+              final LoopModifier<IEntity> pLoopEntityModifier,
               final int pLoopsRemaining) {
             runOnUiThread(new Runnable() {
               @Override
               public void run() {
-                Toast.makeText(ShapeModifierExample.this, "Loops remaining:" +
+                Toast.makeText(EntityModifierExample.this, "Loops remaining:" +
                     pLoopsRemaining, Toast.LENGTH_SHORT).show();
               }
             });
           }
         },
-        new SequenceShapeModifier(
+        new SequenceEntityModifier(
             new RotationModifier(1, 0, 90),
             new AlphaModifier(2, 1, 0),
             new AlphaModifier(1, 0, 1),
             new ScaleModifier(2, 1, 0.5f),
             new DelayModifier(0.5f),
-            new ParallelShapeModifier(
+            new ParallelEntityModifier(
                 new ScaleModifier(3, 0.5f, 5),
                 new RotationByModifier(3, 90)
             ),
-            new ParallelShapeModifier(
+            new ParallelEntityModifier(
                 new ScaleModifier(3, 5, 1),
                 new RotationModifier(3, 180, 0)
             )
         )
     );
 
-    face.addShapeModifier(shapeModifier);
-    rect.addShapeModifier(shapeModifier.clone());
+    face.addEntityModifier(entityModifier);
+    rect.addEntityModifier(entityModifier.clone());
 
-    scene.getTopLayer().addEntity(face);
-    scene.getTopLayer().addEntity(rect);
+    scene.getLastChild().addChild(face);
+    scene.getLastChild().addChild(rect);
 
     return scene;
   }

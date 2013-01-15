@@ -7,13 +7,13 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.AlphaModifier;
+import org.anddev.andengine.entity.modifier.ParallelEntityModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
-import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.entity.text.TickerText;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -44,9 +44,9 @@ public class TickerTextExample extends BaseExample {
         "There are also ticker texts!\n\nYou'll see the answer to life & " +
         "universe in...\n\n5 4 3 2 1...\n\n42\n\nIndeed very funny!",
         HorizontalAlign.CENTER, 10);
-    text.addShapeModifier(
-        new SequenceShapeModifier(
-            new ParallelShapeModifier(
+    text.addEntityModifier(
+        new SequenceEntityModifier(
+            new ParallelEntityModifier(
                 new AlphaModifier(10, 0, 1),
                 new ScaleModifier(10, 0.5f, 1)
             ),
@@ -54,7 +54,7 @@ public class TickerTextExample extends BaseExample {
         )
     );
     text.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-    scene.getTopLayer().addEntity(text);
+    scene.getLastChild().addChild(text);
 
     return scene;
   }

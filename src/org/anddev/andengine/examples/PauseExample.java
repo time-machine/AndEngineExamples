@@ -5,10 +5,10 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.MoveModifier;
 import org.anddev.andengine.entity.scene.CameraScene;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.modifier.MoveModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.opengl.texture.Texture;
@@ -40,16 +40,16 @@ public class PauseExample extends BaseExample {
     final int x = (CAMERA_WIDTH - mPauseTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mPauseTextureRegion.getHeight()) / 2;
     final Sprite pauseSprite = new Sprite(x, y, mPauseTextureRegion);
-    mPauseScene.getTopLayer().addEntity(pauseSprite);
+    mPauseScene.getLastChild().addChild(pauseSprite);
     mPauseScene.setBackgroundEnabled(false);
 
     mMainScene = new Scene(1);
     mMainScene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
     final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
-    face.addShapeModifier(new MoveModifier(30, 0,
+    face.addEntityModifier(new MoveModifier(30, 0,
         CAMERA_WIDTH - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
-    mMainScene.getTopLayer().addEntity(face);
+    mMainScene.getLastChild().addChild(face);
 
     return mMainScene;
   }

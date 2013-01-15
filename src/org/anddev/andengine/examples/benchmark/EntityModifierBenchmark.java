@@ -8,16 +8,16 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.modifier.AlphaModifier;
+import org.anddev.andengine.entity.modifier.DelayModifier;
+import org.anddev.andengine.entity.modifier.ParallelEntityModifier;
+import org.anddev.andengine.entity.modifier.RotationByModifier;
+import org.anddev.andengine.entity.modifier.RotationModifier;
+import org.anddev.andengine.entity.modifier.ScaleModifier;
+import org.anddev.andengine.entity.modifier.SequenceEntityModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.shape.modifier.AlphaModifier;
-import org.anddev.andengine.entity.shape.modifier.DelayModifier;
-import org.anddev.andengine.entity.shape.modifier.ParallelShapeModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationByModifier;
-import org.anddev.andengine.entity.shape.modifier.RotationModifier;
-import org.anddev.andengine.entity.shape.modifier.ScaleModifier;
-import org.anddev.andengine.entity.shape.modifier.SequenceShapeModifier;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.opengl.texture.Texture;
 import org.anddev.andengine.opengl.texture.TextureOptions;
@@ -25,7 +25,7 @@ import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.texture.region.TextureRegionFactory;
 import org.anddev.andengine.opengl.vertex.RectangleVertexBuffer;
 
-public class ShapeModifierBenchmark extends BaseBenchmark {
+public class EntityModifierBenchmark extends BaseBenchmark {
   private static final int CAMERA_WIDTH = 720;
   private static final int CAMERA_HEIGHT = 480;
 
@@ -62,20 +62,20 @@ public class ShapeModifierBenchmark extends BaseBenchmark {
 
   @Override
   public Scene onLoadScene() {
-    final Scene scene = new Scene(1, true, 2 * SPRITE_COUNT);
+    final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
-    final SequenceShapeModifier shapeModifier = new SequenceShapeModifier(
+    final SequenceEntityModifier shapeModifier = new SequenceEntityModifier(
         new RotationByModifier(2, 90),
         new AlphaModifier(1.5f, 1, 0),
         new AlphaModifier(1.5f, 0, 1),
         new ScaleModifier(2.5f, 1, 0.5f),
         new DelayModifier(0.5f),
-        new ParallelShapeModifier(
+        new ParallelEntityModifier(
             new ScaleModifier(2f, 0.5f, 5),
             new RotationByModifier(2, 90)
         ),
-        new ParallelShapeModifier(
+        new ParallelEntityModifier(
             new ScaleModifier(2f, 5, 1),
             new RotationModifier(2f, 180, 0)
         )
@@ -100,11 +100,11 @@ public class ShapeModifierBenchmark extends BaseBenchmark {
           (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), mFaceTextureRegion,
           sharedVertexBuffer);
 
-      face.addShapeModifier(shapeModifier.clone());
-      rect.addShapeModifier(shapeModifier.clone());
+      face.addEntityModifier(shapeModifier.clone());
+      rect.addEntityModifier(shapeModifier.clone());
 
-      scene.getTopLayer().addEntity(face);
-      scene.getTopLayer().addEntity(rect);
+      scene.getLastChild().addChild(face);
+      scene.getLastChild().addChild(rect);
     }
 
     return scene;
@@ -112,6 +112,6 @@ public class ShapeModifierBenchmark extends BaseBenchmark {
 
   @Override
   protected float getBenchmarkID() {
-    return SHAPEMODIFIERBENCHMARK_ID;
+    return ENTITYMODIFIERBENCHMARK_ID;
   }
 }
