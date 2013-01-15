@@ -71,12 +71,12 @@ public class AutoParallaxBackgroundExample extends BaseExample {
     final Scene scene = new Scene(1);
     final AutoParallaxBackground autoParallaxBackground =
         new AutoParallaxBackground(0, 0, 0, 5);
-    autoParallaxBackground.addParallaxEntity(new ParallaxEntity(0,
+    autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0,
         new Sprite(0, CAMERA_HEIGHT - mParallaxLayerBack.getHeight(),
             mParallaxLayerBack)));
-    autoParallaxBackground.addParallaxEntity(new ParallaxEntity(-5,
+    autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-5,
         new Sprite(0, 80, mParallaxLayerMid)));
-    autoParallaxBackground.addParallaxEntity(new ParallaxEntity(-10,
+    autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-10,
         new Sprite(0, CAMERA_HEIGHT - mParallaxLayerFront.getHeight(),
             mParallaxLayerFront)));
 
