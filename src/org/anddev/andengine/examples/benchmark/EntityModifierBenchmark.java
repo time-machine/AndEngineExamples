@@ -56,8 +56,9 @@ public class EntityModifierBenchmark extends BaseBenchmark {
   public void onLoadResources() {
     mTexture = new Texture(32, 32, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
     mFaceTextureRegion = TextureRegionFactory.createFromAsset(mTexture, this,
-        "gfx/face_box_tiled.png", 0, 0);
-    getEngine().getTextureManager().loadTexture(mTexture);
+        "gfx/face_box.png", 0, 0);
+
+    mEngine.getTextureManager().loadTexture(mTexture);
   }
 
   @Override
@@ -71,32 +72,27 @@ public class EntityModifierBenchmark extends BaseBenchmark {
         new AlphaModifier(1.5f, 0, 1),
         new ScaleModifier(2.5f, 1, 0.5f),
         new DelayModifier(0.5f),
-        new ParallelEntityModifier(
-            new ScaleModifier(2f, 0.5f, 5),
-            new RotationByModifier(2, 90)
-        ),
-        new ParallelEntityModifier(
-            new ScaleModifier(2f, 5, 1),
-            new RotationModifier(2f, 180, 0)
-        )
-    );
+        new ParallelEntityModifier(new ScaleModifier(2f, 0.5f, 5),
+            new RotationByModifier(2, 90)),
+        new ParallelEntityModifier(new ScaleModifier(2f, 5, 1),
+            new RotationModifier(2f, 180, 0)));
 
-    // as we are creating quite a lot of the same Sprites, we can let them
-    // share a VertexBuffer to significantly increase performance
-    final RectangleVertexBuffer sharedVertexBuffer =
-        new RectangleVertexBuffer(GL11.GL_DYNAMIC_DRAW);
+    // as we are creating quite a lot of the same Sprites, we can let them share
+    // a VertexBuffer to significantly increase performance
+    final RectangleVertexBuffer sharedVertexBuffer = new RectangleVertexBuffer(
+        GL11.GL_DYNAMIC_DRAW);
     sharedVertexBuffer.update(mFaceTextureRegion.getWidth(),
         mFaceTextureRegion.getHeight());
 
     for (int i = 0; i < SPRITE_COUNT; i++) {
       final Rectangle rect = new Rectangle(
           (CAMERA_WIDTH - 32) * mRandom.nextFloat(),
-          (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), 32, 32, sharedVertexBuffer);
+          (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), 32, 32,
+          sharedVertexBuffer);
       rect.setColor(1, 0, 0);
       rect.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 
-      final Sprite face = new Sprite(
-          (CAMERA_WIDTH - 32) * mRandom.nextFloat(),
+      final Sprite face = new Sprite((CAMERA_WIDTH - 32) * mRandom.nextFloat(),
           (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), mFaceTextureRegion,
           sharedVertexBuffer);
 
