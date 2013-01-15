@@ -65,7 +65,7 @@ public class EntityModifierBenchmark extends BaseBenchmark {
     final Scene scene = new Scene(1);
     scene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 
-    final SequenceEntityModifier shapeModifier = new SequenceEntityModifier(
+    final SequenceEntityModifier entityModifier = new SequenceEntityModifier(
         new RotationByModifier(2, 90),
         new AlphaModifier(1.5f, 1, 0),
         new AlphaModifier(1.5f, 0, 1),
@@ -100,8 +100,8 @@ public class EntityModifierBenchmark extends BaseBenchmark {
           (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), mFaceTextureRegion,
           sharedVertexBuffer);
 
-      face.addEntityModifier(shapeModifier.clone());
-      rect.addEntityModifier(shapeModifier.clone());
+      face.addEntityModifier(entityModifier.clone());
+      rect.addEntityModifier(entityModifier.clone());
 
       scene.getLastChild().addChild(face);
       scene.getLastChild().addChild(rect);
