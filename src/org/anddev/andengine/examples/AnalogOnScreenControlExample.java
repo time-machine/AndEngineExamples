@@ -73,7 +73,7 @@ public class AnalogOnScreenControlExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
 
     final AnalogOnScreenControl analogOnScreenControl = new AnalogOnScreenControl(
         0, CAMERA_HEIGHT - mOnScreenControlBaseTextureRegion.getHeight(),

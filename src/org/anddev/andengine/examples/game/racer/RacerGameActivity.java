@@ -161,9 +161,6 @@ public class RacerGameActivity extends BaseGameActivity {
     analogOnScreenControl.getControlBase().setBlendFunction(GL10.GL_SRC_ALPHA,
         GL10.GL_ONE_MINUS_SRC_ALPHA);
     analogOnScreenControl.getControlBase().setAlpha(0.5f);
-    analogOnScreenControl.getControlBase().setScaleCenter(0, 128);
-    analogOnScreenControl.getControlBase().setScale(0.75f);
-    analogOnScreenControl.getControlKnob().setScale(0.75f);
     analogOnScreenControl.refreshControlKnobPosition();
 
     scene.setChildScene(analogOnScreenControl);
@@ -183,7 +180,7 @@ public class RacerGameActivity extends BaseGameActivity {
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(mCar, mCarBody,
         true, false, true, false));
 
-    scene.getLayer(LAYER_CARS).addChild(mCar);
+    scene.getLayer(LAYER_CARS).attachChild(mCar);
   }
 
   private void initObstacles(final Scene scene) {
@@ -208,7 +205,7 @@ public class RacerGameActivity extends BaseGameActivity {
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(box, boxBody,
         true, true, false, false));
 
-    pScene.getLayer(LAYER_OBSTACLES).addChild(box);
+    pScene.getLayer(LAYER_OBSTACLES).attachChild(box);
   }
 
   private void initRacetrack(final Scene scene) {
@@ -225,12 +222,12 @@ public class RacerGameActivity extends BaseGameActivity {
           mRacetrackStraightTextureRegion;
 
       // top straight
-      racetrackEntity.addChild(new Sprite(RACETRACK_WIDTH, 0,
+      racetrackEntity.attachChild(new Sprite(RACETRACK_WIDTH, 0,
           3 * RACETRACK_WIDTH, RACETRACK_WIDTH,
           racetrackHorizontalStraightTextureRegion));
 
       // bottom straight
-      racetrackEntity.addChild(new Sprite(RACETRACK_WIDTH,
+      racetrackEntity.attachChild(new Sprite(RACETRACK_WIDTH,
           CAMERA_HEIGHT - RACETRACK_WIDTH, 3 * RACETRACK_WIDTH, RACETRACK_WIDTH,
           racetrackHorizontalStraightTextureRegion));
 
@@ -239,14 +236,14 @@ public class RacerGameActivity extends BaseGameActivity {
           RACETRACK_WIDTH, RACETRACK_WIDTH,
           racetrackVerticalStraightTextureRegion);
       leftVerticalStraight.setRotation(90);
-      racetrackEntity.addChild(leftVerticalStraight);
+      racetrackEntity.attachChild(leftVerticalStraight);
 
       // right straight
       final Sprite rightVerticalStraight = new Sprite(
           CAMERA_WIDTH - RACETRACK_WIDTH, RACETRACK_WIDTH, RACETRACK_WIDTH,
           RACETRACK_WIDTH, racetrackVerticalStraightTextureRegion);
       rightVerticalStraight.setRotation(90);
-      racetrackEntity.addChild(rightVerticalStraight);
+      racetrackEntity.attachChild(rightVerticalStraight);
     }
 
     // edges
@@ -257,26 +254,26 @@ public class RacerGameActivity extends BaseGameActivity {
       final Sprite upperLeftCurve = new Sprite(0, 0, RACETRACK_WIDTH,
           RACETRACK_WIDTH, racetrackCurveTextureRegion);
       upperLeftCurve.setRotation(90);
-      racetrackEntity.addChild(upperLeftCurve);
+      racetrackEntity.attachChild(upperLeftCurve);
 
       // upper right
       final Sprite upperRightCurve = new Sprite(CAMERA_WIDTH - RACETRACK_WIDTH,
           0, RACETRACK_WIDTH, RACETRACK_WIDTH, racetrackCurveTextureRegion);
       upperRightCurve.setRotation(180);
-      racetrackEntity.addChild(upperRightCurve);
+      racetrackEntity.attachChild(upperRightCurve);
 
       // lower right
       final Sprite lowerRigthCurve = new Sprite(CAMERA_WIDTH - RACETRACK_WIDTH,
           CAMERA_HEIGHT - RACETRACK_WIDTH, RACETRACK_WIDTH, RACETRACK_WIDTH,
           racetrackCurveTextureRegion);
       lowerRigthCurve.setRotation(270);
-      racetrackEntity.addChild(lowerRigthCurve);
+      racetrackEntity.attachChild(lowerRigthCurve);
 
       // lower left
       final Sprite lowerLeftCurve = new Sprite(0,
           CAMERA_HEIGHT - RACETRACK_WIDTH, RACETRACK_WIDTH, RACETRACK_WIDTH,
           racetrackCurveTextureRegion);
-      racetrackEntity.addChild(lowerLeftCurve);
+      racetrackEntity.attachChild(lowerLeftCurve);
     }
   }
 
@@ -318,14 +315,14 @@ public class RacerGameActivity extends BaseGameActivity {
         BodyType.StaticBody, wallFixtureDef);
 
     final IEntity firstChild =  scene.getChild(LAYER_BORDERS);
-    firstChild.addChild(bottomOuter);
-    firstChild.addChild(topOuter);
-    firstChild.addChild(leftOuter);
-    firstChild.addChild(rightOuter);
+    firstChild.attachChild(bottomOuter);
+    firstChild.attachChild(topOuter);
+    firstChild.attachChild(leftOuter);
+    firstChild.attachChild(rightOuter);
 
-    firstChild.addChild(bottomInner);
-    firstChild.addChild(topInner);
-    firstChild.addChild(leftInner);
-    firstChild.addChild(rightInner);
+    firstChild.attachChild(bottomInner);
+    firstChild.attachChild(topInner);
+    firstChild.attachChild(leftInner);
+    firstChild.attachChild(rightInner);
   }
 }

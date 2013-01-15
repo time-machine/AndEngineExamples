@@ -100,10 +100,10 @@ public class PhysicsRemoveExample extends BaseExample implements
     PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
         wallFixtureDef);
 
-    scene.getFirstChild().addChild(ground);
-    scene.getFirstChild().addChild(roof);
-    scene.getFirstChild().addChild(left);
-    scene.getFirstChild().addChild(right);
+    scene.getFirstChild().attachChild(ground);
+    scene.getFirstChild().attachChild(roof);
+    scene.getFirstChild().attachChild(left);
+    scene.getFirstChild().attachChild(right);
 
     scene.registerUpdateHandler(mPhysicsWorld);
 
@@ -171,7 +171,7 @@ public class PhysicsRemoveExample extends BaseExample implements
     face.setUpdatePhysics(false);
 
     scene.registerTouchArea(face);
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
   }
@@ -186,6 +186,6 @@ public class PhysicsRemoveExample extends BaseExample implements
     mPhysicsWorld.destroyBody(facePhysicsConnector.getBody());
 
     scene.unregisterTouchArea(face);
-    scene.getLastChild().removeChild(face);
+    scene.getLastChild().detachChild(face);
   }
 }

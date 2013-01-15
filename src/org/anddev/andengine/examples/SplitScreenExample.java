@@ -98,10 +98,10 @@ public class SplitScreenExample extends BaseExample implements
     PhysicsFactory.createBoxBody(mPhysicsWorld, right, BodyType.StaticBody,
         wallFixtureDef);
 
-    scene.getFirstChild().addChild(ground);
-    scene.getFirstChild().addChild(roof);
-    scene.getFirstChild().addChild(left);
-    scene.getFirstChild().addChild(right);
+    scene.getFirstChild().attachChild(ground);
+    scene.getFirstChild().attachChild(roof);
+    scene.getFirstChild().attachChild(left);
+    scene.getFirstChild().attachChild(right);
 
     getEngine().registerUpdateHandler(mPhysicsWorld);
 
@@ -148,7 +148,7 @@ public class SplitScreenExample extends BaseExample implements
     final Body body = PhysicsFactory.createBoxBody(mPhysicsWorld, face,
         BodyType.DynamicBody, objectFixtureDef);
 
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));
 

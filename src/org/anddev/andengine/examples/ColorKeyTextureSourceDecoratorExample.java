@@ -82,8 +82,8 @@ public class ColorKeyTextureSourceDecoratorExample extends BaseExample {
         mChromaticCircleColorKeyTextureRegion);
 
     final IEntity lastChild = scene.getLastChild();
-    lastChild.addChild(chromaticCircle);
-    lastChild.addChild(chromaticCircleColorKeyed);
+    lastChild.attachChild(chromaticCircle);
+    lastChild.attachChild(chromaticCircleColorKeyed);
 
     return scene;
   }

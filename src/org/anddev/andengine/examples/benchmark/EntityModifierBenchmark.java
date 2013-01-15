@@ -99,8 +99,8 @@ public class EntityModifierBenchmark extends BaseBenchmark {
       face.addEntityModifier(entityModifier.clone());
       rect.addEntityModifier(entityModifier.clone());
 
-      scene.getLastChild().addChild(face);
-      scene.getLastChild().addChild(rect);
+      scene.getLastChild().attachChild(face);
+      scene.getLastChild().attachChild(rect);
     }
 
     return scene;

@@ -57,11 +57,11 @@ public class ZoomExample extends BaseExample {
 
     // create some faces and add them to the scene
     final IEntity lastChild = scene.getLastChild();
-    lastChild.addChild(new Sprite(centerX - 25, centerY - 25,
+    lastChild.attachChild(new Sprite(centerX - 25, centerY - 25,
         mFaceTextureRegion));
-    lastChild.addChild(new Sprite(centerX + 25, centerY - 25,
+    lastChild.attachChild(new Sprite(centerX + 25, centerY - 25,
         mFaceTextureRegion));
-    lastChild.addChild(new Sprite(centerX, centerY + 25, mFaceTextureRegion));
+    lastChild.attachChild(new Sprite(centerX, centerY + 25, mFaceTextureRegion));
 
     scene.setOnSceneTouchListener(new IOnSceneTouchListener() {
       @Override

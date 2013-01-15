@@ -23,7 +23,7 @@ public class Snake extends Entity {
     super(0,0);
     mTailPartTextureRegion = pTailPartTextureRegion;
     mHead = new SnakeHead(pCellX, pCellY, pHeadTextureRegion);
-    addChild(mHead);
+    attachChild(mHead);
     setDirection(pInitialDirection);
   }
 
@@ -67,7 +67,7 @@ public class Snake extends Entity {
       // tail, where the head currently is
       final SnakeTailPart newTailPart = new SnakeTailPart(mHead,
           mTailPartTextureRegion);
-      addChild(newTailPart);
+      attachChild(newTailPart);
       mTail.addFirst(newTailPart);
     }
     else {

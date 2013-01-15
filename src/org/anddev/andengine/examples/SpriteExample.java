@@ -35,7 +35,7 @@ public class SpriteExample extends BaseExample {
 
     // create the face and add it to the scene
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
 
     return scene;
   }

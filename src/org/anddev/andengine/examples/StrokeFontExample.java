@@ -73,9 +73,9 @@ public class StrokeFontExample extends BaseExample {
     final Text textStrokeOnly = new Text(100, 300, mStrokeOnlyFont,
         "Text with stroke only.");
 
-    scene.getLastChild().addChild(textNormal);
-    scene.getLastChild().addChild(textStroke);
-    scene.getLastChild().addChild(textStrokeOnly);
+    scene.getLastChild().attachChild(textNormal);
+    scene.getLastChild().attachChild(textStroke);
+    scene.getLastChild().attachChild(textStrokeOnly);
 
     return scene;
   }

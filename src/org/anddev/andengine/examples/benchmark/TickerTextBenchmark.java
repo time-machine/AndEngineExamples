@@ -56,7 +56,7 @@ public class TickerTextBenchmark extends BaseBenchmark {
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
           HorizontalAlign.CENTER, 5 + 5 * mRandom.nextFloat());
       text.setColor(mRandom.nextFloat(), mRandom.nextFloat(), mRandom.nextFloat());
-      lastChild.addChild(text);
+      lastChild.attachChild(text);
     }
 
     return scene;

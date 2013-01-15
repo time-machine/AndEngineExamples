@@ -174,8 +174,8 @@ public class CityRadarActivity extends BaseGameActivity implements
       mCityToCityNameTextMap.put(city, cityNameText);
       mCityToCitySpriteMap.put(city, citySprite);
 
-      pEntity.addChild(citySprite);
-      pEntity.addChild(cityNameText);
+      pEntity.attachChild(citySprite);
+      pEntity.attachChild(cityNameText);
     }
 
     mFinishedInitSprites = true;
@@ -186,14 +186,14 @@ public class CityRadarActivity extends BaseGameActivity implements
     for (int i = GRID_SIZE / 2; i < CAMERA_WIDTH; i += GRID_SIZE) {
       final Line line = new Line(i, 0, i, CAMERA_HEIGHT);
       line.setColor(0, 0.5f, 0, 1);
-      pEntity.addChild(line);
+      pEntity.attachChild(line);
     }
 
     // horizontal grid lines
     for (int i = GRID_SIZE / 2; i < CAMERA_HEIGHT; i += GRID_SIZE) {
       final Line line = new Line(0, i, CAMERA_WIDTH, i);
       line.setColor(0, 0.5f, 0, 1);
-      pEntity.addChild(line);
+      pEntity.attachChild(line);
     }
 
     final Sprite radarSprite = new Sprite(
@@ -205,7 +205,7 @@ public class CityRadarActivity extends BaseGameActivity implements
         radarSprite.getHeight());
     radarSprite.addEntityModifier(new LoopEntityModifier(new RotationModifier(3,
         0, 360, EaseLinear.getInstance())));
-    pEntity.addChild(radarSprite);
+    pEntity.attachChild(radarSprite);
 
     // title
     final Text titleText = new Text(0, 0, mFont, "-- CityRadar --");
@@ -213,7 +213,7 @@ public class CityRadarActivity extends BaseGameActivity implements
         titleText.getHeight() + 35);
     titleText.setScale(2);
     titleText.setScaleCenterY(0);
-    pEntity.addChild(titleText);
+    pEntity.attachChild(titleText);
   }
 
   @Override

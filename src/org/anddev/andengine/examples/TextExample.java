@@ -41,9 +41,9 @@ public class TextExample extends BaseExample {
         "And right aligned!\nLorem ipsum dolor sit amat...",
         HorizontalAlign.RIGHT);
 
-    scene.getLastChild().addChild(textCenter);
-    scene.getLastChild().addChild(textLeft);
-    scene.getLastChild().addChild(textRight);
+    scene.getLastChild().attachChild(textCenter);
+    scene.getLastChild().attachChild(textLeft);
+    scene.getLastChild().attachChild(textRight);
 
     return scene;
   }

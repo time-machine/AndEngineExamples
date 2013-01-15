@@ -118,10 +118,10 @@ public class CollisionDetectionExample extends BaseExample {
             new SequenceEntityModifier(new ScaleModifier(3, 1, 1.5f),
                 new ScaleModifier(3,  1.5f, 1)))));
 
-    scene.getLastChild().addChild(centerRectangle);
+    scene.getLastChild().attachChild(centerRectangle);
 
     final Sprite face = new Sprite(centerX, centerY + 42, mFaceTextureRegion);
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
 
     // velocity control (left)
     final int x1 = 0;

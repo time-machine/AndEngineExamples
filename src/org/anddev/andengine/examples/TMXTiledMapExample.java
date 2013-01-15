@@ -95,7 +95,7 @@ public class TMXTiledMapExample extends BaseExample {
     }
 
     final TMXLayer tmxLayer = mTmxTiledMap.getTMXLayers().get(0);
-    scene.getFirstChild().addChild(tmxLayer);
+    scene.getFirstChild().attachChild(tmxLayer);
 
     // make the camera not exceed the bounds of the TMXEntity
     mBoundChaseCamera.setBounds(0, tmxLayer.getWidth(), 0,
@@ -143,7 +143,7 @@ public class TMXTiledMapExample extends BaseExample {
     final Rectangle currentTileRectangle = new Rectangle(0, 0,
         mTmxTiledMap.getTileWidth(), mTmxTiledMap.getTileHeight());
     currentTileRectangle.setColor(1, 0, 0, 0.25f);
-    scene.getLastChild().addChild(currentTileRectangle);
+    scene.getLastChild().attachChild(currentTileRectangle);
 
     scene.registerUpdateHandler(new IUpdateHandler() {
       @Override
@@ -167,7 +167,7 @@ public class TMXTiledMapExample extends BaseExample {
       }
     });
 
-    scene.getLastChild().addChild(player);
+    scene.getLastChild().attachChild(player);
 
     return scene;
   }

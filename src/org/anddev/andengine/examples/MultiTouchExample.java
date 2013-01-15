@@ -140,7 +140,7 @@ public class MultiTouchExample extends BaseGameActivity {
       }
     };
 
-    pScene.getLastChild().addChild(sprite);
+    pScene.getLastChild().attachChild(sprite);
     pScene.registerTouchArea(sprite);
   }
 }

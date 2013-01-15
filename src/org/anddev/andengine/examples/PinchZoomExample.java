@@ -202,7 +202,7 @@ public class PinchZoomExample extends BaseExample implements
       }
     };
 
-    pScene.getLastChild().addChild(sprite);
+    pScene.getLastChild().attachChild(sprite);
     pScene.registerTouchArea(sprite);
   }
 }

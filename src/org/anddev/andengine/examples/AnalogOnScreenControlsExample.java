@@ -106,7 +106,7 @@ public class AnalogOnScreenControlsExample extends BaseExample {
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
 
-    scene.getLastChild().addChild(face);
+    scene.getLastChild().attachChild(face);
 
     // velocity control (left)
     final int x1 = 0;

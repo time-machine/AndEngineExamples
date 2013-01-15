@@ -77,7 +77,7 @@ public class MenuExample extends BaseExample implements IOnMenuItemClickListener
     final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
     face.addEntityModifier(new MoveModifier(30, 0, CAMERA_WIDTH
         - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
-    mMainScene.getLastChild().addChild(face);
+    mMainScene.getLastChild().attachChild(face);
 
     return mMainScene;
   }

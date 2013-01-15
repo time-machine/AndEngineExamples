@@ -55,9 +55,9 @@ public class TextureOptionsExample extends BaseExample {
         mFaceTextureRegionRepeating);
 
     final IEntity lastChild = scene.getLastChild();
-    lastChild.addChild(face);
-    lastChild.addChild(faceBillinear);
-    lastChild.addChild(faceRepeating);
+    lastChild.attachChild(face);
+    lastChild.attachChild(faceBillinear);
+    lastChild.attachChild(faceRepeating);
 
     return scene;
   }

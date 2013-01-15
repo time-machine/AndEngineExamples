@@ -80,10 +80,10 @@ public class ImageFormatsExample extends BaseExample {
     // create the icons and add them to the scene
     final IEntity lastChild = scene.getLastChild();
 
-    lastChild.addChild(new Sprite(160 - 24, 106 - 24, mPngTextureRegion));
-    lastChild.addChild(new Sprite(160 - 24, 213 - 24, mJpgTextureRegion));
-    lastChild.addChild(new Sprite(320 - 24, 106 - 24, mGifTextureRegion));
-    lastChild.addChild(new Sprite(320 - 24, 213 - 24, mBmpTextureRegion));
+    lastChild.attachChild(new Sprite(160 - 24, 106 - 24, mPngTextureRegion));
+    lastChild.attachChild(new Sprite(160 - 24, 213 - 24, mJpgTextureRegion));
+    lastChild.attachChild(new Sprite(320 - 24, 106 - 24, mGifTextureRegion));
+    lastChild.attachChild(new Sprite(320 - 24, 213 - 24, mBmpTextureRegion));
 
     return scene;
   }

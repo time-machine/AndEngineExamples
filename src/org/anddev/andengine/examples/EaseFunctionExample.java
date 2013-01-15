@@ -197,8 +197,8 @@ public class EaseFunctionExample extends BaseExample {
 
     previouSprite.getTextureRegion().setFlippedHorizontal(true);
 
-    hud.getLastChild().addChild(nextSprite);
-    hud.getLastChild().addChild(previouSprite);
+    hud.getLastChild().attachChild(nextSprite);
+    hud.getLastChild().attachChild(previouSprite);
 
     hud.registerTouchArea(nextSprite);
     hud.registerTouchArea(previouSprite);
@@ -218,17 +218,17 @@ public class EaseFunctionExample extends BaseExample {
         mFont, "Function", 20);
 
     final IEntity lastChild = scene.getLastChild();
-    lastChild.addChild(mFaces[0]);
-    lastChild.addChild(mFaces[1]);
-    lastChild.addChild(mFaces[2]);
-    lastChild.addChild(mEaseFunctionNameTexts[0]);
-    lastChild.addChild(mEaseFunctionNameTexts[1]);
-    lastChild.addChild(mEaseFunctionNameTexts[2]);
-    lastChild.addChild(new Line(0, CAMERA_HEIGHT - 110, CAMERA_WIDTH,
+    lastChild.attachChild(mFaces[0]);
+    lastChild.attachChild(mFaces[1]);
+    lastChild.attachChild(mFaces[2]);
+    lastChild.attachChild(mEaseFunctionNameTexts[0]);
+    lastChild.attachChild(mEaseFunctionNameTexts[1]);
+    lastChild.attachChild(mEaseFunctionNameTexts[2]);
+    lastChild.attachChild(new Line(0, CAMERA_HEIGHT - 110, CAMERA_WIDTH,
         CAMERA_HEIGHT - 110));
-    lastChild.addChild(new Line(0, CAMERA_HEIGHT - 210, CAMERA_WIDTH,
+    lastChild.attachChild(new Line(0, CAMERA_HEIGHT - 210, CAMERA_WIDTH,
         CAMERA_HEIGHT - 210));
-    lastChild.addChild(new Line(0, CAMERA_HEIGHT - 310, CAMERA_WIDTH,
+    lastChild.attachChild(new Line(0, CAMERA_HEIGHT - 310, CAMERA_WIDTH,
         CAMERA_HEIGHT - 310));
 
     return scene;

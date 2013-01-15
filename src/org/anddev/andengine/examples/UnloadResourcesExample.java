@@ -64,14 +64,14 @@ public class UnloadResourcesExample extends BaseExample {
         runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            scene.getLastChild().removeChild(thisRef);
+            scene.getLastChild().detachChild(thisRef);
           }
         });
         return true;
       }
     };
 
-    scene.getLastChild().addChild(clickToUnload);
+    scene.getLastChild().attachChild(clickToUnload);
     scene.registerTouchArea(clickToUnload);
 
     return scene;

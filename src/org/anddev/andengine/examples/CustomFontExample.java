@@ -85,13 +85,13 @@ public class CustomFontExample extends BaseExample {
 
     final IEntity lastChild = scene.getLastChild();
 
-    lastChild.addChild(new Text(230, 30, mDroidFont, "Droid Font"));
-    lastChild.addChild(new Text(160, 120, mKingdomOfHeartsFont,
+    lastChild.attachChild(new Text(230, 30, mDroidFont, "Droid Font"));
+    lastChild.attachChild(new Text(160, 120, mKingdomOfHeartsFont,
         "Kingdom Of Hearts Font"));
-    lastChild.addChild(new Text(110, 210, mNeverwinterNightsFont,
+    lastChild.attachChild(new Text(110, 210, mNeverwinterNightsFont,
         "Neverwinter Nights Font"));
-    lastChild.addChild(new Text(140, 300, mPlokFont, "Plok Font"));
-    lastChild.addChild(new Text(25, 390, mUnrealTournamentFont,
+    lastChild.attachChild(new Text(140, 300, mPlokFont, "Plok Font"));
+    lastChild.attachChild(new Text(25, 390, mUnrealTournamentFont,
         "Unreal Tournament Font"));
 
     return scene;

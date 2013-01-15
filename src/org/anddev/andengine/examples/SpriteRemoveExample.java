@@ -57,7 +57,7 @@ public class SpriteRemoveExample extends BaseExample
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
 
     mFaceToRemove = new Sprite(centerX, centerY, mFaceTextureRegion);
-    scene.getLastChild().addChild(mFaceToRemove);
+    scene.getLastChild().attachChild(mFaceToRemove);
 
     scene.setOnSceneTouchListener(this);
 
@@ -78,7 +78,7 @@ public class SpriteRemoveExample extends BaseExample
       @Override
       public void run() {
         // now it is save to remove the entity
-        pScene.getLastChild().removeChild(mFaceToRemove);
+        pScene.getLastChild().detachChild(mFaceToRemove);
       }
     });
 

@@ -40,7 +40,7 @@ public class PauseExample extends BaseExample {
     final int x = (CAMERA_WIDTH - mPauseTextureRegion.getWidth()) / 2;
     final int y = (CAMERA_HEIGHT - mPauseTextureRegion.getHeight()) / 2;
     final Sprite pauseSprite = new Sprite(x, y, mPauseTextureRegion);
-    mPauseScene.getLastChild().addChild(pauseSprite);
+    mPauseScene.getLastChild().attachChild(pauseSprite);
     mPauseScene.setBackgroundEnabled(false);
 
     mMainScene = new Scene(1);
@@ -49,7 +49,7 @@ public class PauseExample extends BaseExample {
     final Sprite face = new Sprite(0, 0, mFaceTextureRegion);
     face.addEntityModifier(new MoveModifier(30, 0,
         CAMERA_WIDTH - face.getWidth(), 0, CAMERA_HEIGHT - face.getHeight()));
-    mMainScene.getLastChild().addChild(face);
+    mMainScene.getLastChild().attachChild(face);
 
     return mMainScene;
   }

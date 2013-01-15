@@ -146,7 +146,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // no background color needed as we have a fullscreen background sprite
     scene.setBackgroundEnabled(false);
-    scene.getChild(LAYER_BACKGROUND).addChild(new Sprite(0, 0,
+    scene.getChild(LAYER_BACKGROUND).attachChild(new Sprite(0, 0,
         mBackgroundTextureRegion));
 
     // the ScoreText showing how many points the player scored
@@ -154,7 +154,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
         "Score: XXXX".length());
     mScoreText.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
     mScoreText.setAlpha(0.5f);
-    scene.getChild(LAYER_SCORE).addChild(mScoreText);
+    scene.getChild(LAYER_SCORE).attachChild(mScoreText);
 
     // the snake
     mSnake = new Snake(Direction.RIGHT, 0, CELLS_VERTICAL / 2,
@@ -163,13 +163,13 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
     // snake starts with one tail
     mSnake.grow();
-    scene.getChild(LAYER_SNAKE).addChild(mSnake);
+    scene.getChild(LAYER_SNAKE).attachChild(mSnake);
 
     // a frog to approach and eat
     mFrog= new Frog(0, 0, mFrogTextureRegion);
     mFrog.animate(1000);
     setFrogToRandomCell();
-    scene.getLayer(LAYER_FOOD).addChild(mFrog);
+    scene.getLayer(LAYER_FOOD).attachChild(mFrog);
 
     // the On-Screen controls to control the direction of the snake
     mDigitalOnScreenControl = new DigitalOnScreenControl(0,
@@ -227,14 +227,14 @@ public class SnakeGameActivity extends BaseGameActivity implements
         (CAMERA_HEIGHT - titleText.getHeight()) * 0.5f);
     titleText.setScale(0);
     titleText.addEntityModifier(new ScaleModifier(2, 0, 1));
-    scene.getChild(LAYER_SCORE).addChild(titleText);
+    scene.getChild(LAYER_SCORE).attachChild(titleText);
 
     // the handler that removes the title-text and starts the game
     scene.registerUpdateHandler(new TimerHandler(3, new ITimerCallback() {
       @Override
       public void onTimePassed(final TimerHandler pTimerHandler) {
         scene.unregisterUpdateHandler(pTimerHandler);
-        scene.getChild(LAYER_SCORE).removeChild(titleText);
+        scene.getChild(LAYER_SCORE).detachChild(titleText);
         mGameRunning = true;
       }
     }));
@@ -267,7 +267,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
 
   protected void onGameOver() {
     mGameOverSound.play();
-    mEngine.getScene().getLayer(LAYER_SCORE).addChild(mGameOverText);
+    mEngine.getScene().getLayer(LAYER_SCORE).attachChild(mGameOverText);
     mGameRunning = false;
   }
 
