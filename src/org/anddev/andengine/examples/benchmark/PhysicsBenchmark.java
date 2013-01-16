@@ -164,7 +164,7 @@ public class PhysicsBenchmark extends BaseBenchmark implements
 
     pScene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
-        true, true, false, false));
+        true, true));
   }
 
   @Override

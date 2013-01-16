@@ -172,7 +172,7 @@ public class PhysicsRemoveExample extends BaseExample implements
     scene.registerTouchArea(face);
     scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
-        true, true, false, false));
+        true, true));
   }
 
   private void removeFace(final AnimatedSprite face) {

@@ -181,7 +181,7 @@ public class PhysicsJumpExample extends BaseExample implements
     }
 
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
-        true, true, false, false));
+        true, true));
 
     face.animate(new long[] { 200, 200 }, 0, 1, true);
     scene.registerTouchArea(face);

@@ -150,7 +150,7 @@ public class SplitScreenExample extends BaseExample implements
 
     scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
-        true, true, false, false));
+        true, true));
 
     if (mFaceCount == 0) {
       mChaseCamera.setChaseEntity(face);

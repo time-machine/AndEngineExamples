@@ -163,6 +163,6 @@ public class PhysicsFixedStepExample extends BaseExample implements
 
     scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
-        true, true, false, false));
+        true, true));
   }
 }

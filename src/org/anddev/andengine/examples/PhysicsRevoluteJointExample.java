@@ -61,7 +61,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
       scene.getFirstChild().attachChild(connectionLine);
 
       mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(anchorFace,
-          anchorBody, true, true, false, false) {
+          anchorBody, true, true) {
         @Override
         public void onUpdate(final float pSecondsElapsed) {
           super.onUpdate(pSecondsElapsed);
@@ -76,7 +76,7 @@ public class PhysicsRevoluteJointExample extends BasePhysicsJointExample {
       });
 
       mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(movingFace,
-          movingBody, true, true, false, false));
+          movingBody, true, true));
 
       final RevoluteJointDef revoluteJointDef = new RevoluteJointDef();
       revoluteJointDef.initialize(anchorBody, movingBody,

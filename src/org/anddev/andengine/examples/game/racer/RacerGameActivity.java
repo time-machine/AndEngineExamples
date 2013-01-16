@@ -177,7 +177,7 @@ public class RacerGameActivity extends BaseGameActivity {
         BodyType.DynamicBody, carFixtureDef);
 
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(mCar, mCarBody,
-        true, false, true, false));
+        true, false));
 
     scene.getChild(LAYER_CARS).attachChild(mCar);
   }
@@ -201,7 +201,7 @@ public class RacerGameActivity extends BaseGameActivity {
     boxBody.setAngularDamping(10);
 
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(box, boxBody,
-        true, true, false, false));
+        true, true));
 
     pScene.getChild(LAYER_OBSTACLES).attachChild(box);
   }
