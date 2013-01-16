@@ -7,6 +7,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
+import org.anddev.andengine.engine.handler.physics.PhysicsHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -72,6 +73,8 @@ public class AnalogOnScreenControlExample extends BaseExample {
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Sprite face = new Sprite(centerX, centerY, mFaceTextureRegion);
+    final PhysicsHandler physicsHandler = new PhysicsHandler(face);
+    face.registerUpdateHandler(physicsHandler);
 
     scene.getLastChild().attachChild(face);
 
@@ -84,13 +87,13 @@ public class AnalogOnScreenControlExample extends BaseExample {
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
               final float pValueX, final float pValueY) {
-            face.setVelocity(pValueX * 100, pValueY * 100);
+            physicsHandler.setVelocity(pValueX * 100, pValueY * 100);
           }
 
           @Override
           public void onControlClick(
               final AnalogOnScreenControl pAnalogOnScreenControl) {
-            face.addEntityModifier(new SequenceEntityModifier(
+            face.registerEntityModifier(new SequenceEntityModifier(
                 new ScaleModifier(0.25f, 1, 1.5f),
                 new ScaleModifier(0.25f, 1.5f, 1)));
           }

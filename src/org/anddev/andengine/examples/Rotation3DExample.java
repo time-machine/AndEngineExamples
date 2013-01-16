@@ -85,7 +85,7 @@ public class Rotation3DExample extends BaseExample {
       }
     };
 
-    face.addEntityModifier(new LoopEntityModifier(new RotationModifier(6, 0,
+    face.registerEntityModifier(new LoopEntityModifier(new RotationModifier(6, 0,
         360)));
     scene.getLastChild().attachChild(face);
 

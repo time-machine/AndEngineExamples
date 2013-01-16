@@ -44,7 +44,7 @@ public class TickerTextExample extends BaseExample {
         "There are also ticker texts!\n\nYou'll see the answer to life & " +
         "universe in...\n\n5 4 3 2 1...\n\n42\n\nIndeed very funny!",
         HorizontalAlign.CENTER, 10);
-    text.addEntityModifier(
+    text.registerEntityModifier(
         new SequenceEntityModifier(
             new ParallelEntityModifier(
                 new AlphaModifier(10, 0, 1),

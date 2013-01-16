@@ -184,7 +184,6 @@ public class PhysicsJumpExample extends BaseExample implements
         true, true, false, false));
 
     face.animate(new long[] { 200, 200 }, 0, 1, true);
-    face.setUpdatePhysics(false);
     scene.registerTouchArea(face);
     scene.getLastChild().attachChild(face);
   }

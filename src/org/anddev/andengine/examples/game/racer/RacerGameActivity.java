@@ -168,7 +168,6 @@ public class RacerGameActivity extends BaseGameActivity {
 
   private void initCar(final Scene scene) {
     mCar = new TiledSprite(20, 20, CAR_SIZE, CAR_SIZE, mVehiclesTextureRegion);
-    mCar.setUpdatePhysics(false);
     mCar.setCurrentTileIndex(0);
 
     final FixtureDef carFixtureDef = PhysicsFactory.createFixtureDef(1, 0.5f,
@@ -180,7 +179,7 @@ public class RacerGameActivity extends BaseGameActivity {
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(mCar, mCarBody,
         true, false, true, false));
 
-    scene.getLayer(LAYER_CARS).attachChild(mCar);
+    scene.getChild(LAYER_CARS).attachChild(mCar);
   }
 
   private void initObstacles(final Scene scene) {
@@ -193,7 +192,6 @@ public class RacerGameActivity extends BaseGameActivity {
   private void addObstacle(final Scene pScene, final float pX, final float pY) {
     final Sprite box = new Sprite(pX, pY, OBSTACLE_SIZE, OBSTACLE_SIZE,
         mBoxTextureRegion);
-    box.setUpdatePhysics(false);
 
     final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0.1f, 0.5f,
         0.5f);
@@ -205,11 +203,11 @@ public class RacerGameActivity extends BaseGameActivity {
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(box, boxBody,
         true, true, false, false));
 
-    pScene.getLayer(LAYER_OBSTACLES).attachChild(box);
+    pScene.getChild(LAYER_OBSTACLES).attachChild(box);
   }
 
   private void initRacetrack(final Scene scene) {
-    final IEntity racetrackEntity = scene.getLayer(LAYER_RACERTRACK);
+    final IEntity racetrackEntity = scene.getChild(LAYER_RACERTRACK);
 
     // straights
     {

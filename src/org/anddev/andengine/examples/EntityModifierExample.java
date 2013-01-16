@@ -112,8 +112,8 @@ public class EntityModifierExample extends BaseExample {
         )
     );
 
-    face.addEntityModifier(entityModifier);
-    rect.addEntityModifier(entityModifier.clone());
+    face.registerEntityModifier(entityModifier);
+    rect.registerEntityModifier(entityModifier.clone());
 
     scene.getLastChild().attachChild(face);
     scene.getLastChild().attachChild(rect);

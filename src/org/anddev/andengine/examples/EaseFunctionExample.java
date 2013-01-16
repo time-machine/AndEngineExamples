@@ -271,7 +271,7 @@ public class EaseFunctionExample extends BaseExample {
           face.clearEntityModifiers();
           final float y = face.getY();
           face.setPosition(0, y);
-          face.addEntityModifier(new MoveModifier(3, 0,
+          face.registerEntityModifier(new MoveModifier(3, 0,
               CAMERA_WIDTH - face.getWidth(), y, y,
               currentEaseFunctionsSet[i]));
         }

@@ -10,6 +10,7 @@ import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.anddev.andengine.engine.camera.hud.controls.AnalogOnScreenControl.IAnalogOnScreenControlListener;
 import org.anddev.andengine.engine.camera.hud.controls.BaseOnScreenControl;
+import org.anddev.andengine.engine.handler.physics.PhysicsHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -141,8 +142,11 @@ public class CoordinateConversionExample extends BaseExample {
       }
     };
 
-    face.addEntityModifier(new LoopEntityModifier(new SequenceEntityModifier(
-        new ScaleModifier(3, 1, 1.75f), new ScaleModifier(3, 1.75f, 1))));
+    final PhysicsHandler physicsHandler = new PhysicsHandler(face);
+    face.registerUpdateHandler(physicsHandler);
+    face.registerEntityModifier(new LoopEntityModifier(
+        new SequenceEntityModifier(new ScaleModifier(3, 1, 1.75f),
+            new ScaleModifier(3, 1.75f, 1))));
 
     scene.getFirstChild().attachChild(face);
 
@@ -159,7 +163,7 @@ public class CoordinateConversionExample extends BaseExample {
           public void onControlChange(
               final BaseOnScreenControl pBaseOnScreenControl,
               final float pValueX, final float pValueY) {
-            face.setVelocity(pValueX * 100, pValueY * 100);
+            physicsHandler.setVelocity(pValueX * 100, pValueY * 100);
           }
 
           @Override

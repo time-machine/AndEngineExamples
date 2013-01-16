@@ -2,6 +2,7 @@ package org.anddev.andengine.examples;
 
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.Camera;
+import org.anddev.andengine.engine.handler.physics.PhysicsHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -49,7 +50,9 @@ public class MovingBallExample extends BaseExample {
     final int centerX = (CAMERA_WIDTH - mFaceTextureRegion.getWidth()) / 2;
     final int centerY = (CAMERA_HEIGHT - mFaceTextureRegion.getHeight()) / 2;
     final Ball ball = new Ball(centerX, centerY, mFaceTextureRegion);
-    ball.setVelocity(DEMO_VELOCITY, DEMO_VELOCITY);
+    final PhysicsHandler physicsHandler = new PhysicsHandler(ball);
+    ball.registerUpdateHandler(physicsHandler);
+    physicsHandler.setVelocity(DEMO_VELOCITY, DEMO_VELOCITY);
 
     scene.getLastChild().attachChild(ball);
 
@@ -61,25 +64,29 @@ public class MovingBallExample extends BaseExample {
   }
 
   private static class Ball extends AnimatedSprite {
+    private final PhysicsHandler mPhysicsHandler;
+
     public Ball(final float pX, final float pY,
         final TiledTextureRegion pTiledTextureRegion) {
       super(pX, pY, pTiledTextureRegion);
+      mPhysicsHandler = new PhysicsHandler(this);
+      registerUpdateHandler(mPhysicsHandler);
     }
 
     @Override
     protected void onManagedUpdate(final float pSecondsElapsed) {
       if (mX < 0) {
-        setVelocityX(DEMO_VELOCITY);
+        mPhysicsHandler.setVelocityX(DEMO_VELOCITY);
       }
       else if (mX + getWidth() > CAMERA_WIDTH) {
-        setVelocityX(-DEMO_VELOCITY);
+        mPhysicsHandler.setVelocityX(-DEMO_VELOCITY);
       }
 
       if (mY < 0) {
-        setVelocityY(DEMO_VELOCITY);
+        mPhysicsHandler.setVelocityY(DEMO_VELOCITY);
       }
       else if (mY + getHeight() > CAMERA_HEIGHT) {
-        setVelocityY(-DEMO_VELOCITY);
+        mPhysicsHandler.setVelocityY(-DEMO_VELOCITY);
       }
 
       super.onManagedUpdate(pSecondsElapsed);

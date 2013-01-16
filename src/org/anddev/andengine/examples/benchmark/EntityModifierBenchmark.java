@@ -96,8 +96,8 @@ public class EntityModifierBenchmark extends BaseBenchmark {
           (CAMERA_HEIGHT - 32) * mRandom.nextFloat(), mFaceTextureRegion,
           sharedVertexBuffer);
 
-      face.addEntityModifier(entityModifier.clone());
-      rect.addEntityModifier(entityModifier.clone());
+      face.registerEntityModifier(entityModifier.clone());
+      rect.registerEntityModifier(entityModifier.clone());
 
       scene.getLastChild().attachChild(face);
       scene.getLastChild().attachChild(rect);

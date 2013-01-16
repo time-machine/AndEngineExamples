@@ -162,8 +162,6 @@ public class PhysicsBenchmark extends BaseBenchmark implements
           BodyType.DynamicBody, objectFixtureDef);
     }
 
-    face.setUpdatePhysics(false);
-
     pScene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,
         true, true, false, false));

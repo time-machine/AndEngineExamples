@@ -168,7 +168,6 @@ public class PhysicsRemoveExample extends BaseExample implements
     }
 
     face.animate(200, true);
-    face.setUpdatePhysics(false);
 
     scene.registerTouchArea(face);
     scene.getLastChild().attachChild(face);

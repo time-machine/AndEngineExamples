@@ -71,13 +71,13 @@ public class RectangleExample extends BaseExample {
       }
     };
 
-    subRectangle.addEntityModifier(new LoopEntityModifier(
+    subRectangle.registerEntityModifier(new LoopEntityModifier(
         new RotationModifier(5, 0, 360)));
     rect4.attachChild(subRectangle);
 
     final Entity rectangleGroup = new Entity(CAMERA_WIDTH / 2,
         CAMERA_HEIGHT / 2);
-    rectangleGroup.addEntityModifier(new LoopEntityModifier(
+    rectangleGroup.registerEntityModifier(new LoopEntityModifier(
         new ParallelEntityModifier(new SequenceEntityModifier(
             new ScaleModifier(10, 1, 0.5f), new ScaleModifier(10, 0.5f, 1)),
             new RotationModifier(20, 0, 360))));
@@ -113,7 +113,7 @@ public class RectangleExample extends BaseExample {
     coloredRect.setColor(pRed, pGreen, pBlue);
 
     final Rectangle subRectangle = new Rectangle(45, 45, 90, 90);
-    subRectangle.addEntityModifier(new LoopEntityModifier(
+    subRectangle.registerEntityModifier(new LoopEntityModifier(
         new RotationModifier(3, 0, 360)));
 
     coloredRect.attachChild(subRectangle);

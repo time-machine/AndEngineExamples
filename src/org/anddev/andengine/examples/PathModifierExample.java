@@ -70,7 +70,7 @@ public class PathModifierExample extends BaseExample {
         .to(10, 10);
 
     // add the proper animation when a waypoint of the path is passed
-    player.addEntityModifier(new LoopEntityModifier(new PathModifier(30, path,
+    player.registerEntityModifier(new LoopEntityModifier(new PathModifier(30, path,
         null, new IPathModifierListener() {
           @Override
           public void onWaypointPassed(final PathModifier pPathModifier,

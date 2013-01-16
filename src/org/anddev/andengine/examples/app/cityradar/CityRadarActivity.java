@@ -203,7 +203,7 @@ public class CityRadarActivity extends BaseGameActivity implements
     radarSprite.setColor(0, 1, 0, 1);
     radarSprite.setRotationCenter(radarSprite.getWidth(),
         radarSprite.getHeight());
-    radarSprite.addEntityModifier(new LoopEntityModifier(new RotationModifier(3,
+    radarSprite.registerEntityModifier(new LoopEntityModifier(new RotationModifier(3,
         0, 360, EaseLinear.getInstance())));
     pEntity.attachChild(radarSprite);
 

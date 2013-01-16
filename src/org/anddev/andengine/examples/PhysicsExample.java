@@ -179,7 +179,6 @@ public class PhysicsExample extends BaseExample implements
     }
 
     face.animate(200);
-    face.setUpdatePhysics(false);
 
     scene.getLastChild().attachChild(face);
     mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(face, body,

@@ -226,7 +226,7 @@ public class SnakeGameActivity extends BaseGameActivity implements
     titleText.setPosition((CAMERA_WIDTH - titleText.getWidth()) * 0.5f,
         (CAMERA_HEIGHT - titleText.getHeight()) * 0.5f);
     titleText.setScale(0);
-    titleText.addEntityModifier(new ScaleModifier(2, 0, 1));
+    titleText.registerEntityModifier(new ScaleModifier(2, 0, 1));
     scene.getChild(LAYER_SCORE).attachChild(titleText);
 
     // the handler that removes the title-text and starts the game
@@ -243,8 +243,8 @@ public class SnakeGameActivity extends BaseGameActivity implements
     mGameOverText = new Text(0, 0, mFont, "Game\nOver", HorizontalAlign.CENTER);
     mGameOverText.setPosition((CAMERA_WIDTH - mGameOverText.getWidth()) * 0.5f,
         (CAMERA_HEIGHT - mGameOverText.getHeight()) * 0.5f);
-    mGameOverText.addEntityModifier(new ScaleModifier(3, 0.1f, 2));
-    mGameOverText.addEntityModifier(new RotationModifier(3, 0, 720));
+    mGameOverText.registerEntityModifier(new ScaleModifier(3, 0.1f, 2));
+    mGameOverText.registerEntityModifier(new RotationModifier(3, 0, 720));
 
     return scene;
   }
